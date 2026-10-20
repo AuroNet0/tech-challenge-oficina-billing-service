@@ -8,18 +8,17 @@ import javax.sql.DataSource;
 import jakarta.persistence.EntityManagerFactory;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.ConfigurableWebApplicationContext;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -27,8 +26,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.spy;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -36,6 +33,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Testcontainers
+@SpringBootTest(useMainMethod = SpringBootTest.UseMainMethod.ALWAYS, properties = {
+        "spring.security.user.name=billing-test", "spring.security.user.password=test-password"
+})
+@AutoConfigureMockMvc
 class BillingApplicationTests {
 
     @Container
@@ -44,56 +45,25 @@ class BillingApplicationTests {
             .withUsername("billing")
             .withPassword("test-password");
 
-    private static ConfigurableWebApplicationContext context;
-    private static EntityManagerFactory entityManagerFactory;
-    private static JdbcTemplate jdbc;
-    private static Flyway flyway;
-    private static MockMvc mvc;
-    private static DataSource dataSource;
-
-    @BeforeAll
-    static void startApplication() {
-        context = (ConfigurableWebApplicationContext) SpringApplication.from(BillingApplication::main)
-                .with(DatabaseSpyConfig.class)
-                .run("--server.port=0",
-                        "--spring.datasource.url=" + POSTGRES.getJdbcUrl(),
-                        "--spring.datasource.username=" + POSTGRES.getUsername(),
-                        "--spring.datasource.password=" + POSTGRES.getPassword(),
-                        "--spring.security.user.name=billing-test",
-                        "--spring.security.user.password=test-password").getApplicationContext();
-        entityManagerFactory = context.getBean(EntityManagerFactory.class);
-        jdbc = context.getBean(JdbcTemplate.class);
-        flyway = context.getBean(Flyway.class);
-        dataSource = context.getBean(DataSource.class);
-        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+    @DynamicPropertySource
+    static void databaseProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", POSTGRES::getJdbcUrl);
+        registry.add("spring.datasource.username", POSTGRES::getUsername);
+        registry.add("spring.datasource.password", POSTGRES::getPassword);
     }
 
-    @AfterAll
-    static void stopApplication() {
-        if (context != null) {
-            context.close();
-        }
-    }
-
-    @TestConfiguration(proxyBeanMethods = false)
-    static class DatabaseSpyConfig {
-
-        @Bean
-        static BeanPostProcessor dataSourceSpyPostProcessor() {
-            return new BeanPostProcessor() {
-                @Override
-                public Object postProcessAfterInitialization(Object bean, String beanName) {
-                    return bean instanceof DataSource ? spy(bean) : bean;
-                }
-            };
-        }
-    }
+    @Autowired private ApplicationContext context;
+    @Autowired private EntityManagerFactory entityManagerFactory;
+    @Autowired private JdbcTemplate jdbc;
+    @Autowired private Flyway flyway;
+    @Autowired private MockMvc mvc;
+    @MockitoSpyBean private DataSource dataSource;
 
     @Test
-    void startsSpringWithJpaValidationAndWithoutDomainEntities() {
+    void startsSpringWithJpaValidationAndFinancialEntities() {
         assertThat(context.getBean(BillingApplication.class)).isNotNull();
         assertThat(entityManagerFactory.isOpen()).isTrue();
-        assertThat(entityManagerFactory.getMetamodel().getEntities()).isEmpty();
+        assertThat(entityManagerFactory.getMetamodel().getEntities()).hasSize(5);
         assertThat(context.getEnvironment().getProperty("spring.jpa.hibernate.ddl-auto")).isEqualTo("validate");
         assertThat(context.getEnvironment().getProperty("spring.jpa.open-in-view")).isEqualTo("false");
     }
@@ -109,15 +79,16 @@ class BillingApplicationTests {
     }
 
     @Test
-    void appliesBootstrapMigrationWithoutCreatingBusinessTables() {
+    void preservesBootstrapMigrationAndAppliesFinancialSchema() {
         assertThat(flyway.validateWithResult().validationSuccessful).isTrue();
-        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("1");
+        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("2");
         assertThat(flyway.info().pending()).isEmpty();
         assertThat(jdbc.queryForObject(
                 "SELECT success FROM flyway_schema_history WHERE version = '1'", Boolean.class)).isTrue();
         List<String> tables = jdbc.queryForList(
                 "SELECT tablename FROM pg_tables WHERE schemaname = 'public'", String.class);
-        assertThat(tables).containsExactly("flyway_schema_history");
+        assertThat(tables).containsExactlyInAnyOrder("flyway_schema_history", "orcamentos", "orcamento_itens",
+                "aprovacoes", "pagamentos", "pagamentos_tentativas");
     }
 
     @ParameterizedTest
