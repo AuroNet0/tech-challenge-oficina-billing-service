@@ -1,0 +1,6 @@
+.git
+.idea
+target
+.env
+*.iml
+bootstrap-*.log
