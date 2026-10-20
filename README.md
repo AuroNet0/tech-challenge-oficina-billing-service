@@ -1,6 +1,6 @@
 # Oficina Billing Service
 
-Tech Challenge FIAP — Fase 4, etapas 7.1 e 7.2. Microsserviço responsável pelo domínio de orçamentos, decisões e cobranças, com PostgreSQL próprio. Esta etapa implementa domínio e persistência; não disponibiliza APIs financeiras.
+Tech Challenge FIAP — Fase 4, etapas 7.1, 7.2 e 7.3. Microsserviço responsável pelo domínio de orçamentos, decisões e cobranças, com PostgreSQL próprio. Esta etapa disponibiliza consultas financeiras e decisões locais por API REST autenticada, exclusivamente para desenvolvimento.
 
 ## Tecnologias e compatibilidade
 
@@ -21,12 +21,15 @@ src/main/java/com/oficina/billing/
 │   ├── enums/        OrcamentoStatus, OrcamentoItemType, PriceUnit,
 │   │                 AprovacaoStatus, PagamentoStatus
 │   └── exception/    DomainException
+├── application/port/in/  ConsultarOrcamentoPort, ConsultarPagamentoPort, DecidirOrcamentoPort
+├── application/usecase/ ConsultarOrcamentoUseCase, ConsultarPagamentoUseCase, DecidirOrcamentoUseCase
 ├── application/port/out/
 │   ├── OrcamentoRepositoryPort.java
 │   ├── AprovacaoRepositoryPort.java
 │   └── PagamentoRepositoryPort.java
 └── infrastructure/
-    ├── config/       SecurityConfig, OpenApiConfig
+    ├── config/       SecurityConfig, OpenApiConfig, TimeConfig
+    ├── web/          Controllers, DTOs, ProblemDetail e suporte CSRF
     └── persistence/
         ├── entity/   Cinco entidades JPA
         ├── repository/
@@ -70,7 +73,7 @@ Um orçamento nasce `PENDING_APPROVAL`, com ao menos um item e sem `itemId` ou U
 
 `Aprovacao.registrar` captura a decisão já tomada no orçamento, o instante, responsável opcional, motivo opcional e correlação opcional. Não cria identidade de cliente. O registro é imutável inclusive no banco.
 
-A aprovação/rejeição deve salvar orçamento e decisão **na mesma transação PostgreSQL**. Os adapters usam propagação REQUIRED e participam da transação do futuro caso de uso. Não existe caso de uso/API de aprovação nesta etapa. Os testes usam `TransactionTemplate` para comprovar commit e rollback atômicos.
+Os casos de uso de aprovação/rejeição salvam orçamento e decisão **na mesma transação PostgreSQL** com `@Transactional`. Os adapters usam propagação REQUIRED e participam da transação do caso de uso. O relógio UTC é injetado; um único instante, truncado a microssegundos, é utilizado para a alteração do orçamento e os campos decisionAt/createdAt da decisão. Os testes REST comprovam commit, rollback e concorrência, preservando também os testes PostgreSQL anteriores.
 
 Triggers de constraint, diferidos até o commit, verificam itens/total e correspondência entre estado e decisão. Isso permite inserir/atualizar os registros em uma única transação sem tolerar estado inconsistente após o commit. Triggers também bloqueiam alteração de orçamento terminal e de seus itens.
 
@@ -94,10 +97,140 @@ Resultados exigem a chave da tentativa atual. A mesma confirmação com o mesmo 
 
 `@Version` protege ambos os agregados mutáveis. Concorrência entre aprovação e rejeição é resolvida por versão e unicidade da decisão no banco. O retorno de `save` deve ser utilizado, pois contém a nova versão. Não existem locks distribuídos nem transações entre microsserviços.
 
+## API REST financeira — etapa 7.3
+
+As portas de entrada ficam em `application.port.in`, os casos de uso em `application.usecase`, e controllers/DTOs/tratamento de erros em `infrastructure.web`. Controllers apenas validam o contrato HTTP, mapeiam DTOs e chamam portas. Modelos JPA não são serializados.
+
+| Método e rota | Resposta |
+| --- | --- |
+| GET `/api/v1/orcamentos/{id}` | 200, orçamento completo; 404 se inexistente |
+| GET `/api/v1/orcamentos?osId={uuid}` | 200, orçamento único da OS; 404 se inexistente |
+| POST `/api/v1/orcamentos/{id}/aprovar` | 200, decisão APPROVED persistida |
+| POST `/api/v1/orcamentos/{id}/rejeitar` | 200, decisão REJECTED persistida |
+| GET `/api/v1/orcamentos/{id}/aprovacao` | 200, decisão original; 404 se orçamento ou decisão inexistente |
+| GET `/api/v1/pagamentos/{id}` | 200, pagamento e tentativas; 404 se inexistente |
+| GET `/api/v1/pagamentos?osId={uuid}` | 200, lista de pagamentos da OS; `[]` quando vazia |
+
+Todas as rotas financeiras exigem autenticação. Não há POST de criação de orçamento/pagamento, edição de itens/preços, confirmação ou falha manual de cobrança. Orçamentos existentes nos testes são preparados com factories e adapters; não existe endpoint para gerar dados de teste.
+
+### Requests e respostas
+
+Aprovação aceita um objeto JSON com identificador provisório opcional:
+
+```http
+POST /api/v1/orcamentos/{id}/aprovar
+Content-Type: application/json
+X-Correlation-Id: 11111111-1111-4111-8111-111111111111
+X-CSRF-TOKEN: <token da mesma sessao>
+
+{"responsavelId":"cliente-123"}
+```
+
+Recusa aceita também um motivo opcional:
+
+```http
+POST /api/v1/orcamentos/{id}/rejeitar
+Content-Type: application/json
+X-CSRF-TOKEN: <token da mesma sessao>
+
+{"responsavelId":"cliente-123","motivo":"Orçamento acima do esperado"}
+```
+
+`responsavelId` tem limite de 100 caracteres; `motivo`, de 500. Campos opcionais podem ser omitidos ou null; valores em branco são inválidos. O corpo JSON é obrigatório (`{}` é permitido). Campos desconhecidos, incluindo `valorTotal` e `itens`, são rejeitados com 400. Os casos de uso utilizam as transições existentes do domínio, sem receber totais ou itens do solicitante. `X-Correlation-Id` é UUID opcional, preservado na decisão.
+
+Exemplo ilustrativo de consulta de orçamento:
+
+```json
+{
+  "id":"22222222-2222-4222-8222-222222222222",
+  "osId":"33333333-3333-4333-8333-333333333333",
+  "sagaId":"44444444-4444-4444-8444-444444444444",
+  "status":"PENDING_APPROVAL",
+  "itens":[{
+    "id":"55555555-5555-4555-8555-555555555555",
+    "itemId":"servico-1",
+    "descricao":"Diagnóstico técnico",
+    "tipo":"SERVICO",
+    "quantidade":"1.2500",
+    "unidadePreco":"HORA",
+    "precoUnitario":"80.000000",
+    "valorTotal":"100.00"
+  }],
+  "valorTotal":"100.00",
+  "createdAt":"2026-10-20T12:00:00Z",
+  "updatedAt":"2026-10-20T12:00:00Z",
+  "approvedAt":null,
+  "rejectedAt":null
+}
+```
+
+Todos os valores monetários e quantidades são **strings decimais exatas**, produzidas com `BigDecimal.toPlainString()`. Não há conversão para double nem notação exponencial. Totais têm duas casas; o preço unitário recuperado do PostgreSQL tem seis, e a quantidade preserva sua escala original.
+
+A resposta de decisão contém `id`, `orcamentoId`, `osId`, `status`, `decisionAt`, `responsavelId`, `motivo`, `correlationId` e `createdAt`. Os três instantes da operação (updatedAt do orçamento, decisionAt e createdAt da decisão) são iguais.
+
+Pagamento retorna `id`, `osId`, `sagaId`, `orcamentoId`, `status`, `valor`, `moeda`, `provider`, timestamps e `tentativas` ordenadas. Cada tentativa informa seu ID, status e timestamps. A resposta usa uma lista explícita de campos permitidos: não expõe tokens, credenciais, cartões, chaves de idempotência, referência externa, IDs internos de pagamento no provedor nem texto livre de falhas do provedor, que pode conter informações sensíveis.
+
+### Decisões repetidas e concorrência
+
+A política é **409 para toda decisão repetida**, inclusive a mesma decisão, sem criar registro, incrementar versão ou alterar timestamps. Decisão oposta, orçamento cancelado e conflito otimista também retornam 409. A decisão original permanece consultável por GET e pela porta de consulta, inclusive para integrações futuras.
+
+Somente PENDING_APPROVAL permite aprovação ou recusa. Os casos de uso são transacionais e reutilizam @Version, unicidade e constraint triggers de V2. Uma falha na gravação da decisão reverte também a alteração do orçamento. A disputa REST entre aprovação e recusa é testada com duas requisições concorrentes: apenas uma pode efetivar a decisão; a outra recebe 409. Não há transação distribuída.
+
+**As decisões são persistidas localmente e ainda não produzem eventos RabbitMQ.** Os estados e o motivo registrado permitem futura publicação de `quote.approved.v1` ou `quote.rejected.v1`, preservando IDs e correlação. O OS Service continua sendo o único orquestrador; nenhum contrato externo foi alterado.
+
+### Segurança provisória e CSRF
+
+A API é destinada a operadores de desenvolvimento com credenciais HTTP Basic controladas. **Não está pronta para acesso público de clientes.** Ainda não há vínculo autenticado entre cliente, OS e orçamento. Um usuário Basic autenticado consegue operar os orçamentos locais; esta etapa não implementa autorização por proprietário.
+
+`responsavelId` é apenas uma declaração do solicitante, não comprova identidade e não concede autorização. Alterar esse campo não autentica uma requisição. A identidade definitiva e a autorização por cliente dependem de integração futura com Auth Service. Não há JWT.
+
+CSRF permanece habilitado, inclusive para Basic. POST exige JSON, a mesma sessão HTTP e header `X-CSRF-TOKEN`. Um GET financeiro retorna esse token em um header de resposta e estabelece a sessão. O token retornado é o token mascarado pelo mecanismo padrão do Spring Security. O Swagger documenta esse header nas operações POST; obtenha o token em um GET na mesma sessão do navegador antes de usar o POST.
+
+Exemplo com curl, sem criar dados financeiros:
+
+```bash
+curl -sS -u billing:billing_local -c target/billing.cookies -D target/billing.headers \
+  "http://localhost:8082/api/v1/pagamentos?osId=33333333-3333-4333-8333-333333333333"
+CSRF_TOKEN=$(awk 'tolower($1)=="x-csrf-token:" {sub(/\r$/, "", $2); print $2}' target/billing.headers)
+curl -i -u billing:billing_local -b target/billing.cookies \
+  -H "X-CSRF-TOKEN: $CSRF_TOKEN" -H "Content-Type: application/json" \
+  -d '{"responsavelId":"cliente-123"}' \
+  "http://localhost:8082/api/v1/orcamentos/<orcamento-existente>/aprovar"
+```
+
+Use um UUID de orçamento já existente. No Windows, utilize curl.exe e preserve o mesmo arquivo de cookies e o token recebido. Sem token válido, POST retorna 403; como o filtro CSRF precede a autenticação, uma requisição sem token pode receber 403 antes de se avaliar HTTP Basic. Com token válido e sem credenciais, retorna 401.
+
+A execução Java no host escuta somente em `127.0.0.1` por padrão. No Compose, o endereço interno é `0.0.0.0`, mas a publicação permanece restrita a `127.0.0.1:8082`. Não remova essa restrição para disponibilizar a API publicamente.
+
+### Erros HTTP
+
+Erros são retornados como `application/problem+json` (ProblemDetail), com type, title, status, detail e instance, sem SQL, stack trace, valores rejeitados ou detalhes internos do PostgreSQL.
+
+| Status | Significado |
+| --- | --- |
+| 400 | JSON/campos inválidos, UUID inválido, parâmetro obrigatório ausente |
+| 401 | Autenticação ausente ou inválida |
+| 403 | Token CSRF ausente/inválido ou acesso negado |
+| 404 | Recurso ou decisão inexistente |
+| 409 | Decisão repetida/oposta, estado terminal, concorrência ou constraint de consistência |
+| 405 / 415 | Método não implementado / tipo de conteúdo não suportado |
+| 500 | Erro inesperado, com mensagem genérica |
+
+```json
+{
+  "type":"about:blank",
+  "title":"Conflict",
+  "status":409,
+  "detail":"Operacao em conflito com o estado atual do recurso.",
+  "instance":"/api/v1/orcamentos/22222222-2222-4222-8222-222222222222/aprovar"
+}
+```
+
 ## Banco e variáveis de ambiente
 
 | Variável | Padrão / finalidade |
 | --- | --- |
+| `SERVER_ADDRESS` | `127.0.0.1` no host; `0.0.0.0` somente dentro do Compose |
 | `DB_HOST` | `localhost` no host; `postgres` no Compose |
 | `DB_PORT` | `5434` no host, configurável; `5432` dentro do Compose |
 | `DB_NAME` | `oficina_billing` |
@@ -144,7 +277,7 @@ O Dockerfile multi-stage usa JDK 21 no build, JRE 21 na execução e usuário n�
 | http://localhost:8082/actuator/health/liveness | Público; estado de vida da aplicação |
 | http://localhost:8082/actuator/health/readiness | Público; considera PostgreSQL; 503 se indisponível |
 | http://localhost:8082/swagger-ui/index.html | Swagger UI público |
-| http://localhost:8082/v3/api-docs | OpenAPI JSON público, sem operações financeiras |
+| http://localhost:8082/v3/api-docs | OpenAPI JSON público, com os contratos REST autenticados |
 
 Somente os três caminhos exatos de health, `/swagger-ui/**` e `/v3/api-docs/**` são públicos. As demais rotas exigem HTTP Basic temporário. `/swagger-ui.html` continua protegido: utilize a URL indicada. Somente health é exposto no Actuator, sem detalhes internos. CSRF permanece habilitado. Credenciais são mantidas em memória pela autoconfiguração do Spring Security; use HTTPS fora do desenvolvimento local.
 
@@ -152,11 +285,11 @@ Somente os três caminhos exatos de health, `/swagger-ui/**` e `/v3/api-docs/**`
 curl -i http://localhost:8082/actuator/health
 curl -i http://localhost:8082/actuator/health/readiness
 curl -i http://localhost:8082/v3/api-docs
-curl -i http://localhost:8082/api/pagamentos
-curl -i -u billing:billing_local http://localhost:8082/api/pagamentos
+curl -i "http://localhost:8082/api/v1/pagamentos?osId=33333333-3333-4333-8333-333333333333"
+curl -i -u billing:billing_local "http://localhost:8082/api/v1/pagamentos?osId=33333333-3333-4333-8333-333333333333"
 ```
 
-As últimas chamadas retornam 401 sem credenciais e 404 com credenciais válidas: não há endpoint financeiro.
+As últimas chamadas retornam 401 sem credenciais e 200 com credenciais válidas, com lista vazia se a OS não possuir pagamentos.
 
 ## Testes e cobertura
 
@@ -166,7 +299,19 @@ A suíte verifica precisão e escala, quantidades decimais, overflow, itens dupl
 
 Relatórios: `target/surefire-reports/` e `target/site/jacoco/index.html`, com XML em `target/site/jacoco/jacoco.xml`. Logs locais ignorados pelo Git: `bootstrap-domain.log` e `bootstrap-compose.log`.
 
-### Validação da etapa 7.2 em 2026-10-20
+### Validação da etapa 7.3 em 2026-10-20
+
+- `./mvnw.cmd -B -ntp clean verify`: **BUILD SUCCESS**, 92 testes, zero falhas, erros ou skips. Os 57 cenários anteriores permanecem, com 12 novos testes unitários de casos de uso e 23 cenários REST/PostgreSQL.
+- JaCoCo: **98,51% de linhas — 462/469**, sem exclusões; limite de 80% aprovado.
+- Aprovação e recusa concorrentes pela API: uma resposta 200, uma 409 e exatamente uma decisão persistida. Repetições sequenciais mantêm ID, timestamps e versão originais.
+- Rollback comprovado tanto com rejeição real do INSERT por trigger PostgreSQL quanto com falha inesperada durante a gravação. Respostas não expõem os detalhes internos simulados.
+- Compose reconstruído e saudável, PostgreSQL próprio, Flyway V1/V2 válidas e Hibernate com `ddl-auto=validate`. Modelagem e migrações da etapa 7.2 preservadas.
+- Pela porta 8082: consulta autenticada de pagamentos retorna 200; sem autenticação, 401; POST sem CSRF, 403; POST com cookie/token reais e orçamento inexistente, 404. Health, liveness, readiness, Swagger e OpenAPI retornam 200.
+- Tabelas financeiras permaneceram vazias no Compose. Não foram criados dados financeiros nem endpoints de preparação para a validação.
+
+O ajuste encontrado nos novos testes foi comparar itens após a leitura PostgreSQL, que padroniza a escala do preço unitário em seis casas sem alterar seu valor. Não há bloqueios pendentes. Logs locais: `bootstrap-api.log` e `bootstrap-compose.log`.
+
+### Histórico: validação da etapa 7.2 em 2026-10-20
 
 - `./mvnw.cmd -B -ntp clean verify`: **BUILD SUCCESS**, Java 21, 57 testes, zero falhas, erros ou skips: 27 de domínio, 12 de persistência PostgreSQL e 18 do bootstrap.
 - JaCoCo: **100% de linhas — 351/351**, sem exclusões; mínimo de 80% aprovado.
@@ -190,4 +335,4 @@ Itens do Execution fornecem quantidade e precoPrevisto em strings decimais; o Bi
 
 ## Limitações atuais
 
-Sem controllers ou casos de uso de negócio, API de aprovação, RabbitMQ, Inbox/Outbox, Mercado Pago, Saga Orchestrator, JWT definitivo, Terraform, Kubernetes ou CI/CD. Não há dados financeiros fictícios em migrações ou startup. A identidade definitiva do responsável, reconciliação do provedor, autorização por cliente e integração dos comandos/eventos ficam para etapas posteriores. Os triggers representam invariantes locais PostgreSQL, não uma implementação de Saga.
+Sem criação REST de orçamento/pagamento, edição financeira manual, RabbitMQ, Inbox/Outbox, Mercado Pago, Saga Orchestrator, JWT definitivo, Terraform, Kubernetes ou CI/CD. Não há dados financeiros fictícios em migrações ou startup. A identidade definitiva do responsável, reconciliação do provedor, autorização por cliente e integração dos comandos/eventos ficam para etapas posteriores. Aprovar/recusar pela API altera apenas o PostgreSQL local e não avança a Saga do OS. Os triggers representam invariantes locais PostgreSQL, não uma implementação de Saga.

@@ -21,6 +21,7 @@ services:
   billing:
     build: .
     environment:
+      SERVER_ADDRESS: 0.0.0.0
       DB_HOST: postgres
       DB_PORT: 5432
       DB_NAME: ${DB_NAME:-oficina_billing}
