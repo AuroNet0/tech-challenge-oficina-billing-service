@@ -1,0 +1,1215 @@
+﻿{
+    "result":  {
+                   "status":  "PASSED",
+                   "scenario":  "Main",
+                   "runId":  "20261020-223000-c9e5a9",
+                   "project":  "billing-e2e-20261020-223000-c9e5a9",
+                   "revisions":  {
+                                     "os":  {
+                                                "trackedLocalChangesExcluded":  [
+
+                                                                                ],
+                                                "commit":  "665aea6bffc92d2d2d6183a56d20393745d208b4"
+                                            },
+                                     "execution":  {
+                                                       "trackedLocalChangesExcluded":  [
+
+                                                                                       ],
+                                                       "commit":  "c1769c390825d12f35841e1b0d8f9508afa926a1"
+                                                   },
+                                     "billing":  {
+                                                     "trackedLocalChangesExcluded":  [
+
+                                                                                     ],
+                                                     "commit":  "aa72d36da9ad1b516ed7ee9b6632ed26b3740f67"
+                                                 }
+                                 },
+                   "ports":  {
+                                 "rabbitManagement":  15678,
+                                 "os":  21080,
+                                 "execution":  21081,
+                                 "billing":  21082
+                             },
+                   "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                   "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                   "diagnosticId":  "ce72fd3f-4acd-4125-98a8-63b1ed25d02c",
+                   "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                   "quoteId":  "6649b3da-beff-447b-a0ba-e5c63a0860ec",
+                   "repairId":  "8e887090-aede-451c-9076-ba07368ea251",
+                   "paymentId":  "893db737-1f71-49d7-8e7a-1c11ad066cae",
+                   "finalStates":  {
+                                       "saga":  {
+                                                    "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                                                    "ordemServicoId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                                                    "status":  "WAITING_PAYMENT",
+                                                    "currentStep":  "PAYMENT",
+                                                    "createdAt":  "2026-10-21T01:31:19.961223Z",
+                                                    "updatedAt":  "2026-10-21T01:32:34.844765Z",
+                                                    "completedAt":  null,
+                                                    "lastError":  null
+                                                },
+                                       "order":  {
+                                                     "id":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                                                     "clienteId":  "367c248b-e527-4f3e-9071-03a3368b9f73",
+                                                     "veiculoId":  "d7f244c2-4b0d-4df3-a97e-5683c9a44fbc",
+                                                     "filialId":  "482f0748-32a7-477f-ad95-d8d64777054e",
+                                                     "status":  "AGUARDANDO_PAGAMENTO",
+                                                     "observacoes":  "E2E 7.4.1 Main sem provedor financeiro",
+                                                     "createdAt":  "2026-10-21T01:31:19.950208Z",
+                                                     "updatedAt":  "2026-10-21T01:32:34.835973Z",
+                                                     "startedAt":  "2026-10-21T01:32:29.781613Z",
+                                                     "finishedAt":  null,
+                                                     "version":  4
+                                                 }
+                                   },
+                   "completedAt":  "2026-10-21T01:33:00.3321701Z",
+                   "checks":  [
+                                  "Readiness os UP",
+                                  "Readiness execution UP",
+                                  "Readiness billing UP",
+                                  "Banco OS inicialmente vazio",
+                                  "Banco Billing inicialmente vazio",
+                                  "Mongo inicialmente sem diagnosticos",
+                                  "Saga inicialmente WAITING_DIAGNOSTIC",
+                                  "diagnostic.start occurredAt e string ISO",
+                                  "Diagnostico concluido pela API",
+                                  "Copia de quote.create identica aos bytes originais publicados",
+                                  "Replay roteado: quote.create.v1 e3e0c486-7af8-4ecb-9137-2a1ed2290149",
+                                  "Duas entregas originais identicas aguardam consumidores",
+                                  "Orcamento pertence a Saga original",
+                                  "Orcamento possui exatamente tres itens",
+                                  "Item unico SVC-E2E",
+                                  "Quantidade e escala preservadas SVC-E2E",
+                                  "Preco preservado SVC-E2E",
+                                  "Contrato de item preservado SVC-E2E",
+                                  "Total exato SVC-E2E",
+                                  "Item unico PECA-E2E",
+                                  "Quantidade e escala preservadas PECA-E2E",
+                                  "Preco preservado PECA-E2E",
+                                  "Contrato de item preservado PECA-E2E",
+                                  "Total exato PECA-E2E",
+                                  "Item unico MAT-E2E",
+                                  "Quantidade e escala preservadas MAT-E2E",
+                                  "Preco preservado MAT-E2E",
+                                  "Contrato de item preservado MAT-E2E",
+                                  "Total exato MAT-E2E",
+                                  "Total BRL 200.14 sem arredondamento",
+                                  "Um unico orcamento",
+                                  "Um unico conjunto de itens",
+                                  "Um unico evento quote.created",
+                                  "Inbox original quote unica e processada",
+                                  "Dois consumidores ativos na fila de criacao concorrente",
+                                  "CSRF real obtido na sessao Billing",
+                                  "POST Billing sem CSRF negado com 403",
+                                  "Aprovacoes concorrentes retornam 200 e 409",
+                                  "Aprovacao preserva correlacao original sem header",
+                                  "Uma unica aprovacao concorrente persistida",
+                                  "Uma unica Outbox de aprovacao concorrente",
+                                  "Outbox preservada e tentativa observada durante indisponibilidade",
+                                  "Recuperacao preserva eventId e bytes da Outbox",
+                                  "Repeticao REST retorna 409 sem nova decisao",
+                                  "Reparo concluido somente pela API real",
+                                  "Pagamento pendente corresponde ao total BRL aprovado",
+                                  "Pagamento vinculado a OS Saga e orcamento corretos",
+                                  "Uma tentativa inicial PENDING",
+                                  "Um unico pagamento logico",
+                                  "Uma unica tentativa",
+                                  "Sem identificador ou confirmacao de cobranca do provedor",
+                                  "Chave idempotente inicial consistente",
+                                  "Replay roteado: quote.create.v1 e3e0c486-7af8-4ecb-9137-2a1ed2290149",
+                                  "Replay roteado: payment.request.v1 68148df8-b030-4571-8671-3222643227d0",
+                                  "Replay roteado: quote.created.v1 728c3416-b1b6-4aef-a7ae-1e57086e0499",
+                                  "Replay roteado: quote.approved.v1 107c17f9-2290-4708-9acb-aa8f5ddbac9d",
+                                  "Replay roteado: repair.completed.v1 df260e2e-e6eb-48a4-b6a9-9748583a245e",
+                                  "Replay nao altera dados persistidos os",
+                                  "Replay nao altera dados persistidos billing",
+                                  "Replay nao altera dados persistidos execution",
+                                  "Wire occurredAt ISO string diagnostic.start.v1",
+                                  "Wire correlacao diagnostic.start.v1",
+                                  "Wire routing key diagnostic.start.v1",
+                                  "Wire source diagnostic.start.v1",
+                                  "Wire occurredAt ISO string diagnostic.started.v1",
+                                  "Wire correlacao diagnostic.started.v1",
+                                  "Wire routing key diagnostic.started.v1",
+                                  "Wire source diagnostic.started.v1",
+                                  "Wire occurredAt ISO string diagnostic.completed.v1",
+                                  "Wire correlacao diagnostic.completed.v1",
+                                  "Wire routing key diagnostic.completed.v1",
+                                  "Wire source diagnostic.completed.v1",
+                                  "Wire occurredAt ISO string quote.create.v1",
+                                  "Wire correlacao quote.create.v1",
+                                  "Wire routing key quote.create.v1",
+                                  "Wire source quote.create.v1",
+                                  "Wire occurredAt ISO string quote.create.v1",
+                                  "Wire correlacao quote.create.v1",
+                                  "Wire routing key quote.create.v1",
+                                  "Wire source quote.create.v1",
+                                  "Wire occurredAt ISO string quote.created.v1",
+                                  "Wire correlacao quote.created.v1",
+                                  "Wire routing key quote.created.v1",
+                                  "Wire source quote.created.v1",
+                                  "Wire occurredAt ISO string quote.approved.v1",
+                                  "Wire correlacao quote.approved.v1",
+                                  "Wire routing key quote.approved.v1",
+                                  "Wire source quote.approved.v1",
+                                  "Wire occurredAt ISO string repair.start.v1",
+                                  "Wire correlacao repair.start.v1",
+                                  "Wire routing key repair.start.v1",
+                                  "Wire source repair.start.v1",
+                                  "Wire occurredAt ISO string repair.started.v1",
+                                  "Wire correlacao repair.started.v1",
+                                  "Wire routing key repair.started.v1",
+                                  "Wire source repair.started.v1",
+                                  "Wire occurredAt ISO string repair.completed.v1",
+                                  "Wire correlacao repair.completed.v1",
+                                  "Wire routing key repair.completed.v1",
+                                  "Wire source repair.completed.v1",
+                                  "Wire occurredAt ISO string payment.request.v1",
+                                  "Wire correlacao payment.request.v1",
+                                  "Wire routing key payment.request.v1",
+                                  "Wire source payment.request.v1",
+                                  "Wire occurredAt ISO string quote.create.v1",
+                                  "Wire correlacao quote.create.v1",
+                                  "Wire routing key quote.create.v1",
+                                  "Wire source quote.create.v1",
+                                  "Wire occurredAt ISO string payment.request.v1",
+                                  "Wire correlacao payment.request.v1",
+                                  "Wire routing key payment.request.v1",
+                                  "Wire source payment.request.v1",
+                                  "Wire occurredAt ISO string quote.created.v1",
+                                  "Wire correlacao quote.created.v1",
+                                  "Wire routing key quote.created.v1",
+                                  "Wire source quote.created.v1",
+                                  "Wire occurredAt ISO string quote.approved.v1",
+                                  "Wire correlacao quote.approved.v1",
+                                  "Wire routing key quote.approved.v1",
+                                  "Wire source quote.approved.v1",
+                                  "Wire occurredAt ISO string repair.completed.v1",
+                                  "Wire correlacao repair.completed.v1",
+                                  "Wire routing key repair.completed.v1",
+                                  "Wire source repair.completed.v1",
+                                  "Evento real observado diagnostic.start.v1",
+                                  "Evento real observado diagnostic.started.v1",
+                                  "Evento real observado diagnostic.completed.v1",
+                                  "Evento real observado quote.create.v1",
+                                  "Evento real observado quote.created.v1",
+                                  "Evento real observado quote.approved.v1",
+                                  "Evento real observado repair.start.v1",
+                                  "Evento real observado repair.started.v1",
+                                  "Evento real observado repair.completed.v1",
+                                  "Evento real observado payment.request.v1",
+                                  "Nenhum resultado financeiro artificial",
+                                  "DLQs vazias no ambiente corrigido"
+                              ]
+               },
+    "checkpoints":  [
+                        {
+                            "at":  "2026-10-21T01:31:16.2926578Z",
+                            "name":  "fresh environment and authenticated registration"
+                        },
+                        {
+                            "at":  "2026-10-21T01:31:20.1593408Z",
+                            "name":  "real diagnostic.start and diagnostic.started"
+                        },
+                        {
+                            "at":  "2026-10-21T01:31:26.1587209Z",
+                            "name":  "diagnostic.completed and original quote.create"
+                        },
+                        {
+                            "at":  "2026-10-21T01:31:31.9366492Z",
+                            "name":  "two original quote deliveries queued for concurrent consumers"
+                        },
+                        {
+                            "at":  "2026-10-21T01:31:55.4800655Z",
+                            "name":  "broker outage and concurrent approval with CSRF"
+                        },
+                        {
+                            "at":  "2026-10-21T01:32:20.2992343Z",
+                            "name":  "broker recovery and real repair.start/repair.started"
+                        },
+                        {
+                            "at":  "2026-10-21T01:32:30.8076320Z",
+                            "name":  "repair.completed and pending payment"
+                        },
+                        {
+                            "at":  "2026-10-21T01:32:41.2064145Z",
+                            "name":  "original envelope replay and no duplicated effects"
+                        },
+                        {
+                            "at":  "2026-10-21T01:33:00.2018292Z",
+                            "name":  "wire contract and final evidence"
+                        }
+                    ],
+    "quote":  {
+                  "id":  "6649b3da-beff-447b-a0ba-e5c63a0860ec",
+                  "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                  "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                  "status":  "APPROVED",
+                  "itens":  [
+                                {
+                                    "id":  "b7f3032d-afa2-4f22-9831-9e6290a7fe47",
+                                    "itemId":  "SVC-E2E",
+                                    "descricao":  "Servico E2E",
+                                    "tipo":  "SERVICO",
+                                    "quantidade":  "1.250000",
+                                    "unidadePreco":  "HORA",
+                                    "precoUnitario":  "123.456000",
+                                    "valorTotal":  "154.32"
+                                },
+                                {
+                                    "id":  "50140407-45cc-4b81-b2f3-55af7236a657",
+                                    "itemId":  "PECA-E2E",
+                                    "descricao":  "Peca E2E",
+                                    "tipo":  "PECA",
+                                    "quantidade":  "2.500000",
+                                    "unidadePreco":  "UNIDADE",
+                                    "precoUnitario":  "12.340000",
+                                    "valorTotal":  "30.85"
+                                },
+                                {
+                                    "id":  "d814c3a2-32e9-4fff-b36f-3b2edcfcde40",
+                                    "itemId":  "MAT-E2E",
+                                    "descricao":  "Material E2E",
+                                    "tipo":  "MATERIAL",
+                                    "quantidade":  "0.750000",
+                                    "unidadePreco":  "KIT",
+                                    "precoUnitario":  "19.960000",
+                                    "valorTotal":  "14.97"
+                                }
+                            ],
+                  "valorTotal":  "200.14",
+                  "createdAt":  "2026-10-21T01:31:46.601300Z",
+                  "updatedAt":  "2026-10-21T01:32:00.951158Z",
+                  "approvedAt":  "2026-10-21T01:32:00.951158Z",
+                  "rejectedAt":  null
+              },
+    "decision":  {
+                     "id":  "311032af-a968-4d05-b25a-d26e0af6c5b9",
+                     "orcamentoId":  "6649b3da-beff-447b-a0ba-e5c63a0860ec",
+                     "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                     "status":  "APPROVED",
+                     "decisionAt":  "2026-10-21T01:32:00.951158Z",
+                     "responsavelId":  "e2e-provisorio",
+                     "motivo":  null,
+                     "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                     "createdAt":  "2026-10-21T01:32:00.951158Z"
+                 },
+    "payment":  {
+                    "id":  "893db737-1f71-49d7-8e7a-1c11ad066cae",
+                    "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                    "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                    "orcamentoId":  "6649b3da-beff-447b-a0ba-e5c63a0860ec",
+                    "status":  "PENDING",
+                    "valor":  "200.14",
+                    "moeda":  "BRL",
+                    "provider":  "MERCADO_PAGO",
+                    "createdAt":  "2026-10-21T01:32:36.534111Z",
+                    "updatedAt":  "2026-10-21T01:32:36.534111Z",
+                    "confirmedAt":  null,
+                    "failedAt":  null,
+                    "tentativas":  [
+                                       {
+                                           "id":  "13c7d592-56d1-4f67-a46b-6bdf39bcfa7a",
+                                           "status":  "PENDING",
+                                           "createdAt":  "2026-10-21T01:32:36.534111Z",
+                                           "updatedAt":  "2026-10-21T01:32:36.534111Z",
+                                           "confirmedAt":  null,
+                                           "failedAt":  null
+                                       }
+                                   ]
+                },
+    "diagnostic":  {
+                       "id":  "ce72fd3f-4acd-4125-98a8-63b1ed25d02c",
+                       "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                       "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                       "status":  "COMPLETED",
+                       "observacoes":  "E2E 7.4.1 Main sem provedor financeiro",
+                       "items":  [
+                                     {
+                                         "itemId":  "SVC-E2E",
+                                         "descricao":  "Servico E2E",
+                                         "tipo":  "SERVICO",
+                                         "quantidade":  "1.250000",
+                                         "unidadePreco":  "HORA",
+                                         "precoPrevisto":  "123.456000"
+                                     },
+                                     {
+                                         "itemId":  "PECA-E2E",
+                                         "descricao":  "Peca E2E",
+                                         "tipo":  "PECA",
+                                         "quantidade":  "2.500000",
+                                         "unidadePreco":  "UNIDADE",
+                                         "precoPrevisto":  "12.340000"
+                                     },
+                                     {
+                                         "itemId":  "MAT-E2E",
+                                         "descricao":  "Material E2E",
+                                         "tipo":  "MATERIAL",
+                                         "quantidade":  "0.750000",
+                                         "unidadePreco":  "KIT",
+                                         "precoPrevisto":  "19.960000"
+                                     }
+                                 ],
+                       "createdAt":  "2026-10-21T01:31:21.427Z",
+                       "updatedAt":  "2026-10-21T01:31:27.672Z",
+                       "completedAt":  "2026-10-21T01:31:27.672Z",
+                       "version":  4
+                   },
+    "repair":  {
+                   "id":  "8e887090-aede-451c-9076-ba07368ea251",
+                   "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                   "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                   "diagnosticId":  "ce72fd3f-4acd-4125-98a8-63b1ed25d02c",
+                   "status":  "COMPLETED",
+                   "observacoes":  null,
+                   "startedAt":  "2026-10-21T01:32:26.493Z",
+                   "completedAt":  "2026-10-21T01:32:30.967Z",
+                   "createdAt":  "2026-10-21T01:32:26.493Z",
+                   "updatedAt":  "2026-10-21T01:32:30.967Z",
+                   "version":  1
+               },
+    "quoteConcurrency":  {
+                             "queue":  {
+                                           "name":  "billing.quote.create",
+                                           "consumers":  2,
+                                           "messages_ready":  0,
+                                           "messages_unacknowledged":  0,
+                                           "message_stats":  {
+                                                                 "ack":  2,
+                                                                 "ack_details":  {
+                                                                                     "rate":  0.4
+                                                                                 },
+                                                                 "deliver":  2,
+                                                                 "deliver_details":  {
+                                                                                         "rate":  0.0
+                                                                                     },
+                                                                 "deliver_get":  5,
+                                                                 "deliver_get_details":  {
+                                                                                             "rate":  0.0
+                                                                                         },
+                                                                 "deliver_no_ack":  0,
+                                                                 "deliver_no_ack_details":  {
+                                                                                                "rate":  0.0
+                                                                                            },
+                                                                 "get":  3,
+                                                                 "get_details":  {
+                                                                                     "rate":  0.0
+                                                                                 },
+                                                                 "get_empty":  0,
+                                                                 "get_empty_details":  {
+                                                                                           "rate":  0.0
+                                                                                       },
+                                                                 "get_no_ack":  0,
+                                                                 "get_no_ack_details":  {
+                                                                                            "rate":  0.0
+                                                                                        },
+                                                                 "publish":  2,
+                                                                 "publish_details":  {
+                                                                                         "rate":  0.0
+                                                                                     },
+                                                                 "redeliver":  3,
+                                                                 "redeliver_details":  {
+                                                                                           "rate":  0.0
+                                                                                       }
+                                                             }
+                                       },
+                             "originalInbox":  "1"
+                         },
+    "approvalConcurrency":  {
+                                "bodies":  [
+                                               {
+                                                   "id":  "311032af-a968-4d05-b25a-d26e0af6c5b9",
+                                                   "orcamentoId":  "6649b3da-beff-447b-a0ba-e5c63a0860ec",
+                                                   "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                                                   "status":  "APPROVED",
+                                                   "decisionAt":  "2026-10-21T01:32:00.951158Z",
+                                                   "responsavelId":  "e2e-provisorio",
+                                                   "motivo":  null,
+                                                   "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                                                   "createdAt":  "2026-10-21T01:32:00.951158Z"
+                                               },
+                                               {
+                                                   "detail":  "Operacao em conflito com o estado atual do recurso.",
+                                                   "instance":  "/api/v1/orcamentos/6649b3da-beff-447b-a0ba-e5c63a0860ec/aprovar",
+                                                   "status":  409,
+                                                   "title":  "Conflict"
+                                               }
+                                           ],
+                                "statuses":  [
+                                                 200,
+                                                 409
+                                             ]
+                            },
+    "brokerOutage":  {
+                         "outbox":  {
+                                        "event_id":  "107c17f9-2290-4708-9acb-aa8f5ddbac9d",
+                                        "status":  "PROCESSING",
+                                        "attempts":  2,
+                                        "payload":  "{\"eventId\":\"107c17f9-2290-4708-9acb-aa8f5ddbac9d\",\"eventType\":\"quote.approved.v1\",\"occurredAt\":\"2026-10-21T01:32:00.951158Z\",\"correlationId\":\"8c43dfd0-454a-474e-bfcd-142a8e8d563f\",\"sagaId\":\"0887024b-b90a-46a5-884f-1ff4f41b26b2\",\"osId\":\"7458b7e9-fcd7-47d3-935f-a31ac8c39515\",\"source\":\"billing-service\",\"payload\":{}}",
+                                        "last_error":  "BrokerPublishException",
+                                        "next_attempt_at":  "2026-10-21T01:32:09.404627+00:00"
+                                    },
+                         "readiness":  {
+                                           "status":  "UP"
+                                       },
+                         "approval":  {
+                                          "id":  "311032af-a968-4d05-b25a-d26e0af6c5b9",
+                                          "orcamentoId":  "6649b3da-beff-447b-a0ba-e5c63a0860ec",
+                                          "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                                          "status":  "APPROVED",
+                                          "decisionAt":  "2026-10-21T01:32:00.951158Z",
+                                          "responsavelId":  "e2e-provisorio",
+                                          "motivo":  null,
+                                          "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                                          "createdAt":  "2026-10-21T01:32:00.951158Z"
+                                      }
+                     },
+    "timeline":  [
+                     {
+                         "eventType":  "diagnostic.start.v1",
+                         "source":  "os-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.commands",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "filialId":  "482f0748-32a7-477f-ad95-d8d64777054e",
+                                         "clienteId":  "367c248b-e527-4f3e-9071-03a3368b9f73",
+                                         "veiculoId":  "d7f244c2-4b0d-4df3-a97e-5683c9a44fbc",
+                                         "observacoes":  "E2E 7.4.1 Main sem provedor financeiro"
+                                     },
+                         "eventId":  "08a5eb86-2535-40fe-b801-21bc8c98bb7d",
+                         "occurredAt":  "2026-10-21T01:31:19.962604826Z"
+                     },
+                     {
+                         "eventType":  "diagnostic.started.v1",
+                         "source":  "execution-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+
+                                     },
+                         "eventId":  "9885b1cf-8e6a-4c3c-9310-2978cc7de164",
+                         "occurredAt":  "2026-10-21T01:31:21.448301946Z"
+                     },
+                     {
+                         "eventType":  "diagnostic.completed.v1",
+                         "source":  "execution-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "items":  [
+                                                       {
+                                                           "itemId":  "SVC-E2E",
+                                                           "descricao":  "Servico E2E",
+                                                           "tipo":  "SERVICO",
+                                                           "quantidade":  "1.250000",
+                                                           "unidadePreco":  "HORA",
+                                                           "precoPrevisto":  "123.456000"
+                                                       },
+                                                       {
+                                                           "itemId":  "PECA-E2E",
+                                                           "descricao":  "Peca E2E",
+                                                           "tipo":  "PECA",
+                                                           "quantidade":  "2.500000",
+                                                           "unidadePreco":  "UNIDADE",
+                                                           "precoPrevisto":  "12.340000"
+                                                       },
+                                                       {
+                                                           "itemId":  "MAT-E2E",
+                                                           "descricao":  "Material E2E",
+                                                           "tipo":  "MATERIAL",
+                                                           "quantidade":  "0.750000",
+                                                           "unidadePreco":  "KIT",
+                                                           "precoPrevisto":  "19.960000"
+                                                       }
+                                                   ]
+                                     },
+                         "eventId":  "d9463662-af54-47d5-bd9f-a80ecbb690ed",
+                         "occurredAt":  "2026-10-21T01:31:27.688276395Z"
+                     },
+                     {
+                         "eventType":  "quote.create.v1",
+                         "source":  "os-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.commands",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "items":  [
+                                                       {
+                                                           "tipo":  "SERVICO",
+                                                           "itemId":  "SVC-E2E",
+                                                           "descricao":  "Servico E2E",
+                                                           "quantidade":  "1.250000",
+                                                           "unidadePreco":  "HORA",
+                                                           "precoPrevisto":  "123.456000"
+                                                       },
+                                                       {
+                                                           "tipo":  "PECA",
+                                                           "itemId":  "PECA-E2E",
+                                                           "descricao":  "Peca E2E",
+                                                           "quantidade":  "2.500000",
+                                                           "unidadePreco":  "UNIDADE",
+                                                           "precoPrevisto":  "12.340000"
+                                                       },
+                                                       {
+                                                           "tipo":  "MATERIAL",
+                                                           "itemId":  "MAT-E2E",
+                                                           "descricao":  "Material E2E",
+                                                           "quantidade":  "0.750000",
+                                                           "unidadePreco":  "KIT",
+                                                           "precoPrevisto":  "19.960000"
+                                                       }
+                                                   ]
+                                     },
+                         "eventId":  "e3e0c486-7af8-4ecb-9137-2a1ed2290149",
+                         "occurredAt":  "2026-10-21T01:31:29.615648550Z"
+                     },
+                     {
+                         "eventType":  "quote.create.v1",
+                         "source":  "os-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.commands",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "items":  [
+                                                       {
+                                                           "tipo":  "SERVICO",
+                                                           "itemId":  "SVC-E2E",
+                                                           "descricao":  "Servico E2E",
+                                                           "quantidade":  "1.250000",
+                                                           "unidadePreco":  "HORA",
+                                                           "precoPrevisto":  "123.456000"
+                                                       },
+                                                       {
+                                                           "tipo":  "PECA",
+                                                           "itemId":  "PECA-E2E",
+                                                           "descricao":  "Peca E2E",
+                                                           "quantidade":  "2.500000",
+                                                           "unidadePreco":  "UNIDADE",
+                                                           "precoPrevisto":  "12.340000"
+                                                       },
+                                                       {
+                                                           "tipo":  "MATERIAL",
+                                                           "itemId":  "MAT-E2E",
+                                                           "descricao":  "Material E2E",
+                                                           "quantidade":  "0.750000",
+                                                           "unidadePreco":  "KIT",
+                                                           "precoPrevisto":  "19.960000"
+                                                       }
+                                                   ]
+                                     },
+                         "eventId":  "e3e0c486-7af8-4ecb-9137-2a1ed2290149",
+                         "occurredAt":  "2026-10-21T01:31:29.615648550Z"
+                     },
+                     {
+                         "eventType":  "quote.created.v1",
+                         "source":  "billing-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "quoteId":  "6649b3da-beff-447b-a0ba-e5c63a0860ec"
+                                     },
+                         "eventId":  "728c3416-b1b6-4aef-a7ae-1e57086e0499",
+                         "occurredAt":  "2026-10-21T01:31:46.699263216Z"
+                     },
+                     {
+                         "eventType":  "quote.approved.v1",
+                         "source":  "billing-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+
+                                     },
+                         "eventId":  "107c17f9-2290-4708-9acb-aa8f5ddbac9d",
+                         "occurredAt":  "2026-10-21T01:32:00.951158Z"
+                     },
+                     {
+                         "eventType":  "repair.start.v1",
+                         "source":  "os-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.commands",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+
+                                     },
+                         "eventId":  "4aa3c8fc-9fa7-43e2-9633-bb3d59e4390b",
+                         "occurredAt":  "2026-10-21T01:32:22.591525133Z"
+                     },
+                     {
+                         "eventType":  "repair.started.v1",
+                         "source":  "execution-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+
+                                     },
+                         "eventId":  "dd302ac4-52f2-4113-86b6-69d995209593",
+                         "occurredAt":  "2026-10-21T01:32:26.508660645Z"
+                     },
+                     {
+                         "eventType":  "repair.completed.v1",
+                         "source":  "execution-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "repairId":  "8e887090-aede-451c-9076-ba07368ea251"
+                                     },
+                         "eventId":  "df260e2e-e6eb-48a4-b6a9-9748583a245e",
+                         "occurredAt":  "2026-10-21T01:32:30.983421055Z"
+                     },
+                     {
+                         "eventType":  "payment.request.v1",
+                         "source":  "os-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.commands",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "repairId":  "8e887090-aede-451c-9076-ba07368ea251"
+                                     },
+                         "eventId":  "68148df8-b030-4571-8671-3222643227d0",
+                         "occurredAt":  "2026-10-21T01:32:34.841476162Z"
+                     },
+                     {
+                         "eventType":  "quote.create.v1",
+                         "source":  "os-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.commands",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "items":  [
+                                                       {
+                                                           "tipo":  "SERVICO",
+                                                           "itemId":  "SVC-E2E",
+                                                           "descricao":  "Servico E2E",
+                                                           "quantidade":  "1.250000",
+                                                           "unidadePreco":  "HORA",
+                                                           "precoPrevisto":  "123.456000"
+                                                       },
+                                                       {
+                                                           "tipo":  "PECA",
+                                                           "itemId":  "PECA-E2E",
+                                                           "descricao":  "Peca E2E",
+                                                           "quantidade":  "2.500000",
+                                                           "unidadePreco":  "UNIDADE",
+                                                           "precoPrevisto":  "12.340000"
+                                                       },
+                                                       {
+                                                           "tipo":  "MATERIAL",
+                                                           "itemId":  "MAT-E2E",
+                                                           "descricao":  "Material E2E",
+                                                           "quantidade":  "0.750000",
+                                                           "unidadePreco":  "KIT",
+                                                           "precoPrevisto":  "19.960000"
+                                                       }
+                                                   ]
+                                     },
+                         "eventId":  "e3e0c486-7af8-4ecb-9137-2a1ed2290149",
+                         "occurredAt":  "2026-10-21T01:31:29.615648550Z"
+                     },
+                     {
+                         "eventType":  "payment.request.v1",
+                         "source":  "os-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.commands",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "repairId":  "8e887090-aede-451c-9076-ba07368ea251"
+                                     },
+                         "eventId":  "68148df8-b030-4571-8671-3222643227d0",
+                         "occurredAt":  "2026-10-21T01:32:34.841476162Z"
+                     },
+                     {
+                         "eventType":  "quote.created.v1",
+                         "source":  "billing-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "quoteId":  "6649b3da-beff-447b-a0ba-e5c63a0860ec"
+                                     },
+                         "eventId":  "728c3416-b1b6-4aef-a7ae-1e57086e0499",
+                         "occurredAt":  "2026-10-21T01:31:46.699263216Z"
+                     },
+                     {
+                         "eventType":  "quote.approved.v1",
+                         "source":  "billing-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+
+                                     },
+                         "eventId":  "107c17f9-2290-4708-9acb-aa8f5ddbac9d",
+                         "occurredAt":  "2026-10-21T01:32:00.951158Z"
+                     },
+                     {
+                         "eventType":  "repair.completed.v1",
+                         "source":  "execution-service",
+                         "correlationId":  "8c43dfd0-454a-474e-bfcd-142a8e8d563f",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "0887024b-b90a-46a5-884f-1ff4f41b26b2",
+                         "osId":  "7458b7e9-fcd7-47d3-935f-a31ac8c39515",
+                         "payload":  {
+                                         "repairId":  "8e887090-aede-451c-9076-ba07368ea251"
+                                     },
+                         "eventId":  "df260e2e-e6eb-48a4-b6a9-9748583a245e",
+                         "occurredAt":  "2026-10-21T01:32:30.983421055Z"
+                     }
+                 ],
+    "queues":  [
+                   {
+                       "name":  "billing.commands.dlq",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.payment.request",
+                       "consumers":  2,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.payment.request.retry",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.quote.create",
+                       "consumers":  2,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.quote.create.retry",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "e2e.audit",
+                       "consumers":  0,
+                       "messages_ready":  16,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.commands.dlq",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.diagnostic.start",
+                       "consumers":  1,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.diagnostic.start.retry",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.cancel",
+                       "consumers":  1,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.cancel.retry",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.start",
+                       "consumers":  1,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.start.retry",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "os.saga.events",
+                       "consumers":  1,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "os.saga.events.dlq",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   }
+               ],
+    "securityObservations":  [
+                                 {
+                                     "readiness":  200,
+                                     "withoutAuthentication":  401,
+                                     "service":  "os",
+                                     "at":  "2026-10-21T01:37:33.4773585Z"
+                                 },
+                                 {
+                                     "readiness":  200,
+                                     "withoutAuthentication":  401,
+                                     "service":  "execution",
+                                     "at":  "2026-10-21T01:37:34.3264024Z"
+                                 },
+                                 {
+                                     "readiness":  200,
+                                     "withoutAuthentication":  401,
+                                     "service":  "billing",
+                                     "at":  "2026-10-21T01:37:34.7574218Z"
+                                 }
+                             ],
+    "bindings":  [
+                     {
+                         "source":  "billing.commands.dlx",
+                         "destination":  "billing.commands.dlq",
+                         "routing_key":  "#"
+                     },
+                     {
+                         "source":  "billing.commands.retry",
+                         "destination":  "billing.payment.request.retry",
+                         "routing_key":  "payment.request.v1"
+                     },
+                     {
+                         "source":  "billing.commands.retry",
+                         "destination":  "billing.quote.create.retry",
+                         "routing_key":  "quote.create.v1"
+                     },
+                     {
+                         "source":  "execution.commands.dlx",
+                         "destination":  "execution.commands.dlq",
+                         "routing_key":  "#"
+                     },
+                     {
+                         "source":  "execution.commands.retry",
+                         "destination":  "execution.diagnostic.start.retry",
+                         "routing_key":  "diagnostic.start.v1"
+                     },
+                     {
+                         "source":  "execution.commands.retry",
+                         "destination":  "execution.repair.cancel.retry",
+                         "routing_key":  "repair.cancel.v1"
+                     },
+                     {
+                         "source":  "execution.commands.retry",
+                         "destination":  "execution.repair.start.retry",
+                         "routing_key":  "repair.start.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "billing.payment.request",
+                         "routing_key":  "payment.request.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "billing.quote.create",
+                         "routing_key":  "quote.create.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "e2e.audit",
+                         "routing_key":  "#"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "execution.diagnostic.start",
+                         "routing_key":  "diagnostic.start.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "execution.repair.cancel",
+                         "routing_key":  "repair.cancel.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "execution.repair.start",
+                         "routing_key":  "repair.start.v1"
+                     },
+                     {
+                         "source":  "oficina.events",
+                         "destination":  "e2e.audit",
+                         "routing_key":  "#"
+                     },
+                     {
+                         "source":  "oficina.events",
+                         "destination":  "os.saga.events",
+                         "routing_key":  "#.v1"
+                     },
+                     {
+                         "source":  "oficina.events.dlx",
+                         "destination":  "os.saga.events.dlq",
+                         "routing_key":  "saga.events.dead"
+                     }
+                 ],
+    "brokerConnections":  [
+                              {
+                                  "name":  "172.25.0.6:57520 -\u003e 172.25.0.2:5672",
+                                  "peer_host":  "172.25.0.6",
+                                  "vhost":  "/",
+                                  "state":  "running"
+                              },
+                              {
+                                  "name":  "172.25.0.7:36978 -\u003e 172.25.0.2:5672",
+                                  "peer_host":  "172.25.0.7",
+                                  "vhost":  "/",
+                                  "state":  "running"
+                              },
+                              {
+                                  "name":  "172.25.0.7:36988 -\u003e 172.25.0.2:5672",
+                                  "peer_host":  "172.25.0.7",
+                                  "vhost":  "/",
+                                  "state":  "running"
+                              },
+                              {
+                                  "name":  "172.25.0.8:58230 -\u003e 172.25.0.2:5672",
+                                  "peer_host":  "172.25.0.8",
+                                  "vhost":  "/",
+                                  "state":  "running"
+                              }
+                          ],
+    "containersAtCompletion":  [
+                                   {
+                                       "Name":  "billing-e2e-20261020-223000-c9e5a9-billing-1",
+                                       "Service":  "billing",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "444da7f0f101",
+                                       "Image":  "billing-e2e-20261020-223000-c9e5a9-billing"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223000-c9e5a9-billing-db-1",
+                                       "Service":  "billing-db",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "da83af4f251d",
+                                       "Image":  "postgres:17-alpine"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223000-c9e5a9-execution-1",
+                                       "Service":  "execution",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "385b81996b34",
+                                       "Image":  "billing-e2e-20261020-223000-c9e5a9-execution"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223000-c9e5a9-mongodb-1",
+                                       "Service":  "mongodb",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "a348d1637d1a",
+                                       "Image":  "mongo:8.0"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223000-c9e5a9-os-1",
+                                       "Service":  "os",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "96c8238418e5",
+                                       "Image":  "billing-e2e-20261020-223000-c9e5a9-os"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223000-c9e5a9-os-db-1",
+                                       "Service":  "os-db",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "5f9ff63a7280",
+                                       "Image":  "postgres:17-alpine"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223000-c9e5a9-rabbitmq-1",
+                                       "Service":  "rabbitmq",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "095c79adaa6c",
+                                       "Image":  "rabbitmq:4-management-alpine"
+                                   }
+                               ],
+    "migrations":  {
+                       "os":  [
+                                  {
+                                      "version":  "1",
+                                      "description":  "bootstrap schema",
+                                      "success":  true
+                                  },
+                                  {
+                                      "version":  "2",
+                                      "description":  "create os domain",
+                                      "success":  true
+                                  },
+                                  {
+                                      "version":  "3",
+                                      "description":  "create outbox events",
+                                      "success":  true
+                                  },
+                                  {
+                                      "version":  "4",
+                                      "description":  "create saga and inbox",
+                                      "success":  true
+                                  }
+                              ],
+                       "billing":  [
+                                       {
+                                           "version":  "1",
+                                           "description":  "bootstrap schema",
+                                           "success":  true
+                                       },
+                                       {
+                                           "version":  "2",
+                                           "description":  "create billing domain",
+                                           "success":  true
+                                       },
+                                       {
+                                           "version":  "3",
+                                           "description":  "create messaging tables",
+                                           "success":  true
+                                       }
+                                   ]
+                   },
+    "originalEnvironments":  [
+                                 {
+                                     "name":  "oficina-billing-rabbitmq-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-billing-billing-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-billing-postgres-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-execution-service",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "tech-challenge-oficina-execution-service-rabbitmq-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-execution-mongodb",
+                                     "sameContainerStillRunning":  true
+                                 }
+                             ],
+    "supplementalChecks":  {
+                               "quoteIdMatchesPersistedRecord":  true,
+                               "decisionTimestampIdentical":  true,
+                               "repairIdMatchesPersistedRecord":  true
+                           },
+    "quoteConcurrencyBefore":  {
+                                   "deliveries":  2,
+                                   "inboxCount":  0,
+                                   "identicalBodies":  true,
+                                   "sha256":  "eaf0ba9324ebabbbca62ba01314151aae8d5ddc8d2180795c8b80bf7d871737d"
+                               },
+    "replaySnapshots":  {
+                            "os":  {
+                                       "beforeSha256":  "218321ab8594f187348bc426141f44a2156fe70f050e734c3943832833d71e73",
+                                       "afterSha256":  "218321ab8594f187348bc426141f44a2156fe70f050e734c3943832833d71e73",
+                                       "identical":  true
+                                   },
+                            "billing":  {
+                                            "beforeSha256":  "e6c117289094d7da886003b98ee6908b2ae171e9f24b08c4464f58b3681f9adc",
+                                            "afterSha256":  "e6c117289094d7da886003b98ee6908b2ae171e9f24b08c4464f58b3681f9adc",
+                                            "identical":  true
+                                        },
+                            "execution":  {
+                                              "beforeSha256":  "b472d3ecd0c24c85f3a213e9c9a4aea4e21203d9e1d07216779d5e9222a6147e",
+                                              "afterSha256":  "b472d3ecd0c24c85f3a213e9c9a4aea4e21203d9e1d07216779d5e9222a6147e",
+                                              "identical":  true
+                                          }
+                        },
+    "originalReplays":  [
+                            {
+                                "eventId":  "e3e0c486-7af8-4ecb-9137-2a1ed2290149",
+                                "sha256":  "eaf0ba9324ebabbbca62ba01314151aae8d5ddc8d2180795c8b80bf7d871737d",
+                                "exchange":  "oficina.commands",
+                                "rawEnvelope":  "{\"osId\": \"7458b7e9-fcd7-47d3-935f-a31ac8c39515\", \"sagaId\": \"0887024b-b90a-46a5-884f-1ff4f41b26b2\", \"source\": \"os-service\", \"eventId\": \"e3e0c486-7af8-4ecb-9137-2a1ed2290149\", \"payload\": {\"items\": [{\"tipo\": \"SERVICO\", \"itemId\": \"SVC-E2E\", \"descricao\": \"Servico E2E\", \"quantidade\": \"1.250000\", \"unidadePreco\": \"HORA\", \"precoPrevisto\": \"123.456000\"}, {\"tipo\": \"PECA\", \"itemId\": \"PECA-E2E\", \"descricao\": \"Peca E2E\", \"quantidade\": \"2.500000\", \"unidadePreco\": \"UNIDADE\", \"precoPrevisto\": \"12.340000\"}, {\"tipo\": \"MATERIAL\", \"itemId\": \"MAT-E2E\", \"descricao\": \"Material E2E\", \"quantidade\": \"0.750000\", \"unidadePreco\": \"KIT\", \"precoPrevisto\": \"19.960000\"}]}, \"eventType\": \"quote.create.v1\", \"occurredAt\": \"2026-10-21T01:31:29.615648550Z\", \"correlationId\": \"8c43dfd0-454a-474e-bfcd-142a8e8d563f\"}",
+                                "eventType":  "quote.create.v1"
+                            },
+                            {
+                                "eventId":  "68148df8-b030-4571-8671-3222643227d0",
+                                "sha256":  "43b8033b1de2c758738efb6f226ff123f0a392bae10a2a5c1eb2c2b2f787669f",
+                                "exchange":  "oficina.commands",
+                                "rawEnvelope":  "{\"osId\": \"7458b7e9-fcd7-47d3-935f-a31ac8c39515\", \"sagaId\": \"0887024b-b90a-46a5-884f-1ff4f41b26b2\", \"source\": \"os-service\", \"eventId\": \"68148df8-b030-4571-8671-3222643227d0\", \"payload\": {\"repairId\": \"8e887090-aede-451c-9076-ba07368ea251\"}, \"eventType\": \"payment.request.v1\", \"occurredAt\": \"2026-10-21T01:32:34.841476162Z\", \"correlationId\": \"8c43dfd0-454a-474e-bfcd-142a8e8d563f\"}",
+                                "eventType":  "payment.request.v1"
+                            },
+                            {
+                                "eventId":  "728c3416-b1b6-4aef-a7ae-1e57086e0499",
+                                "sha256":  "8a94cee609e139628e4f8bc811571ea508a97161692230903a4cfd414d96c488",
+                                "exchange":  "oficina.events",
+                                "rawEnvelope":  "{\"eventId\":\"728c3416-b1b6-4aef-a7ae-1e57086e0499\",\"eventType\":\"quote.created.v1\",\"occurredAt\":\"2026-10-21T01:31:46.699263216Z\",\"correlationId\":\"8c43dfd0-454a-474e-bfcd-142a8e8d563f\",\"sagaId\":\"0887024b-b90a-46a5-884f-1ff4f41b26b2\",\"osId\":\"7458b7e9-fcd7-47d3-935f-a31ac8c39515\",\"source\":\"billing-service\",\"payload\":{\"quoteId\":\"6649b3da-beff-447b-a0ba-e5c63a0860ec\"}}",
+                                "eventType":  "quote.created.v1"
+                            },
+                            {
+                                "eventId":  "107c17f9-2290-4708-9acb-aa8f5ddbac9d",
+                                "sha256":  "9cd4d4add98456c56cd8aa244a0fef427171c9fabc97be1c11a396267d44debc",
+                                "exchange":  "oficina.events",
+                                "rawEnvelope":  "{\"eventId\":\"107c17f9-2290-4708-9acb-aa8f5ddbac9d\",\"eventType\":\"quote.approved.v1\",\"occurredAt\":\"2026-10-21T01:32:00.951158Z\",\"correlationId\":\"8c43dfd0-454a-474e-bfcd-142a8e8d563f\",\"sagaId\":\"0887024b-b90a-46a5-884f-1ff4f41b26b2\",\"osId\":\"7458b7e9-fcd7-47d3-935f-a31ac8c39515\",\"source\":\"billing-service\",\"payload\":{}}",
+                                "eventType":  "quote.approved.v1"
+                            },
+                            {
+                                "eventId":  "df260e2e-e6eb-48a4-b6a9-9748583a245e",
+                                "sha256":  "a1678add0b5a3a6cc280877b75d011549d739b5e88bb8b2015f3a6bb2e531131",
+                                "exchange":  "oficina.events",
+                                "rawEnvelope":  "{\"eventId\":\"df260e2e-e6eb-48a4-b6a9-9748583a245e\",\"eventType\":\"repair.completed.v1\",\"occurredAt\":\"2026-10-21T01:32:30.983421055Z\",\"correlationId\":\"8c43dfd0-454a-474e-bfcd-142a8e8d563f\",\"sagaId\":\"0887024b-b90a-46a5-884f-1ff4f41b26b2\",\"osId\":\"7458b7e9-fcd7-47d3-935f-a31ac8c39515\",\"source\":\"execution-service\",\"payload\":{\"repairId\":\"8e887090-aede-451c-9076-ba07368ea251\"}}",
+                                "eventType":  "repair.completed.v1"
+                            }
+                        ],
+    "persistedCounts":  {
+                            "quotes":  1,
+                            "decisions":  1,
+                            "outbox":  2,
+                            "payments":  1,
+                            "inbox":  2,
+                            "items":  3,
+                            "attempts":  1
+                        },
+    "finalOutbox":  [
+                        {
+                            "event_id":  "107c17f9-2290-4708-9acb-aa8f5ddbac9d",
+                            "event_type":  "quote.approved.v1",
+                            "status":  "PUBLISHED",
+                            "attempts":  3,
+                            "published_at":  "2026-10-21T01:32:22.578782+00:00"
+                        },
+                        {
+                            "event_id":  "728c3416-b1b6-4aef-a7ae-1e57086e0499",
+                            "event_type":  "quote.created.v1",
+                            "status":  "PUBLISHED",
+                            "attempts":  1,
+                            "published_at":  "2026-10-21T01:31:51.336292+00:00"
+                        }
+                    ]
+}
