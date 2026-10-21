@@ -1,5 +1,6 @@
 /target/
 /integration/7.4.1/artifacts/
+/integration/7.6/artifacts/
 /.idea/
 *.iml
 /.env

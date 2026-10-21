@@ -1,0 +1,12 @@
+{
+  "distributedE2E": "PASSED",
+  "distributedChecks": 409,
+  "globalValidation": "BLOCKED",
+  "reason": "Billing clean verify failed twice: two failures initially, one failure in unchanged isolated retry",
+  "remainingTest": "ProviderIntegrationTests.reconciliationFindsAnApprovalWithoutAnyWebhook",
+  "diagnosis": "PostgreSQL clock was ahead of Java receive time in 49 of 50 JDBC samples; retryNow uses PostgreSQL now while the worker uses Java Clock",
+  "minimumProposedCorrection": "Use the application Clock and an explicitly past Timestamp in the test retryNow helper",
+  "testOrProductionSourcesChanged": false,
+  "correctionAuthorizationReceived": false,
+  "realPaymentsPerformed": false
+}

@@ -1,0 +1,72 @@
+﻿[
+    {
+        "name":  "billing.commands.dlq",
+        "consumers":  0,
+        "messages":  0
+    },
+    {
+        "name":  "billing.payment.request",
+        "consumers":  2,
+        "messages":  0
+    },
+    {
+        "name":  "billing.payment.request.retry",
+        "consumers":  0,
+        "messages":  0
+    },
+    {
+        "name":  "billing.quote.create",
+        "consumers":  2,
+        "messages":  0
+    },
+    {
+        "name":  "billing.quote.create.retry",
+        "consumers":  0,
+        "messages":  0
+    },
+    {
+        "name":  "execution.commands.dlq",
+        "consumers":  0,
+        "messages":  0
+    },
+    {
+        "name":  "execution.diagnostic.start",
+        "consumers":  1,
+        "messages":  0
+    },
+    {
+        "name":  "execution.diagnostic.start.retry",
+        "consumers":  0,
+        "messages":  0
+    },
+    {
+        "name":  "execution.repair.cancel",
+        "consumers":  1,
+        "messages":  0
+    },
+    {
+        "name":  "execution.repair.cancel.retry",
+        "consumers":  0,
+        "messages":  0
+    },
+    {
+        "name":  "execution.repair.start",
+        "consumers":  1,
+        "messages":  0
+    },
+    {
+        "name":  "execution.repair.start.retry",
+        "consumers":  0,
+        "messages":  0
+    },
+    {
+        "name":  "os.saga.events",
+        "consumers":  1,
+        "messages":  0
+    },
+    {
+        "name":  "os.saga.events.dlq",
+        "consumers":  0,
+        "messages":  0
+    }
+]

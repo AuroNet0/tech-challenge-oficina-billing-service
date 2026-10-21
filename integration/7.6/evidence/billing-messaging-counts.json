@@ -1,0 +1,4 @@
+﻿{"inbox" : [{"status":"PROCESSED","count":10}], "outbox" : [{"event_type":"payment.confirmed.v1","status":"PUBLISHED","count":3}, 
+ {"event_type":"payment.failed.v1","status":"PUBLISHED","count":1}, 
+ {"event_type":"quote.approved.v1","status":"PUBLISHED","count":5}, 
+ {"event_type":"quote.created.v1","status":"PUBLISHED","count":5}]}

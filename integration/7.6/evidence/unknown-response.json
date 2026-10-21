@@ -1,0 +1,11 @@
+﻿{
+    "status":  202,
+    "body":  {
+                 "pagamentoId":  "dbf939b6-1877-468c-80e9-84e53f336782",
+                 "provider":  "MERCADO_PAGO",
+                 "preferenceId":  null,
+                 "checkoutUrl":  null,
+                 "status":  "PENDING",
+                 "checkoutStatus":  "UNKNOWN"
+             }
+}

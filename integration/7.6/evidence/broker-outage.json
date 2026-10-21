@@ -1,0 +1,27 @@
+﻿{
+    "outbox":  "{\"event_id\":\"e97e5770-82ef-44af-a5e6-bc5c28abd6de\",\"status\":\"PROCESSING\",\"attempts\":1,\"next_attempt_at\":\"2026-10-21T15:58:07.057299+00:00\"}",
+    "payment":  {
+                    "id":  "60355122-dd62-4c36-9936-d9cc25c98c67",
+                    "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+                    "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+                    "orcamentoId":  "4c8cc7fc-00fd-403e-95b8-90e756b06d3d",
+                    "status":  "CONFIRMED",
+                    "valor":  "200.14",
+                    "moeda":  "BRL",
+                    "provider":  "MERCADO_PAGO",
+                    "createdAt":  "2026-10-21T15:57:55.942107Z",
+                    "updatedAt":  "2026-10-21T15:58:07.057299Z",
+                    "confirmedAt":  "2026-10-21T15:58:07.057299Z",
+                    "failedAt":  null,
+                    "tentativas":  [
+                                       {
+                                           "id":  "691a0098-4b35-40df-8f75-ff8ffcff8ba9",
+                                           "status":  "CONFIRMED",
+                                           "createdAt":  "2026-10-21T15:57:55.942107Z",
+                                           "updatedAt":  "2026-10-21T15:58:07.057299Z",
+                                           "confirmedAt":  "2026-10-21T15:58:07.057299Z",
+                                           "failedAt":  null
+                                       }
+                                   ]
+                }
+}

@@ -1,0 +1,197 @@
+﻿{
+    "isolated":  [
+                     {
+                         "status":  "Exited (137) 7 minutes ago",
+                         "name":  "billing-e2e76-20261021-125335-4c899f-mercado-pago-mock-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (143) 7 minutes ago",
+                         "name":  "billing-e2e76-20261021-125335-4c899f-billing-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (143) 7 minutes ago",
+                         "name":  "billing-e2e76-20261021-125335-4c899f-execution-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (143) 7 minutes ago",
+                         "name":  "billing-e2e76-20261021-125335-4c899f-os-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 7 minutes ago",
+                         "name":  "billing-e2e76-20261021-125335-4c899f-billing-db-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 7 minutes ago",
+                         "name":  "billing-e2e76-20261021-125335-4c899f-rabbitmq-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 7 minutes ago",
+                         "name":  "billing-e2e76-20261021-125335-4c899f-os-db-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 7 minutes ago",
+                         "name":  "billing-e2e76-20261021-125335-4c899f-mongodb-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (137) 15 minutes ago",
+                         "name":  "billing-e2e76-20261021-124828-8368d2-mercado-pago-mock-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (143) 15 minutes ago",
+                         "name":  "billing-e2e76-20261021-124828-8368d2-billing-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (143) 15 minutes ago",
+                         "name":  "billing-e2e76-20261021-124828-8368d2-os-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (143) 15 minutes ago",
+                         "name":  "billing-e2e76-20261021-124828-8368d2-execution-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 15 minutes ago",
+                         "name":  "billing-e2e76-20261021-124828-8368d2-os-db-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 15 minutes ago",
+                         "name":  "billing-e2e76-20261021-124828-8368d2-rabbitmq-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 15 minutes ago",
+                         "name":  "billing-e2e76-20261021-124828-8368d2-billing-db-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 15 minutes ago",
+                         "name":  "billing-e2e76-20261021-124828-8368d2-mongodb-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (137) 22 minutes ago",
+                         "name":  "billing-e2e76-20261021-124152-179f5b-mercado-pago-mock-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (143) 22 minutes ago",
+                         "name":  "billing-e2e76-20261021-124152-179f5b-billing-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (137) 22 minutes ago",
+                         "name":  "billing-e2e76-20261021-124152-179f5b-execution-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (137) 22 minutes ago",
+                         "name":  "billing-e2e76-20261021-124152-179f5b-os-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 22 minutes ago",
+                         "name":  "billing-e2e76-20261021-124152-179f5b-billing-db-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (137) 22 minutes ago",
+                         "name":  "billing-e2e76-20261021-124152-179f5b-rabbitmq-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 22 minutes ago",
+                         "name":  "billing-e2e76-20261021-124152-179f5b-os-db-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (137) 22 minutes ago",
+                         "name":  "billing-e2e76-20261021-124152-179f5b-mongodb-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Created",
+                         "name":  "billing-e2e76-20261021-123657-d4b17e-mercado-pago-mock-1",
+                         "state":  "created"
+                     },
+                     {
+                         "status":  "Created",
+                         "name":  "billing-e2e76-20261021-123657-d4b17e-os-1",
+                         "state":  "created"
+                     },
+                     {
+                         "status":  "Created",
+                         "name":  "billing-e2e76-20261021-123657-d4b17e-execution-1",
+                         "state":  "created"
+                     },
+                     {
+                         "status":  "Created",
+                         "name":  "billing-e2e76-20261021-123657-d4b17e-billing-1",
+                         "state":  "created"
+                     },
+                     {
+                         "status":  "Exited (0) 27 minutes ago",
+                         "name":  "billing-e2e76-20261021-123657-d4b17e-os-db-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 27 minutes ago",
+                         "name":  "billing-e2e76-20261021-123657-d4b17e-billing-db-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 27 minutes ago",
+                         "name":  "billing-e2e76-20261021-123657-d4b17e-rabbitmq-1",
+                         "state":  "exited"
+                     },
+                     {
+                         "status":  "Exited (0) 27 minutes ago",
+                         "name":  "billing-e2e76-20261021-123657-d4b17e-mongodb-1",
+                         "state":  "exited"
+                     }
+                 ],
+    "checkedAt":  "2026-10-21T16:09:01.8361936Z",
+    "normal":  [
+                   {
+                       "status":  "Up 20 hours (healthy)",
+                       "sameContainerRunning":  true,
+                       "name":  "oficina-billing-rabbitmq-1"
+                   },
+                   {
+                       "status":  "Up 20 hours (healthy)",
+                       "sameContainerRunning":  true,
+                       "name":  "oficina-billing-billing-1"
+                   },
+                   {
+                       "status":  "Up 24 hours (healthy)",
+                       "sameContainerRunning":  true,
+                       "name":  "oficina-billing-postgres-1"
+                   },
+                   {
+                       "status":  "Up 46 hours (healthy)",
+                       "sameContainerRunning":  true,
+                       "name":  "oficina-execution-service"
+                   },
+                   {
+                       "status":  "Up 46 hours (healthy)",
+                       "sameContainerRunning":  true,
+                       "name":  "tech-challenge-oficina-execution-service-rabbitmq-1"
+                   },
+                   {
+                       "status":  "Up 2 days (healthy)",
+                       "sameContainerRunning":  true,
+                       "name":  "oficina-execution-mongodb"
+                   }
+               ]
+}

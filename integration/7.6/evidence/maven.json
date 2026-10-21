@@ -1,0 +1,38 @@
+﻿[
+    {
+        "missedLines":  "158",
+        "buildSuccess":  true,
+        "failures":  0,
+        "errors":  0,
+        "log":  "bootstrap-7.6-os-verify.log",
+        "service":  "os",
+        "coverageGateReached":  true,
+        "skipped":  0,
+        "tests":  69,
+        "coveredLines":  "1134"
+    },
+    {
+        "missedLines":  "17",
+        "buildSuccess":  true,
+        "failures":  0,
+        "errors":  0,
+        "log":  "bootstrap-7.6-execution-verify.log",
+        "service":  "execution",
+        "coverageGateReached":  true,
+        "skipped":  0,
+        "tests":  119,
+        "coveredLines":  "718"
+    },
+    {
+        "missedLines":  "32",
+        "buildSuccess":  false,
+        "failures":  1,
+        "errors":  0,
+        "log":  "bootstrap-7.6-billing-retry-verify.log",
+        "service":  "billing",
+        "coverageGateReached":  false,
+        "skipped":  0,
+        "tests":  193,
+        "coveredLines":  "1373"
+    }
+]

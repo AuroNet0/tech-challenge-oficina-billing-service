@@ -1,0 +1,32 @@
+﻿[
+    {
+        "failures":  0,
+        "errors":  0,
+        "service":  "os",
+        "coveredLines":  "1134",
+        "missedLines":  "158",
+        "skipped":  0,
+        "tests":  69,
+        "buildSuccess":  true
+    },
+    {
+        "failures":  0,
+        "errors":  0,
+        "service":  "execution",
+        "coveredLines":  "718",
+        "missedLines":  "17",
+        "skipped":  0,
+        "tests":  119,
+        "buildSuccess":  true
+    },
+    {
+        "failures":  2,
+        "errors":  0,
+        "service":  "billing",
+        "coveredLines":  null,
+        "missedLines":  null,
+        "skipped":  0,
+        "tests":  193,
+        "buildSuccess":  false
+    }
+]

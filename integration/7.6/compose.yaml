@@ -1,0 +1,180 @@
+x-rabbit: &rabbit
+  RABBITMQ_HOST: rabbitmq
+  RABBITMQ_PORT: 5672
+  RABBITMQ_USERNAME: integration
+  RABBITMQ_PASSWORD: integration_local_only
+x-java: &java
+  JAVA_TOOL_OPTIONS: -Xmx384m -XX:ActiveProcessorCount=2
+
+services:
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: integration
+      RABBITMQ_DEFAULT_PASS: integration_local_only
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "+S 2:2 +SDcpu 1 +SDio 1"
+    ports:
+      - "127.0.0.1:${E2E_RABBIT_MANAGEMENT_PORT:-15675}:15672"
+    volumes:
+      - rabbit-data:/var/lib/rabbitmq
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, ping]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+  os-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: oficina_os
+      POSTGRES_USER: integration
+      POSTGRES_PASSWORD: integration_local_only
+    volumes:
+      - os-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD, pg_isready, -U, integration, -d, oficina_os]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  billing-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: oficina_billing
+      POSTGRES_USER: integration
+      POSTGRES_PASSWORD: integration_local_only
+    volumes:
+      - billing-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD, pg_isready, -U, integration, -d, oficina_billing]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  mongodb:
+    image: mongo:8.0
+    entrypoint: [bash, /opt/mongo/mongo-entrypoint.sh]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: integration
+      MONGO_INITDB_ROOT_PASSWORD: integration_local_only
+      MONGO_INITDB_DATABASE: oficina_execution
+    volumes:
+      - mongo-data:/data/db
+      - ${E2E_SOURCE_ROOT:?Execute prepare.ps1}/execution/docker/mongo-entrypoint.sh:/opt/mongo/mongo-entrypoint.sh:ro
+      - ${E2E_SOURCE_ROOT:?Execute prepare.ps1}/execution/docker/mongo-healthcheck.js:/opt/mongo/mongo-healthcheck.js:ro
+    healthcheck:
+      test: [CMD-SHELL, 'mongosh --quiet --username "$$MONGO_INITDB_ROOT_USERNAME" --password "$$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase admin /opt/mongo/mongo-healthcheck.js']
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
+  os:
+    build: ${E2E_SOURCE_ROOT:?Execute prepare.ps1}/os
+    environment:
+      <<: [*rabbit, *java]
+      DB_HOST: os-db
+      DB_PORT: 5432
+      DB_NAME: oficina_os
+      DB_USERNAME: integration
+      DB_PASSWORD: integration_local_only
+      SPRING_SECURITY_USER_NAME: integration
+      SPRING_SECURITY_USER_PASSWORD: integration_local_only
+    ports:
+      - "127.0.0.1:${E2E_OS_PORT:-18080}:8080"
+    depends_on:
+      os-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, bash, -ec, 'exec 3<>/dev/tcp/127.0.0.1/8080; printf "GET /actuator/health/readiness HTTP/1.0\r\nHost: localhost\r\n\r\n" >&3; head -n1 <&3 | grep -q " 200 "']
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+  execution:
+    build: ${E2E_SOURCE_ROOT:?Execute prepare.ps1}/execution
+    environment:
+      <<: [*rabbit, *java]
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      MONGO_DATABASE: oficina_execution
+      MONGO_USERNAME: integration
+      MONGO_PASSWORD: integration_local_only
+      MONGO_AUTH_DATABASE: admin
+      SPRING_SECURITY_USER_NAME: integration
+      SPRING_SECURITY_USER_PASSWORD: integration_local_only
+    ports:
+      - "127.0.0.1:${E2E_EXECUTION_PORT:-18081}:8080"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, curl, --fail, --silent, 'http://localhost:8080/actuator/health/readiness']
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+  billing:
+    build: ${E2E_SOURCE_ROOT:?Execute prepare.ps1}/billing
+    environment:
+      <<: [*rabbit, *java]
+      SERVER_ADDRESS: 0.0.0.0
+      DB_HOST: billing-db
+      DB_PORT: 5432
+      DB_NAME: oficina_billing
+      DB_USERNAME: integration
+      DB_PASSWORD: integration_local_only
+      BILLING_SECURITY_USERNAME: integration
+      BILLING_SECURITY_PASSWORD: integration_local_only
+      BILLING_SECURITY_ROLES: BILLING_OPERATOR
+      MERCADO_PAGO_ENABLED: "true"
+      MERCADO_PAGO_RECONCILIATION_ENABLED: "true"
+      SPRING_APPLICATION_JSON: '{"billing":{"mercado-pago":{"allow-insecure-local":true}}}'
+      MERCADO_PAGO_ACCESS_TOKEN: ${E2E_MP_ACCESS_TOKEN:?Execute prepare.ps1}
+      MERCADO_PAGO_WEBHOOK_SECRET: ${E2E_MP_WEBHOOK_SECRET:?Execute prepare.ps1}
+      MERCADO_PAGO_API_BASE_URL: http://127.0.0.1:8099
+      MERCADO_PAGO_NOTIFICATION_URL: https://billing.e2e.invalid/api/v1/webhooks/mercado-pago
+      MERCADO_PAGO_SUCCESS_URL: https://checkout.e2e.invalid/success
+      MERCADO_PAGO_FAILURE_URL: https://checkout.e2e.invalid/failure
+      MERCADO_PAGO_PENDING_URL: https://checkout.e2e.invalid/pending
+      MERCADO_PAGO_HTTP_TIMEOUT: 3s
+      MERCADO_PAGO_SYNC_INTERVAL: 3s
+      MERCADO_PAGO_WORKER_DELAY: 1s
+    ports:
+      - "127.0.0.1:${E2E_BILLING_PORT:-24082}:8080"
+      - "127.0.0.1:21099:8099"
+    depends_on:
+      billing-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, curl, --fail, --silent, 'http://localhost:8080/actuator/health/readiness']
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 40s
+
+  mercado-pago-mock:
+    image: python:3.13-alpine
+    network_mode: service:billing
+    command: [python, /mock/server.py]
+    environment:
+      MOCK_ACCESS_TOKEN: ${E2E_MP_ACCESS_TOKEN:?Execute prepare.ps1}
+    volumes:
+      - ./mock/server.py:/mock/server.py:ro
+    depends_on:
+      billing:
+        condition: service_started
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8099/health')"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  rabbit-data:
+  os-data:
+  billing-data:
+  mongo-data:

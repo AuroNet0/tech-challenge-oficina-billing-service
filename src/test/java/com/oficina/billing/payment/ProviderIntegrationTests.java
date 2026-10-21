@@ -3,7 +3,10 @@ package com.oficina.billing.payment;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Timestamp;
+import java.time.Clock;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.*;
 import com.oficina.billing.application.payment.*;
@@ -85,6 +88,7 @@ class ProviderIntegrationTests {
     @Autowired AprovacaoRepositoryPort decisions;
     @Autowired PlatformTransactionManager transactionManager;
     @Autowired JdbcTemplate jdbc;
+    @Autowired Clock clock;
     @Autowired MockMvc mvc;
     @Autowired ObjectMapper mapper;
     @Autowired OutboxPublisher publisher;
@@ -524,7 +528,8 @@ class ProviderIntegrationTests {
     private int eventCount(String type) { return jdbc.queryForObject("SELECT count(*) FROM outbox_events WHERE event_type=?", Integer.class, type); }
     private String checkoutPath() { return "/api/v1/pagamentos/" + initial.id() + "/checkout"; }
     private void retryNow() {
-        jdbc.update("UPDATE provider_notifications SET next_attempt_at=now() WHERE status='PENDING'");
-        jdbc.update("UPDATE provider_sync SET next_sync_at=now()");
+        Timestamp dueAt = Timestamp.from(clock.instant().truncatedTo(ChronoUnit.MICROS));
+        jdbc.update("UPDATE provider_notifications SET next_attempt_at=? WHERE status='PENDING'", dueAt);
+        jdbc.update("UPDATE provider_sync SET next_sync_at=?", dueAt);
     }
 }

@@ -1,0 +1,92 @@
+﻿[
+    {
+        "name":  "billing.commands.dlq",
+        "consumers":  0,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "billing.payment.request",
+        "consumers":  2,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "billing.payment.request.retry",
+        "consumers":  0,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "billing.quote.create",
+        "consumers":  2,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "billing.quote.create.retry",
+        "consumers":  0,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "e2e76.audit",
+        "consumers":  0,
+        "messages_ready":  54,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "execution.commands.dlq",
+        "consumers":  0,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "execution.diagnostic.start",
+        "consumers":  1,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "execution.diagnostic.start.retry",
+        "consumers":  0,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "execution.repair.cancel",
+        "consumers":  1,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "execution.repair.cancel.retry",
+        "consumers":  0,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "execution.repair.start",
+        "consumers":  1,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "execution.repair.start.retry",
+        "consumers":  0,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "os.saga.events",
+        "consumers":  1,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    },
+    {
+        "name":  "os.saga.events.dlq",
+        "consumers":  0,
+        "messages_ready":  0,
+        "messages_unacknowledged":  0
+    }
+]

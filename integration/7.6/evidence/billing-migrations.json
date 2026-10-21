@@ -1,0 +1,22 @@
+﻿[
+    {
+        "version":  "1",
+        "description":  "bootstrap schema",
+        "success":  true
+    },
+    {
+        "version":  "2",
+        "description":  "create billing domain",
+        "success":  true
+    },
+    {
+        "version":  "3",
+        "description":  "create messaging tables",
+        "success":  true
+    },
+    {
+        "version":  "4",
+        "description":  "mercado pago integration",
+        "success":  true
+    }
+]
