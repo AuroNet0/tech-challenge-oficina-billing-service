@@ -13,9 +13,24 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import com.oficina.billing.application.exception.ResourceNotFoundException;
 import com.oficina.billing.domain.exception.DomainException;
+import com.oficina.billing.application.payment.*;
 
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(InvalidSignatureException.class)
+    ResponseEntity<Object> invalidSignature(InvalidSignatureException exception, WebRequest request) {
+        return problem(HttpStatus.UNAUTHORIZED, request);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<Object> invalidInput(IllegalArgumentException exception, WebRequest request) {
+        return problem(HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler({IntegrationUnavailableException.class, ProviderException.class})
+    ResponseEntity<Object> providerFailure(RuntimeException exception, WebRequest request) {
+        return problem(HttpStatus.SERVICE_UNAVAILABLE, request);
+    }
     @ExceptionHandler(ResourceNotFoundException.class)
     ResponseEntity<Object> notFound(ResourceNotFoundException exception, WebRequest request) {
         return problem(HttpStatus.NOT_FOUND, request);

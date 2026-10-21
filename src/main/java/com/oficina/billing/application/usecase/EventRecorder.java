@@ -29,6 +29,11 @@ public class EventRecorder {
                 .orElseGet(() -> UUID.nameUUIDFromBytes(("billing:" + sagaId + ":" + osId).getBytes(StandardCharsets.UTF_8)));
     }
 
+    public UUID paymentCorrelation(UUID osId, UUID sagaId) {
+        return inbox.findOrigin(osId, sagaId, "payment.request.v1").map(message -> message.correlationId())
+                .orElseGet(() -> correlation(osId, sagaId, null));
+    }
+
     @Transactional(propagation = Propagation.MANDATORY)
     public void record(UUID aggregateId, String aggregateType, UUID osId, UUID sagaId, UUID correlationId,
                        String eventType, Map<String, Object> payload, Instant now) {

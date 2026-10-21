@@ -44,13 +44,16 @@ public final class Pagamento {
         var keys = new HashSet<String>();
         var ids = new HashSet<UUID>();
         Instant previous = createdAt;
+        int active = 0;
         for (int index = 0; index < tentativas.size(); index++) {
             var tentativa = required(tentativas.get(index), "tentativa");
             require(keys.add(tentativa.idempotencyKey()) && ids.add(tentativa.id()), "Tentativa duplicada");
             require(!tentativa.createdAt().isBefore(previous), "Ordem de tentativas invalida");
-            require(index == tentativas.size() - 1 || tentativa.status() == PagamentoStatus.FAILED,
-                    "Somente uma tentativa ativa");
-            previous = tentativa.updatedAt();
+            if (tentativa.status() != PagamentoStatus.FAILED) active++;
+            require(active <= 1, "Somente uma tentativa ativa");
+            require(index == tentativas.size() - 1 || tentativa.status() == PagamentoStatus.FAILED
+                    || tentativa.status() == PagamentoStatus.CONFIRMED, "Tentativa anterior ainda ativa");
+            previous = tentativa.createdAt();
         }
     }
 
@@ -96,6 +99,25 @@ public final class Pagamento {
         tentativas.add(PagamentoTentativa.criar(key, now));
     }
 
+    public void confirmarVerificado(String key, String paymentId, Instant now) {
+        required(now, "confirmedAt");
+        if (status() == PagamentoStatus.CONFIRMED) {
+            require(idempotencyKey().equals(key) && providerPaymentId().equals(paymentId), "Liquidacao externa conflitante");
+            return;
+        }
+        var target = tentativas.stream().filter(attempt -> attempt.idempotencyKey().equals(key)).findFirst()
+                .orElseThrow(() -> new com.oficina.billing.domain.exception.DomainException("Tentativa desconhecida"));
+        require(!now.isBefore(updatedAt()), "Confirmacao anterior a atualizacao");
+        for (int index = 0; index < tentativas.size(); index++) {
+            var attempt = tentativas.get(index);
+            if (attempt.id().equals(target.id())) {
+                tentativas.set(index, attempt.confirmarReconciliado(paymentId, now));
+            } else if (attempt.status() != PagamentoStatus.FAILED) {
+                tentativas.set(index, attempt.falhar("Tentativa encerrada por liquidacao anterior", now));
+            }
+        }
+    }
+
     private void requireCurrentKey(String key) {
         require(atual().idempotencyKey().equals(key), "Resultado nao pertence a tentativa atual");
     }
@@ -105,7 +127,10 @@ public final class Pagamento {
         tentativas.set(tentativas.size() - 1, tentativa);
     }
 
-    private PagamentoTentativa atual() { return tentativas.getLast(); }
+    private PagamentoTentativa atual() {
+        return tentativas.stream().filter(attempt -> attempt.status() == PagamentoStatus.CONFIRMED)
+                .findFirst().orElse(tentativas.getLast());
+    }
     public UUID id() { return id; }
     public UUID osId() { return osId; }
     public UUID sagaId() { return sagaId; }

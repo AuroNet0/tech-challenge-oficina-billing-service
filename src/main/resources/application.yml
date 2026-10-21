@@ -28,6 +28,7 @@ spring:
     user:
       name: ${BILLING_SECURITY_USERNAME:billing}
       password: ${BILLING_SECURITY_PASSWORD}
+      roles: ${BILLING_SECURITY_ROLES:USER}
 
 server:
   address: ${SERVER_ADDRESS:127.0.0.1}
@@ -57,6 +58,22 @@ springdoc:
     disable-swagger-default-url: true
 
 billing:
+  mercado-pago:
+    enabled: ${MERCADO_PAGO_ENABLED:false}
+    reconciliation-enabled: ${MERCADO_PAGO_RECONCILIATION_ENABLED:false}
+    access-token: ${MERCADO_PAGO_ACCESS_TOKEN:}
+    webhook-secret: ${MERCADO_PAGO_WEBHOOK_SECRET:}
+    api-base-url: ${MERCADO_PAGO_API_BASE_URL:https://api.mercadopago.com}
+    notification-url: ${MERCADO_PAGO_NOTIFICATION_URL:}
+    success-url: ${MERCADO_PAGO_SUCCESS_URL:}
+    failure-url: ${MERCADO_PAGO_FAILURE_URL:}
+    pending-url: ${MERCADO_PAGO_PENDING_URL:}
+    http-timeout: ${MERCADO_PAGO_HTTP_TIMEOUT:5s}
+    signature-tolerance: ${MERCADO_PAGO_SIGNATURE_TOLERANCE:5m}
+    batch-size: ${MERCADO_PAGO_BATCH_SIZE:10}
+    worker-delay: ${MERCADO_PAGO_WORKER_DELAY:5s}
+    lease-duration: ${MERCADO_PAGO_LEASE_DURATION:2m}
+    sync-interval: ${MERCADO_PAGO_SYNC_INTERVAL:1m}
   messaging:
     enabled: ${COMMAND_CONSUMER_ENABLED:true}
     max-deliveries: ${COMMAND_MAX_DELIVERIES:5}

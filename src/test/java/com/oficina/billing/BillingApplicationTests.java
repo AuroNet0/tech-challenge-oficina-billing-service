@@ -81,14 +81,15 @@ class BillingApplicationTests {
     @Test
     void preservesBootstrapMigrationAndAppliesFinancialSchema() {
         assertThat(flyway.validateWithResult().validationSuccessful).isTrue();
-        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("3");
+        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("4");
         assertThat(flyway.info().pending()).isEmpty();
         assertThat(jdbc.queryForObject(
                 "SELECT success FROM flyway_schema_history WHERE version = '1'", Boolean.class)).isTrue();
         List<String> tables = jdbc.queryForList(
                 "SELECT tablename FROM pg_tables WHERE schemaname = 'public'", String.class);
         assertThat(tables).containsExactlyInAnyOrder("flyway_schema_history", "orcamentos", "orcamento_itens",
-                "aprovacoes", "pagamentos", "pagamentos_tentativas", "inbox_messages", "outbox_events");
+                "aprovacoes", "pagamentos", "pagamentos_tentativas", "inbox_messages", "outbox_events",
+                "provider_sync", "provider_checkouts", "provider_notifications", "provider_payments", "provider_observations");
     }
 
     @ParameterizedTest

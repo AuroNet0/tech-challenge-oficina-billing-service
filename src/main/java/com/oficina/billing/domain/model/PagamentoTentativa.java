@@ -56,4 +56,12 @@ public record PagamentoTentativa(UUID id, String idempotencyKey, PagamentoStatus
         return new PagamentoTentativa(id, idempotencyKey, PagamentoStatus.FAILED, providerPaymentId,
                 createdAt, now, null, now, reason);
     }
+
+    public PagamentoTentativa confirmarReconciliado(String paymentId, Instant now) {
+        text(paymentId, 100, "providerPaymentId");
+        require(!now.isBefore(updatedAt), "Liquidacao anterior ao historico");
+        if (status != PagamentoStatus.FAILED) return confirmar(paymentId, now);
+        return new PagamentoTentativa(id, idempotencyKey, PagamentoStatus.CONFIRMED, paymentId,
+                createdAt, now, now, null, null);
+    }
 }

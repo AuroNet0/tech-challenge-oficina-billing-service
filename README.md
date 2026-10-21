@@ -1,6 +1,17 @@
 # Oficina Billing Service
 
-Tech Challenge FIAP — Fase 4, etapas 7.1, 7.2, 7.3 e 7.4. Microsserviço responsável pelo domínio de orçamentos, decisões e cobranças, com PostgreSQL próprio. O Billing integra consultas e decisões REST à Saga do OS por RabbitMQ, com Inbox/Outbox transacionais. Cobranças permanecem como intenções PENDING, sem Mercado Pago ou confirmação simulada.
+Tech Challenge FIAP — Fase 4, etapas 7.1 a 7.5. Microsserviço de orçamentos, decisões e cobranças, com PostgreSQL próprio e Inbox/Outbox RabbitMQ. A Saga cria a intenção PENDING; Checkout Pro de teste pode ser disponibilizado por operação autenticada, e somente consultas verificadas ao Mercado Pago geram resultados financeiros. Integração externa desligada por padrão, sem confirmação simulada.
+
+## Checkout Pro — etapa 7.5
+
+- [Documentação completa, segurança e roteiro oficial sandbox](docs/mercado-pago.md).
+- POST `/api/v1/pagamentos/{id}/checkout`: Basic, role `BILLING_OPERATOR` e CSRF da mesma sessão; não aceita valores/IDs externos no corpo. Retorna 200 READY ou 202 UNKNOWN; não cria outra intenção financeira.
+- POST `/api/v1/webhooks/mercado-pago`: somente esta rota POST dispensa Basic/CSRF, exigindo assinatura HMAC-SHA256 válida, headers/IDs consistentes e receipt durável antes de HTTP 200.
+- Credenciais/URLs são variáveis `MERCADO_PAGO_*` descritas em `.env.example`, sem defaults secretos. `MERCADO_PAGO_ENABLED=false` e `MERCADO_PAGO_RECONCILIATION_ENABLED=false`; só o modo financeiro de testes é permitido nesta etapa.
+- Reserva/HTTP/finalização, leases e pesquisa por referência protegem criação repetida/resultado desconhecido. Não se presume idempotência de POST /checkout/preferences. UNKNOWN não repete POST automaticamente.
+- Webhook e reconciliação compartilham validação financeira e gravação atômica de pagamento/tentativa/receipt/Outbox. Confirmação tardia preserva o histórico; múltiplos créditos, valores divergentes e estados não mapeados exigem revisão.
+- V4 adiciona `provider_sync`, `provider_checkouts`, `provider_notifications`, `provider_payments`, `provider_observations`; V1–V3 não são alteradas. Infraestrutura financeira continua JPA/PostgreSQL; o workflow especializado usa JDBC transacional, sem expor entidades.
+- Não há confirmação manual, captura de cartão, integração de produção ou autorização definitiva por proprietário. Teste oficial com credenciais e HTTPS público permanece pendente; Maven usa API local simulada, PostgreSQL e RabbitMQ Testcontainers.
 
 ## Tecnologias e compatibilidade
 
@@ -85,9 +96,9 @@ Triggers de constraint, diferidos até o commit, verificam itens/total e corresp
 
 Um pagamento lógico possui N tentativas. A unicidade por orçamento evita dois pagamentos lógicos para o mesmo valor aprovado; **não há UNIQUE(os_id) em pagamentos**. Novas tentativas são registradas como novos filhos, sem apagar ou substituir a falha anterior.
 
-Cada tentativa segue `PENDING → PROCESSING → CONFIRMED/FAILED`, admitindo confirmação ou falha diretamente de PENDING. CONFIRMED é terminal. Uma tentativa FAILED também é terminal: `novaTentativa(novaChave, instante)` cria outro registro PENDING, mantendo o mesmo pagamento lógico. O resumo do pagamento acompanha a última tentativa, e suas propriedades públicas de estado/resultado são derivadas dela.
+Cada tentativa segue `PENDING → PROCESSING → CONFIRMED/FAILED`, admitindo confirmação ou falha diretamente de PENDING. CONFIRMED é terminal. `novaTentativa(novaChave, instante)` cria outro registro PENDING após falha, mantendo o mesmo pagamento lógico. Na etapa 7.5, liquidação tardia verificada pode corrigir FAILED para CONFIRMED, arquivando automaticamente o snapshot anterior em ledger imutável. O resumo segue a tentativa confirmada quando existir; caso contrário, a última tentativa.
 
-A tentativa anterior continua com ID, chave, falha e timestamps originais. O banco impede alteração/exclusão de tentativas finalizadas, aceita no máximo uma tentativa não falha por pagamento e valida no commit a igualdade entre resumo e última tentativa. Não existe compensação de reparo físico.
+ID/chave e histórico anterior são preservados. O banco impede alteração/exclusão terminal arbitrária e só admite a correção tardia com evidência approved correspondente já persistida, mantendo a imagem FAILED no ledger. Há no máximo uma tentativa não falha; o commit valida o resumo contra a tentativa efetiva. Uma tentativa local ativa supersedida pela liquidação é encerrada sem evento financeiro fictício. Não existe compensação de reparo físico.
 
 ### Idempotência e concorrência
 
@@ -95,7 +106,7 @@ A chave é obrigatória e única globalmente nas tentativas deste Billing, escop
 
 `findByIdempotencyKey` resolve tanto a chave atual quanto qualquer chave histórica para o pagamento lógico. O consumidor consulta os registros existentes e valida Saga, itens do orçamento, valor do pagamento e repairId do comando original antes de deduplicar. A persistência não transforma conflito de chave com outro pagamento em sucesso: retorna violação de unicidade.
 
-Resultados exigem a chave da tentativa atual. A mesma confirmação com o mesmo ID de provedor é idempotente e preserva o timestamp; um ID diferente é conflito. Repetição de falha com o mesmo motivo é idempotente. Resultados de tentativa histórica são rejeitados: reconciliação de confirmações tardias do provedor será modelada antes da integração externa. Referência externa e ID de confirmação são únicos no escopo do provider.
+As operações ordinárias exigem a chave efetiva; a reconciliação verificada resolve explicitamente uma tentativa histórica pela preferência/metadata, sem presumir que seja a mais recente. A mesma confirmação preserva timestamp; outro crédito é retido para revisão. Referência externa e ID de confirmação continuam únicos no escopo do provider. As regras detalhadas de eventos atrasados, múltiplos pagamentos e expiração de preferências estão em docs/mercado-pago.md.
 
 `@Version` protege ambos os agregados mutáveis. Concorrência entre aprovação e rejeição é resolvida por versão e unicidade da decisão no banco. O retorno de `save` deve ser utilizado, pois contém a nova versão. Não existem locks distribuídos nem transações entre microsserviços.
 
@@ -377,10 +388,10 @@ Referências obrigatórias consultadas na branch homolog:
 - [OS: Saga](https://github.com/AuroNet0/tech-challenge-oficina-os-service/blob/homolog/docs/saga.md).
 - [Execution: mensageria](https://github.com/AuroNet0/tech-challenge-oficina-execution-service/blob/homolog/docs/messaging.md).
 
-O OS Service continua sendo o único orquestrador. `quote.create.v1` cria Orcamento e registra `quote.created.v1` ou `quote.creation-failed.v1` na Outbox. Decisões REST registram `quote.approved.v1` ou `quote.rejected.v1`. `payment.request.v1` cria a intenção PENDING e a tentativa inicial pelo valor aprovado, sem chamar provedor. Os resultados futuros `payment.confirmed.v1` e `payment.failed.v1` dependem da integração verificável com o provedor e não são emitidos nesta etapa. Uma falha financeira não desfaz reparo físico.
+O OS Service continua sendo o único orquestrador. `quote.create.v1` cria Orcamento e registra `quote.created.v1` ou `quote.creation-failed.v1` na Outbox. Decisões REST registram `quote.approved.v1` ou `quote.rejected.v1`. `payment.request.v1` cria a intenção PENDING e a tentativa inicial pelo valor aprovado, sem chamar provedor. A etapa 7.5 acrescenta checkout de teste e consulta verificável do provedor: somente um resultado financeiro validado registra `payment.confirmed.v1` ou `payment.failed.v1`. `paymentId` no evento é o UUID lógico do Billing; o identificador externo é preservado separadamente. Uma falha financeira não desfaz reparo físico.
 
 Itens do Execution fornecem quantidade e precoPrevisto em strings decimais; o Billing utiliza modelos próprios e não consulta o banco de diagnóstico. IDs de OS/Saga e correlationId são preservados nos envelopes. Somente este repositório foi alterado; os contratos e implementações de referência permanecem intactos.
 
 ## Limitações atuais
 
-Sem criação REST de orçamento/pagamento, edição financeira manual, Mercado Pago, webhook, confirmação manual, Saga Orchestrator próprio, JWT definitivo, Terraform, Kubernetes ou CI/CD. Não há dados financeiros fictícios em migrações ou startup. A identidade definitiva do responsável, reconciliação do provedor, autorização por cliente e eventos de resultado financeiro ficam para etapas posteriores. Aprovar/recusar altera o PostgreSQL local e registra o evento na Outbox; somente o OS decide o avanço da Saga após consumi-lo. Intenção PENDING não comprova cobrança nem confirmação de pagamento. Os triggers representam invariantes locais PostgreSQL, não uma implementação de Saga.
+Sem criação REST de orçamento/pagamento, edição financeira manual, confirmação manual, Saga Orchestrator próprio, JWT definitivo, Terraform, Kubernetes ou CI/CD. Não há dados fictícios em migrações/startup. Identidade/ownership definitivos, cobrança de produção, refund/chargeback automático e revisão administrativa financeira ficam fora do escopo. Checkout Pro é somente de teste, desabilitado por padrão; teste oficial depende de credenciais e HTTPS público não fornecidos. UNKNOWN/REVIEW podem exigir intervenção humana. Aprovar/recusar e resultados financeiros registram Outbox; somente o OS avança a Saga. Intenção PENDING e preferência READY não comprovam pagamento. Os triggers são invariantes locais, não outro orquestrador.
