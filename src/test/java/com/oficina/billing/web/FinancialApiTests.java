@@ -64,7 +64,7 @@ class FinancialApiTests {
 
     @BeforeEach
     void prepareDatabase() {
-        jdbc.execute("TRUNCATE pagamentos_tentativas, pagamentos, aprovacoes, orcamento_itens, orcamentos CASCADE");
+        jdbc.execute("TRUNCATE outbox_events, inbox_messages, pagamentos_tentativas, pagamentos, aprovacoes, orcamento_itens, orcamentos CASCADE");
     }
 
     @Test
@@ -135,7 +135,7 @@ class FinancialApiTests {
         var decision = aprovacoes.findByOrcamentoId(budget.id()).orElseThrow();
         assertThat(decision.responsavelId()).isNull();
         assertThat(decision.motivo()).isNull();
-        assertThat(decision.correlationId()).isNull();
+        assertThat(decision.correlationId()).isNotNull();
     }
 
     @Test

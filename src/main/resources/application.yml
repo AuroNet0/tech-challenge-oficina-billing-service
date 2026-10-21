@@ -1,4 +1,13 @@
 spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:billing}
+    password: ${RABBITMQ_PASSWORD:}
+    virtual-host: ${RABBITMQ_VHOST:/}
+    connection-timeout: 3s
+    publisher-confirm-type: correlated
+    publisher-returns: true
   application:
     name: billing-service
   jackson:
@@ -25,6 +34,9 @@ server:
   port: 8080
 
 management:
+  health:
+    rabbit:
+      enabled: false
   endpoints:
     web:
       exposure:
@@ -43,3 +55,18 @@ management:
 springdoc:
   swagger-ui:
     disable-swagger-default-url: true
+
+billing:
+  messaging:
+    enabled: ${COMMAND_CONSUMER_ENABLED:true}
+    max-deliveries: ${COMMAND_MAX_DELIVERIES:5}
+    retry-delay: ${COMMAND_RETRY_DELAY:5s}
+    confirm-timeout: ${RABBITMQ_CONFIRM_TIMEOUT:5s}
+  outbox:
+    enabled: ${OUTBOX_PUBLISHER_ENABLED:true}
+    fixed-delay: ${OUTBOX_FIXED_DELAY:5s}
+    batch-size: ${OUTBOX_BATCH_SIZE:10}
+    lease-duration: ${OUTBOX_LEASE_DURATION:2m}
+    max-attempts: ${OUTBOX_MAX_ATTEMPTS:5}
+    initial-backoff: ${OUTBOX_INITIAL_BACKOFF:5s}
+    max-backoff: ${OUTBOX_MAX_BACKOFF:5m}

@@ -63,7 +63,7 @@ class BillingApplicationTests {
     void startsSpringWithJpaValidationAndFinancialEntities() {
         assertThat(context.getBean(BillingApplication.class)).isNotNull();
         assertThat(entityManagerFactory.isOpen()).isTrue();
-        assertThat(entityManagerFactory.getMetamodel().getEntities()).hasSize(5);
+        assertThat(entityManagerFactory.getMetamodel().getEntities()).hasSize(7);
         assertThat(context.getEnvironment().getProperty("spring.jpa.hibernate.ddl-auto")).isEqualTo("validate");
         assertThat(context.getEnvironment().getProperty("spring.jpa.open-in-view")).isEqualTo("false");
     }
@@ -81,14 +81,14 @@ class BillingApplicationTests {
     @Test
     void preservesBootstrapMigrationAndAppliesFinancialSchema() {
         assertThat(flyway.validateWithResult().validationSuccessful).isTrue();
-        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("2");
+        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("3");
         assertThat(flyway.info().pending()).isEmpty();
         assertThat(jdbc.queryForObject(
                 "SELECT success FROM flyway_schema_history WHERE version = '1'", Boolean.class)).isTrue();
         List<String> tables = jdbc.queryForList(
                 "SELECT tablename FROM pg_tables WHERE schemaname = 'public'", String.class);
         assertThat(tables).containsExactlyInAnyOrder("flyway_schema_history", "orcamentos", "orcamento_itens",
-                "aprovacoes", "pagamentos", "pagamentos_tentativas");
+                "aprovacoes", "pagamentos", "pagamentos_tentativas", "inbox_messages", "outbox_events");
     }
 
     @ParameterizedTest

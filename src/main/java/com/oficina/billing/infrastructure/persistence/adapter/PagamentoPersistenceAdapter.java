@@ -32,6 +32,12 @@ public class PagamentoPersistenceAdapter implements PagamentoRepositoryPort {
 
     @Override
     @Transactional(readOnly = true)
+    public Optional<Pagamento> findByOrcamentoId(UUID orcamentoId) {
+        return repository.findByOrcamentoId(orcamentoId).map(PagamentoMapper::toDomain);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Pagamento> findByOsId(UUID osId) {
         return repository.findByOsId(osId).stream().map(PagamentoMapper::toDomain).toList();
     }

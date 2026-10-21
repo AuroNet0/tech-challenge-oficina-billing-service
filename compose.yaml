@@ -22,6 +22,11 @@ services:
     build: .
     environment:
       SERVER_ADDRESS: 0.0.0.0
+      RABBITMQ_HOST: ${RABBITMQ_HOST:-host.docker.internal}
+      RABBITMQ_PORT: ${RABBITMQ_PORT:-5672}
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME:-billing}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:?Defina RABBITMQ_PASSWORD no .env}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST:-/}
       DB_HOST: postgres
       DB_PORT: 5432
       DB_NAME: ${DB_NAME:-oficina_billing}
@@ -31,6 +36,8 @@ services:
       BILLING_SECURITY_PASSWORD: ${BILLING_SECURITY_PASSWORD:?Defina BILLING_SECURITY_PASSWORD no .env}
     ports:
       - "127.0.0.1:8082:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       postgres:
         condition: service_healthy
@@ -41,5 +48,25 @@ services:
       retries: 10
       start_period: 40s
 
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    profiles: [local-broker]
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME:-billing}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:?Defina RABBITMQ_PASSWORD no .env}
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_VHOST:-/}
+    ports:
+      - "127.0.0.1:5674:5672"
+      - "127.0.0.1:15674:15672"
+    volumes:
+      - billing-rabbit-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+
 volumes:
   billing-postgres-data:
+  billing-rabbit-data:

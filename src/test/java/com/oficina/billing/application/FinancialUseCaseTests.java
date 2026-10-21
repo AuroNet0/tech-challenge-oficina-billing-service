@@ -34,6 +34,7 @@ class FinancialUseCaseTests {
     @Mock private OrcamentoRepositoryPort orcamentos;
     @Mock private AprovacaoRepositoryPort aprovacoes;
     @Mock private PagamentoRepositoryPort pagamentos;
+    @Mock private EventRecorder events;
     private ConsultarOrcamentoUseCase consultas;
     private ConsultarPagamentoUseCase consultasPagamento;
     private DecidirOrcamentoUseCase decisoes;
@@ -43,7 +44,9 @@ class FinancialUseCaseTests {
         consultas = new ConsultarOrcamentoUseCase(orcamentos, aprovacoes);
         consultasPagamento = new ConsultarPagamentoUseCase(pagamentos);
         decisoes = new DecidirOrcamentoUseCase(orcamentos, aprovacoes,
-                Clock.fixed(OPERATION_TIME, ZoneOffset.UTC));
+                Clock.fixed(OPERATION_TIME, ZoneOffset.UTC), events);
+        lenient().when(events.correlation(any(), any(), any())).thenAnswer(invocation ->
+                invocation.getArgument(2) == null ? UUID.nameUUIDFromBytes(new byte[] {1}) : invocation.getArgument(2));
     }
 
     @Test
@@ -152,7 +155,7 @@ class FinancialUseCaseTests {
         var decision = decisoes.rejeitar(new DecisaoCommand(budget.id(), null, null, null));
         assertThat(decision.responsavelId()).isNull();
         assertThat(decision.motivo()).isNull();
-        assertThat(decision.correlationId()).isNull();
+        assertThat(decision.correlationId()).isNotNull();
     }
 
     @Test

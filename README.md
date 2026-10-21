@@ -1,10 +1,10 @@
 # Oficina Billing Service
 
-Tech Challenge FIAP — Fase 4, etapas 7.1, 7.2 e 7.3. Microsserviço responsável pelo domínio de orçamentos, decisões e cobranças, com PostgreSQL próprio. Esta etapa disponibiliza consultas financeiras e decisões locais por API REST autenticada, exclusivamente para desenvolvimento.
+Tech Challenge FIAP — Fase 4, etapas 7.1, 7.2, 7.3 e 7.4. Microsserviço responsável pelo domínio de orçamentos, decisões e cobranças, com PostgreSQL próprio. O Billing integra consultas e decisões REST à Saga do OS por RabbitMQ, com Inbox/Outbox transacionais. Cobranças permanecem como intenções PENDING, sem Mercado Pago ou confirmação simulada.
 
 ## Tecnologias e compatibilidade
 
-Java 21, Spring Boot 4.1.1, Maven Wrapper 3.3.4/Maven 3.10.0, Web MVC, Data JPA, Validation, Security, Actuator, PostgreSQL 17, Flyway e Springdoc OpenAPI 3.1.1. Os testes utilizam Spring Test, Mockito, Spring Security Test, Testcontainers 2.0.5 e JaCoCo 0.8.15.
+Java 21, Spring Boot 4.1.1, Maven Wrapper 3.3.4/Maven 3.10.0, Web MVC, Data JPA, Validation, Security, Actuator, PostgreSQL 17, Flyway e Springdoc OpenAPI 3.1.1, Spring AMQP e RabbitMQ 4. Os testes utilizam Spring Test, Mockito, Spring Security Test, Testcontainers PostgreSQL/RabbitMQ 2.0.5 e JaCoCo 0.8.15.
 
 Foi removida a fixação em JUnit 5.13.4 e adotado **JUnit Jupiter 6.0.3**, gerenciado pelo BOM do Boot 4.1.1. Na etapa 7.1, JUnit 5 exigia inicialização manual do contexto porque a extensão Spring utilizava uma API do JUnit 6. Agora são usados `@SpringBootTest`, `@AutoConfigureMockMvc` e `@MockitoSpyBean`, preservando os 18 cenários do bootstrap, com as verificações de schema atualizadas para V2. O ponto de entrada continua exercitado com `useMainMethod=ALWAYS`. Não foram rebaixados componentes Spring nem excluídas classes da cobertura.
 
@@ -30,6 +30,7 @@ src/main/java/com/oficina/billing/
 └── infrastructure/
     ├── config/       SecurityConfig, OpenApiConfig, TimeConfig
     ├── web/          Controllers, DTOs, ProblemDetail e suporte CSRF
+    ├── messaging/    Codec, consumidor, broker, publisher e topologia RabbitMQ
     └── persistence/
         ├── entity/   Cinco entidades JPA
         ├── repository/
@@ -37,7 +38,8 @@ src/main/java/com/oficina/billing/
         └── adapter/
 src/main/resources/db/migration/
 ├── V1__bootstrap_schema.sql
-└── V2__create_billing_domain.sql
+├── V2__create_billing_domain.sql
+└── V3__create_messaging_tables.sql
 ```
 
 As entidades JPA são restritas à infraestrutura. Os agregados mutáveis são `Orcamento` e `Pagamento`; itens, decisões e snapshots de tentativas são imutáveis. Não há setters públicos de status, edição financeira ou exclusão pelos ports. As fábricas `restaurar` são destinadas à reidratação pelos mappers e validam a estrutura dos snapshots; o adapter e o banco também validam a elegibilidade da cobrança contra o orçamento persistido.
@@ -91,7 +93,7 @@ A tentativa anterior continua com ID, chave, falha e timestamps originais. O ban
 
 A chave é obrigatória e única globalmente nas tentativas deste Billing, escopo conservador adequado ao uso futuro de UUIDs no provedor. A primeira cobrança tem sua própria chave; cada nova tentativa exige uma nova chave. Repetir `novaTentativa` com chave já conhecida é um no-op e não cria cobrança adicional.
 
-`findByIdempotencyKey` resolve tanto a chave atual quanto qualquer chave histórica para o pagamento lógico. O futuro consumidor deverá consultar e comparar OS/Saga/orçamento/provider/referência antes de reprocessar. A persistência não transforma conflito de chave com outro pagamento em sucesso: retorna violação de unicidade.
+`findByIdempotencyKey` resolve tanto a chave atual quanto qualquer chave histórica para o pagamento lógico. O consumidor consulta os registros existentes e valida Saga, itens do orçamento, valor do pagamento e repairId do comando original antes de deduplicar. A persistência não transforma conflito de chave com outro pagamento em sucesso: retorna violação de unicidade.
 
 Resultados exigem a chave da tentativa atual. A mesma confirmação com o mesmo ID de provedor é idempotente e preserva o timestamp; um ID diferente é conflito. Repetição de falha com o mesmo motivo é idempotente. Resultados de tentativa histórica são rejeitados: reconciliação de confirmações tardias do provedor será modelada antes da integração externa. Referência externa e ID de confirmação são únicos no escopo do provider.
 
@@ -136,7 +138,7 @@ X-CSRF-TOKEN: <token da mesma sessao>
 {"responsavelId":"cliente-123","motivo":"Orçamento acima do esperado"}
 ```
 
-`responsavelId` tem limite de 100 caracteres; `motivo`, de 500. Campos opcionais podem ser omitidos ou null; valores em branco são inválidos. O corpo JSON é obrigatório (`{}` é permitido). Campos desconhecidos, incluindo `valorTotal` e `itens`, são rejeitados com 400. Os casos de uso utilizam as transições existentes do domínio, sem receber totais ou itens do solicitante. `X-Correlation-Id` é UUID opcional, preservado na decisão.
+`responsavelId` tem limite de 100 caracteres; `motivo`, de 500. Campos opcionais podem ser omitidos ou null; valores em branco são inválidos. O corpo JSON é obrigatório (`{}` é permitido). Campos desconhecidos, incluindo `valorTotal` e `itens`, são rejeitados com 400. Os casos de uso utilizam as transições existentes do domínio, sem receber totais ou itens do solicitante. `X-Correlation-Id` é UUID opcional, preservado na decisão e no evento. Sem header, reutiliza-se a correlação original de quote.create.v1 da mesma OS/Saga; sem Inbox original, utiliza-se fallback UUID determinístico derivado desses IDs, documentado em [mensageria](docs/messaging.md).
 
 Exemplo ilustrativo de consulta de orçamento:
 
@@ -176,7 +178,7 @@ A política é **409 para toda decisão repetida**, inclusive a mesma decisão, 
 
 Somente PENDING_APPROVAL permite aprovação ou recusa. Os casos de uso são transacionais e reutilizam @Version, unicidade e constraint triggers de V2. Uma falha na gravação da decisão reverte também a alteração do orçamento. A disputa REST entre aprovação e recusa é testada com duas requisições concorrentes: apenas uma pode efetivar a decisão; a outra recebe 409. Não há transação distribuída.
 
-**As decisões são persistidas localmente e ainda não produzem eventos RabbitMQ.** Os estados e o motivo registrado permitem futura publicação de `quote.approved.v1` ou `quote.rejected.v1`, preservando IDs e correlação. O OS Service continua sendo o único orquestrador; nenhum contrato externo foi alterado.
+**As decisões são persistidas atomicamente com sua Outbox e publicadas assincronamente em RabbitMQ.** Os eventos `quote.approved.v1` e `quote.rejected.v1` preservam IDs e correlação; a recusa sempre publica reason não vazio, mesmo quando motivo foi omitido. O OS Service continua sendo o único orquestrador; nenhum contrato externo foi alterado.
 
 ### Segurança provisória e CSRF
 
@@ -226,6 +228,39 @@ Erros são retornados como `application/problem+json` (ProblemDetail), com type,
 }
 ```
 
+## RabbitMQ, Inbox e Outbox — etapa 7.4
+
+A [documentação de mensageria](docs/messaging.md) descreve contratos, topologia, atomicidade, retries, leases, execução integrada e recuperação operacional.
+
+- Consome `quote.create.v1` e `payment.request.v1` de `oficina.commands`.
+- Publica `quote.created.v1`, `quote.creation-failed.v1`, `quote.approved.v1` e `quote.rejected.v1` em `oficina.events`.
+- Filas principais: `billing.quote.create` e `billing.payment.request`; retry/DLQ próprios.
+- V3 adiciona `inbox_messages` e `outbox_events`; V1/V2 e suas triggers permanecem intactas.
+- Inbox combina unicidade, INSERT ON CONFLICT, lock de linha e lock transacional por OS. ACK somente após commit ou transferência confirmada para retry/DLQ.
+- Outbox usa SKIP LOCKED, lease com token, backoff limitado e bloqueio da sequência de uma OS em FAILED. Publicação persistente, mandatory e com publisher confirms fora da transação.
+- Entrega at-least-once: republicações preservam eventId e payload; o OS deduplica. Não há promessa exactly-once.
+- Payment.request persiste pagamento e tentativa inicial PENDING com chave estável, sem chamar provedor nem publicar pagamento confirmado/falho fictício.
+
+Novas classes: InboxMessage/OutboxEvent e enums; portas InboxRepositoryPort, OutboxRepositoryPort, MessageBrokerPort e MessageCodecPort; entidades/repositórios/adapters JPA; CommandHandler, EventRecorder, MessageCodec, CommandConsumer, RabbitMessageBrokerAdapter, OutboxPublisher e configuração de propriedades/topologia. SQL especializado utiliza o mesmo DataSource e a mesma transação JPA.
+
+### Execução com broker compartilhado
+
+O Compose padrão aponta a `host.docker.internal:5672`, para usar o broker do OS. Configure RABBITMQ_HOST/PORT/USERNAME/PASSWORD/VHOST no .env com os dados **do mesmo broker utilizado pelo OS e Execution**. A conta billing não é criada automaticamente em broker externo. Se os serviços usam o broker opcional do Execution, a porta publicada é 5673.
+
+```bash
+docker compose up --build -d --wait
+```
+
+Um broker isolado opcional só é criado com o profile `local-broker`, nas portas 5674/15674. Para desenvolvimento sem os outros serviços:
+
+```bash
+RABBITMQ_HOST=rabbitmq RABBITMQ_PORT=5672 docker compose --profile local-broker up --build -d --wait
+```
+
+No PowerShell, defina `$env:RABBITMQ_HOST='rabbitmq'` e `$env:RABBITMQ_PORT='5672'` antes desse comando. Esse perfil **não integra automaticamente outros serviços**: eles precisam apontar explicitamente para o mesmo broker/vhost. Nenhum Compose externo foi alterado.
+
+Readiness continua considerando PostgreSQL. RabbitMQ indisponível não impede decisões locais, mas a publicação pode atingir FAILED e exigir intervenção auditada. Veja recuperação de Inbox/DLQ/Outbox e limites de dead lettering em [docs/messaging.md](docs/messaging.md).
+
 ## Banco e variáveis de ambiente
 
 | Variável | Padrão / finalidade |
@@ -236,6 +271,8 @@ Erros são retornados como `application/problem+json` (ProblemDetail), com type,
 | `DB_NAME` | `oficina_billing` |
 | `DB_USERNAME` | `billing` |
 | `DB_PASSWORD` | Obrigatória |
+| `RABBITMQ_HOST` / `RABBITMQ_PORT` | localhost/5672 no Java; host.docker.internal/5672 no Compose |
+| `RABBITMQ_USERNAME` / `RABBITMQ_PASSWORD` / `RABBITMQ_VHOST` | Identidade/vhost do broker compartilhado; senha fornecida pelo ambiente |
 | `BILLING_SECURITY_USERNAME` | `billing` |
 | `BILLING_SECURITY_PASSWORD` | Obrigatória |
 
@@ -297,9 +334,20 @@ As últimas chamadas retornam 401 sem credenciais e 200 com credenciais válidas
 
 A suíte verifica precisão e escala, quantidades decimais, overflow, itens duplicados, estados terminais, decisões auditáveis, elegibilidade da cobrança, resultados idempotentes/conflitantes, retries e histórico. Os testes PostgreSQL exercitam adapters/consultas, BigDecimal sem perda, constraints, FKs locais, rollback atômico, versões obsoletas e decisões simultâneas. O bootstrap continua validando contexto, Flyway/Hibernate, health/readiness, falha/recuperação de conexão, Swagger e autenticação.
 
+A suíte de mensageria usa PostgreSQL e RabbitMQ reais para validar os quatro eventos quote.*, decisões REST com Outbox, pagamentos pendentes, deduplicação e consumidores/publishers concorrentes, rollback em cada fluxo, DLQ, retry limitado, unroutable, lease expirado e queda/recuperação do broker. occurredAt é verificado explicitamente como string ISO-8601 compatível com o envelope do OS.
+
 Relatórios: `target/surefire-reports/` e `target/site/jacoco/index.html`, com XML em `target/site/jacoco/jacoco.xml`. Logs locais ignorados pelo Git: `bootstrap-domain.log` e `bootstrap-compose.log`.
 
-### Validação da etapa 7.3 em 2026-10-20
+### Validação da etapa 7.4 em 2026-10-20
+
+- `./mvnw.cmd -B -ntp clean verify`: **BUILD SUCCESS**, 143 testes, zero falhas, erros ou skips; os 92 testes anteriores foram preservados.
+- JaCoCo: **98,10% de linhas — 826/842**, sem exclusões; limite de 80% aprovado.
+- PostgreSQL e RabbitMQ reais via Testcontainers: comandos e eventos, decisões REST, pagamentos PENDING, concorrência, rollback, deduplicação, retry, DLQ, mandatory routing, leases e queda/recuperação do broker.
+- Compose validado com o perfil opcional `local-broker`: Billing, PostgreSQL e RabbitMQ saudáveis; dois consumidores em cada fila principal. Flyway V1/V2/V3 aplicadas e schema validado pelo Hibernate.
+- Health, readiness, Swagger e OpenAPI retornaram 200 na porta 8082; consulta financeira sem autenticação retornou 401. Nenhum dado financeiro fictício foi inserido no Compose.
+- A Saga completa com OS e Execution não foi executada; os testes verificam transporte real e compatibilidade dos envelopes. Logs locais: `bootstrap-messaging.log` e `bootstrap-compose-final.log`.
+
+### Histórico: validação da etapa 7.3 em 2026-10-20
 
 - `./mvnw.cmd -B -ntp clean verify`: **BUILD SUCCESS**, 92 testes, zero falhas, erros ou skips. Os 57 cenários anteriores permanecem, com 12 novos testes unitários de casos de uso e 23 cenários REST/PostgreSQL.
 - JaCoCo: **98,51% de linhas — 462/469**, sem exclusões; limite de 80% aprovado.
@@ -321,7 +369,7 @@ O ajuste encontrado nos novos testes foi comparar itens após a leitura PostgreS
 
 Os erros de conexão e violações de constraints registrados durante testes negativos são esperados. Os ajustes encontrados durante a implementação foram resolvidos: compatibilidade JUnit/Spring, nomes explícitos das colunas de associação e proteção de campos financeiros terminais permitindo a atualização técnica de `version` pelo Hibernate. Não há bloqueios pendentes.
 
-## Contratos futuros
+## Contratos com OS e Execution
 
 Referências obrigatórias consultadas na branch homolog:
 
@@ -329,10 +377,10 @@ Referências obrigatórias consultadas na branch homolog:
 - [OS: Saga](https://github.com/AuroNet0/tech-challenge-oficina-os-service/blob/homolog/docs/saga.md).
 - [Execution: mensageria](https://github.com/AuroNet0/tech-challenge-oficina-execution-service/blob/homolog/docs/messaging.md).
 
-O OS Service continua sendo o único orquestrador. Futuramente, `quote.create.v1` originará Orcamento e `quote.created.v1` identificará o orçamento. As decisões corresponderão a `quote.approved.v1` e `quote.rejected.v1`. `payment.request.v1` originará a cobrança do valor aprovado; seus resultados serão `payment.confirmed.v1` ou `payment.failed.v1`. Uma falha mantém a Saga aguardando pagamento, sem desfazer reparo físico.
+O OS Service continua sendo o único orquestrador. `quote.create.v1` cria Orcamento e registra `quote.created.v1` ou `quote.creation-failed.v1` na Outbox. Decisões REST registram `quote.approved.v1` ou `quote.rejected.v1`. `payment.request.v1` cria a intenção PENDING e a tentativa inicial pelo valor aprovado, sem chamar provedor. Os resultados futuros `payment.confirmed.v1` e `payment.failed.v1` dependem da integração verificável com o provedor e não são emitidos nesta etapa. Uma falha financeira não desfaz reparo físico.
 
-Itens do Execution fornecem quantidade e precoPrevisto em strings decimais; o Billing utiliza modelos próprios e não consulta o banco de diagnóstico. IDs de OS/Saga permitem preservar a correlação no futuro envelope. Não foi implementado consumo/publicação nem alterado outro microsserviço.
+Itens do Execution fornecem quantidade e precoPrevisto em strings decimais; o Billing utiliza modelos próprios e não consulta o banco de diagnóstico. IDs de OS/Saga e correlationId são preservados nos envelopes. Somente este repositório foi alterado; os contratos e implementações de referência permanecem intactos.
 
 ## Limitações atuais
 
-Sem criação REST de orçamento/pagamento, edição financeira manual, RabbitMQ, Inbox/Outbox, Mercado Pago, Saga Orchestrator, JWT definitivo, Terraform, Kubernetes ou CI/CD. Não há dados financeiros fictícios em migrações ou startup. A identidade definitiva do responsável, reconciliação do provedor, autorização por cliente e integração dos comandos/eventos ficam para etapas posteriores. Aprovar/recusar pela API altera apenas o PostgreSQL local e não avança a Saga do OS. Os triggers representam invariantes locais PostgreSQL, não uma implementação de Saga.
+Sem criação REST de orçamento/pagamento, edição financeira manual, Mercado Pago, webhook, confirmação manual, Saga Orchestrator próprio, JWT definitivo, Terraform, Kubernetes ou CI/CD. Não há dados financeiros fictícios em migrações ou startup. A identidade definitiva do responsável, reconciliação do provedor, autorização por cliente e eventos de resultado financeiro ficam para etapas posteriores. Aprovar/recusar altera o PostgreSQL local e registra o evento na Outbox; somente o OS decide o avanço da Saga após consumi-lo. Intenção PENDING não comprova cobrança nem confirmação de pagamento. Os triggers representam invariantes locais PostgreSQL, não uma implementação de Saga.

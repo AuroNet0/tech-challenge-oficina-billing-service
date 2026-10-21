@@ -17,7 +17,7 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Oficina Billing Service")
                         .version("v1")
-                        .description("API financeira de desenvolvimento. Decisoes locais, sem publicacao de eventos."))
+                        .description("API financeira de desenvolvimento com eventos via Outbox. Sem confirmacao simulada de pagamento."))
                 .components(new Components().addSecuritySchemes("basicAuth", new SecurityScheme()
                         .type(SecurityScheme.Type.HTTP)
                         .scheme("basic")))

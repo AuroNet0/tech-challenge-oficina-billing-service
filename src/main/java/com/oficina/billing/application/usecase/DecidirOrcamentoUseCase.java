@@ -2,6 +2,7 @@ package com.oficina.billing.application.usecase;
 
 import java.time.Clock;
 import java.time.temporal.ChronoUnit;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.oficina.billing.application.exception.ResourceNotFoundException;
@@ -16,11 +17,14 @@ public class DecidirOrcamentoUseCase implements DecidirOrcamentoPort {
     private final OrcamentoRepositoryPort orcamentos;
     private final AprovacaoRepositoryPort aprovacoes;
     private final Clock clock;
+    private final EventRecorder events;
 
-    public DecidirOrcamentoUseCase(OrcamentoRepositoryPort orcamentos, AprovacaoRepositoryPort aprovacoes, Clock clock) {
+    public DecidirOrcamentoUseCase(OrcamentoRepositoryPort orcamentos, AprovacaoRepositoryPort aprovacoes,
+                                 Clock clock, EventRecorder events) {
         this.orcamentos = orcamentos;
         this.aprovacoes = aprovacoes;
         this.clock = clock;
+        this.events = events;
     }
 
     @Override
@@ -47,8 +51,13 @@ public class DecidirOrcamentoUseCase implements DecidirOrcamentoPort {
             orcamento.rejeitar(now);
         }
         orcamentos.save(orcamento);
-        var decisao = Aprovacao.registrar(orcamento, command.responsavelId(),
-                approve ? null : command.motivo(), command.correlationId(), now);
-        return aprovacoes.save(decisao);
+        var correlation = events.correlation(orcamento.osId(), orcamento.sagaId(), command.correlationId());
+        var decisao = aprovacoes.save(Aprovacao.registrar(orcamento, command.responsavelId(),
+                approve ? null : command.motivo(), correlation, now));
+        String reason = command.motivo() == null ? "Orcamento recusado pelo solicitante." : command.motivo();
+        events.record(orcamento.id(), "Orcamento", orcamento.osId(), orcamento.sagaId(), correlation,
+                approve ? "quote.approved.v1" : "quote.rejected.v1",
+                approve ? Map.of() : Map.of("reason", reason), now);
+        return decisao;
     }
 }

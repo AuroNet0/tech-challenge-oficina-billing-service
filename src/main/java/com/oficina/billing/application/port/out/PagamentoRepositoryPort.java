@@ -8,6 +8,7 @@ import com.oficina.billing.domain.model.Pagamento;
 public interface PagamentoRepositoryPort {
     Pagamento save(Pagamento pagamento);
     Optional<Pagamento> findById(UUID id);
+    Optional<Pagamento> findByOrcamentoId(UUID orcamentoId);
     List<Pagamento> findByOsId(UUID osId);
     List<Pagamento> findBySagaId(UUID sagaId);
     Optional<Pagamento> findByIdempotencyKey(String key);
