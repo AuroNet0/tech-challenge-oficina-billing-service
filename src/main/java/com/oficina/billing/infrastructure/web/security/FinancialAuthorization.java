@@ -48,7 +48,7 @@ public final class FinancialAuthorization {
 
     public boolean operational() {
         return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(authority -> Set.of("ROLE_ATENDENTE", "ROLE_GERENTE").contains(authority.getAuthority()));
+                .anyMatch(authority -> "ROLE_ATENDENTE".equals(authority.getAuthority()));
     }
 
     private ResponseStatusException unavailable() {

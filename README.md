@@ -11,7 +11,7 @@ Tech Challenge FIAP — Fase 4, etapas 7.1 a 7.5. Microsserviço de orçamentos,
 - Reserva/HTTP/finalização, leases e pesquisa por referência protegem criação repetida/resultado desconhecido. Não se presume idempotência de POST /checkout/preferences. UNKNOWN não repete POST automaticamente.
 - Webhook e reconciliação compartilham validação financeira e gravação atômica de pagamento/tentativa/receipt/Outbox. Confirmação tardia preserva o histórico; múltiplos créditos, valores divergentes e estados não mapeados exigem revisão.
 - V4 adiciona `provider_sync`, `provider_checkouts`, `provider_notifications`, `provider_payments`, `provider_observations`; V1–V3 não são alteradas. Infraestrutura financeira continua JPA/PostgreSQL; o workflow especializado usa JDBC transacional, sem expor entidades.
-- Não há confirmação manual, captura de cartão, integração de produção ou autorização definitiva por proprietário. Teste oficial com credenciais e HTTPS público permanece pendente; Maven usa API local simulada, PostgreSQL e RabbitMQ Testcontainers.
+- Não há confirmação manual, captura de cartão ou integração de produção. A integração local autenticada por proprietário usa mTLS no perfil `mtls`; a validação real em AWS e com o provedor oficial permanece pendente. Consulte [8.3.5](integration/8.3.5/relatorio.md).
 
 ## Tecnologias e compatibilidade
 
@@ -191,9 +191,9 @@ Somente PENDING_APPROVAL permite aprovação ou recusa. Os casos de uso são tra
 
 **As decisões são persistidas atomicamente com sua Outbox e publicadas assincronamente em RabbitMQ.** Os eventos `quote.approved.v1` e `quote.rejected.v1` preservam IDs e correlação; a recusa sempre publica reason não vazio, mesmo quando motivo foi omitido. O OS Service continua sendo o único orquestrador; nenhum contrato externo foi alterado.
 
-### Autorizacao JWT e propriedade — etapa 8.3.4
+### Autorizacao JWT e propriedade — etapas 8.3.4 e 8.3.5
 
-O canal de negocio exige Bearer RS256 validado pelo JWKS HTTPS do Auth. Basic e sessoes foram retirados; CSRF esta desabilitado no canal stateless. CLIENTE pode decidir e iniciar checkout somente com propriedade atual comprovada; ATENDENTE e GERENTE consultam apenas uma projecao operacional quando o escopo for autorizado; MECANICO nao recebe acesso financeiro. Sem o canal interno confiavel OS/Auth, o adapter retorna indisponivel e bloqueia essas operacoes com 503.
+O canal de negocio exige Bearer RS256 validado pelo JWKS HTTPS do Auth. Basic e sessoes foram retirados; CSRF esta desabilitado no canal stateless. CLIENTE pode decidir e iniciar checkout somente com propriedade atual comprovada. ATENDENTE recebe projecao operacional resumida; GERENTE consulta detalhes financeiros das filiais autorizadas, sem decidir pelo cliente. MECANICO nao recebe acesso financeiro. O perfil `mtls` usa certificado tecnico proprio e JWT original para consultar o OS, que valida assinatura, identidade e escopo independentemente. Sem esse perfil/canal confiavel, o adapter indisponivel continua bloqueando as operacoes com 503. Roteiro e evidencias locais: [8.3.5](integration/8.3.5/README.md).
 
 O campo opcional responsavelId deve coincidir exatamente com JWT.sub. A identidade persistida vem exclusivamente do token. Webhooks usam HMAC em cadeia especifica; consumidores RabbitMQ e reconciliacao nao dependem de JWT humano. Detalhes e evidencias: [etapa 8.3.4](docs/security/billing-authorization-8.3.4.md).
 

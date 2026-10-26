@@ -1,0 +1,7 @@
+﻿{
+    "dockerEngine":  "29.7.2",
+    "java":  "openjdk 21.0.12.1 2026-08-18 LTS OpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS) OpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)",
+    "postgres":  "17.11",
+    "mongo":  "8.0.32",
+    "rabbitmq":  "4.3.6"
+}

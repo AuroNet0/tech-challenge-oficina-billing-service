@@ -544,13 +544,18 @@ class ProviderIntegrationTests {
     }
 
     @Test
-    void operationalPaymentProjectionDoesNotExposeAttemptsAndMechanicIsDenied() throws Exception {
+    void staffPaymentProjectionMatchesRoleAndMechanicIsDenied() throws Exception {
         for (String role : List.of("ATENDENTE", "GERENTE")) {
-            mvc.perform(get("/api/v1/pagamentos/{id}", initial.id())
+            var response = mvc.perform(get("/api/v1/pagamentos/{id}", initial.id())
                     .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role)))
-                    .andExpect(status().isOk()).andExpect(jsonPath("$.status").value("PENDING"))
-                    .andExpect(jsonPath("$.tentativas").doesNotExist()).andExpect(jsonPath("$.provider").doesNotExist())
-                    .andExpect(jsonPath("$.valor").doesNotExist());
+                    .andExpect(status().isOk()).andExpect(jsonPath("$.status").value("PENDING"));
+            if (role.equals("ATENDENTE")) {
+                response.andExpect(jsonPath("$.tentativas").doesNotExist()).andExpect(jsonPath("$.provider").doesNotExist())
+                        .andExpect(jsonPath("$.valor").doesNotExist());
+            } else {
+                response.andExpect(jsonPath("$.tentativas").isArray()).andExpect(jsonPath("$.provider").exists())
+                        .andExpect(jsonPath("$.valor").exists());
+            }
         }
         mvc.perform(get("/api/v1/pagamentos/{id}", initial.id())
                 .with(com.oficina.billing.security.FinancialTestSecurity.bearer("MECANICO")))

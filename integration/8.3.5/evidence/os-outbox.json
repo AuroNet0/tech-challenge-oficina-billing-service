@@ -1,0 +1,37 @@
+[
+  {
+    "id": "e16397ff-3af9-4ecc-868c-1efef73684e3",
+    "event_type": "diagnostic.start.v1",
+    "aggregate_id": "ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": "PUBLISHED",
+    "attempts": 0
+  },
+  {
+    "id": "f7823dea-0bb6-456e-9927-db3f2c0cd9a6",
+    "event_type": "diagnostic.start.v1",
+    "aggregate_id": "e57b3513-eeb4-4f26-87f1-305b669c0bfb",
+    "status": "PUBLISHED",
+    "attempts": 0
+  },
+  {
+    "id": "5c4c3680-e958-4976-b481-36ba18a06bc9",
+    "event_type": "quote.create.v1",
+    "aggregate_id": "ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": "PUBLISHED",
+    "attempts": 0
+  },
+  {
+    "id": "46e1f367-2415-4bbe-ae9e-f3b0dfbcd4d3",
+    "event_type": "repair.start.v1",
+    "aggregate_id": "ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": "PUBLISHED",
+    "attempts": 0
+  },
+  {
+    "id": "79ec7c85-6c92-4c6a-9b6b-8ef007f527cc",
+    "event_type": "payment.request.v1",
+    "aggregate_id": "ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": "PUBLISHED",
+    "attempts": 0
+  }
+]

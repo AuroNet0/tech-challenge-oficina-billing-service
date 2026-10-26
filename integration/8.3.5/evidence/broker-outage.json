@@ -1,0 +1,20 @@
+{
+  "orderId": "3ace4e36-68e5-40e5-959f-478dfa3d5dce",
+  "outbox": [
+    {
+      "id": "0164b51b-73c6-4372-9d8d-c95d954af491",
+      "status": "PENDING",
+      "attempts": 1,
+      "event_type": "diagnostic.start.v1"
+    }
+  ],
+  "checks": [
+    "login real clienteA",
+    "login real clienteB",
+    "login real atendente",
+    "login real gerente",
+    "login real mecanico",
+    "login real semPapel",
+    "OS aceita abertura autenticada e ret\u00e9m comando na Outbox durante indisponibilidade do broker"
+  ]
+}

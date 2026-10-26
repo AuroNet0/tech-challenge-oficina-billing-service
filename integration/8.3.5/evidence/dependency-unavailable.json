@@ -1,0 +1,15 @@
+{
+  "status": "PASSED",
+  "checks": [
+    "login real clienteA",
+    "login real clienteB",
+    "login real atendente",
+    "login real gerente",
+    "login real mecanico",
+    "login real semPapel",
+    "negado billing POST /api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522/checkout ator=clienteB HTTP 503",
+    "sem mutacao apos negacao 7",
+    "negado execution PATCH /api/v1/diagnosticos/f33ccbe4-3536-44d7-b52b-0ae5a8fb5912/observacoes ator=mecanico HTTP 503",
+    "sem mutacao apos negacao 9"
+  ]
+}

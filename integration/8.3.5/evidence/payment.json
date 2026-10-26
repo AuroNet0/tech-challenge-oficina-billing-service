@@ -1,0 +1,24 @@
+{
+  "id": "4c211506-af40-43ea-b9dc-00dc37fd2522",
+  "osId": "ff9a70fe-706b-40b6-bf7f-320e31bec889",
+  "sagaId": "36765109-3bfa-4c00-ab62-b903b6dbf9e7",
+  "orcamentoId": "6504d95d-99b2-4ed3-a3ac-7635b518007a",
+  "status": "CONFIRMED",
+  "valor": "150.00",
+  "moeda": "BRL",
+  "provider": "MERCADO_PAGO",
+  "createdAt": "2026-10-26T18:51:26.472443Z",
+  "updatedAt": "2026-10-26T18:51:31.278693Z",
+  "confirmedAt": "2026-10-26T18:51:31.278693Z",
+  "failedAt": null,
+  "tentativas": [
+    {
+      "id": "9947c9c0-3119-4683-989c-fbb8f8ce393a",
+      "status": "CONFIRMED",
+      "createdAt": "2026-10-26T18:51:26.472443Z",
+      "updatedAt": "2026-10-26T18:51:31.278693Z",
+      "confirmedAt": "2026-10-26T18:51:31.278693Z",
+      "failedAt": null
+    }
+  ]
+}

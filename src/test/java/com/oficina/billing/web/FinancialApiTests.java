@@ -376,13 +376,18 @@ class FinancialApiTests {
 
     @ParameterizedTest
     @ValueSource(strings = {"ATENDENTE", "GERENTE"})
-    void staffReceivesOnlyOperationalProjection(String role) throws Exception {
+    void staffProjectionMatchesAuthorizedRole(String role) throws Exception {
         var budget = orcamentos.save(orcamento());
-        mvc.perform(get("/api/v1/orcamentos/{id}", budget.id())
+        var response = mvc.perform(get("/api/v1/orcamentos/{id}", budget.id())
                 .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role)))
-                .andExpect(status().isOk()).andExpect(jsonPath("$.osId").value(budget.osId().toString()))
-                .andExpect(jsonPath("$.itens").doesNotExist()).andExpect(jsonPath("$.valorTotal").doesNotExist())
-                .andExpect(jsonPath("$.sagaId").doesNotExist());
+                .andExpect(status().isOk()).andExpect(jsonPath("$.osId").value(budget.osId().toString()));
+        if (role.equals("ATENDENTE")) {
+            response.andExpect(jsonPath("$.itens").doesNotExist()).andExpect(jsonPath("$.valorTotal").doesNotExist())
+                    .andExpect(jsonPath("$.sagaId").doesNotExist());
+        } else {
+            response.andExpect(jsonPath("$.itens").isArray()).andExpect(jsonPath("$.valorTotal").exists())
+                    .andExpect(jsonPath("$.sagaId").exists());
+        }
     }
 
     @Test

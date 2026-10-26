@@ -1,0 +1,47 @@
+﻿{
+    "auth":  {
+                 "branch":  "homolog",
+                 "commit":  "0f26aa8ee36230ee9dbd3ff0bb244da62c347503",
+                 "changes":  [
+                                 "?? integration/"
+                             ]
+             },
+    "os-service":  {
+                       "branch":  "homolog",
+                       "commit":  "8d551aacee92fdf71448b271c2ae9e2712830693",
+                       "changes":  [
+                                       " M src/main/java/com/oficina/os/application/authorization/Capability.java",
+                                       " M src/main/java/com/oficina/os/infrastructure/config/SecurityConfig.java",
+                                       " M src/main/java/com/oficina/os/infrastructure/identity/UnavailableClientAccessAdapter.java",
+                                       " M src/test/java/com/oficina/os/infrastructure/identity/ClientAccessAdapterTest.java",
+                                       " M src/test/java/com/oficina/os/security/AuthorizationIntegrationTest.java",
+                                       "?? src/main/java/com/oficina/os/infrastructure/identity/MtlsClientAccessAdapter.java",
+                                       "?? src/main/java/com/oficina/os/infrastructure/web/InternalAuthorizationController.java",
+                                       "?? src/main/resources/db/migration/V7__technical_capabilities.sql",
+                                       "?? src/test/java/com/oficina/os/security/InternalAuthorizationControllerTest.java"
+                                   ]
+                   },
+    "execution-service":  {
+                              "branch":  "homolog",
+                              "commit":  "c4f07b64abaab093f1c18049c7a2cc71bda218b8",
+                              "changes":  [
+                                              " M src/main/java/com/oficina/execution/infrastructure/security/UnavailableTechnicalAuthorizationAdapter.java",
+                                              "?? src/main/java/com/oficina/execution/infrastructure/security/MtlsTechnicalAuthorizationAdapter.java"
+                                          ]
+                          },
+    "billing-service":  {
+                            "branch":  "homolog",
+                            "commit":  "82603d24c310bf44b5a3d478afce2512e6402614",
+                            "changes":  [
+                                            " M .gitignore",
+                                            " M README.md",
+                                            " M src/main/java/com/oficina/billing/infrastructure/web/security/FinancialAuthorization.java",
+                                            " M src/main/java/com/oficina/billing/infrastructure/web/security/UnavailableFinancialAccessAdapter.java",
+                                            " M src/test/java/com/oficina/billing/payment/ProviderIntegrationTests.java",
+                                            " M src/test/java/com/oficina/billing/security/FinancialAuthorizationTest.java",
+                                            " M src/test/java/com/oficina/billing/web/FinancialApiTests.java",
+                                            "?? integration/8.3.5/",
+                                            "?? src/main/java/com/oficina/billing/infrastructure/web/security/MtlsFinancialAccessAdapter.java"
+                                        ]
+                        }
+}

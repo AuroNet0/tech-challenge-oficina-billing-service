@@ -63,7 +63,7 @@ class FinancialAuthorizationTest {
         login(role);
         when(port.authorize(any(), anySet(), any(), any())).thenReturn(Decision.ALLOW);
         assertThat(authorization.require(os, Action.READ)).isEqualTo(actor.toString());
-        assertThat(authorization.operational()).isTrue();
+        assertThat(authorization.operational()).isEqualTo(role.equals("ATENDENTE"));
         when(port.authorize(any(), anySet(), any(), any())).thenReturn(Decision.DENY);
         assertThatThrownBy(() -> authorization.require(os, Action.READ)).isInstanceOf(AccessDeniedException.class);
     }

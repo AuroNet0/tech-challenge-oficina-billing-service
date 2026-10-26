@@ -1,0 +1,15 @@
+{
+  "osId": "3ace4e36-68e5-40e5-959f-478dfa3d5dce",
+  "diagnosticId": "9d1e76b1-ac17-4506-b968-e489358e82f7",
+  "outbox": [
+    {
+      "id": "0164b51b-73c6-4372-9d8d-c95d954af491",
+      "status": "PUBLISHED",
+      "attempts": 2,
+      "event_type": "diagnostic.start.v1"
+    }
+  ],
+  "checks": [
+    "recuperacao apos falha de broker processa comando sem JWT humano"
+  ]
+}

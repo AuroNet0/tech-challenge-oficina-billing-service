@@ -1,0 +1,13 @@
+﻿{
+    "totalChecks":  134,
+    "status":  "PASSED",
+    "phases":  [
+                   "preflight",
+                   "provision",
+                   "resume-after-approval",
+                   "dependency-unavailable",
+                   "broker-outage",
+                   "broker-recovery"
+               ],
+    "runId":  "4a21f181-8a36-474f-9089-c3c8be1849de"
+}

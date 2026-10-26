@@ -1,0 +1,853 @@
+[
+  {
+    "arguments": {
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 0,
+    "consumer_utilisation": 0,
+    "consumers": 0,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 13912,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "billing.commands.dlq",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 8745,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 1.0,
+    "consumer_utilisation": 1.0,
+    "consumers": 2,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 35208,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "message_stats": {
+      "ack": 1,
+      "ack_details": {
+        "rate": 0.0
+      },
+      "deliver": 1,
+      "deliver_details": {
+        "rate": 0.0
+      },
+      "deliver_get": 1,
+      "deliver_get_details": {
+        "rate": 0.0
+      },
+      "deliver_no_ack": 0,
+      "deliver_no_ack_details": {
+        "rate": 0.0
+      },
+      "get": 0,
+      "get_details": {
+        "rate": 0.0
+      },
+      "get_empty": 0,
+      "get_empty_details": {
+        "rate": 0.0
+      },
+      "get_no_ack": 0,
+      "get_no_ack_details": {
+        "rate": 0.0
+      },
+      "publish": 1,
+      "publish_details": {
+        "rate": 0.0
+      },
+      "redeliver": 0,
+      "redeliver_details": {
+        "rate": 0.0
+      }
+    },
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "billing.payment.request",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 12268,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-dead-letter-exchange": "oficina.commands",
+      "x-dead-letter-routing-key": "payment.request.v1",
+      "x-message-ttl": 5000,
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 0,
+    "consumer_utilisation": 0,
+    "consumers": 0,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 13912,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "billing.payment.request.retry",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 8869,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 1.0,
+    "consumer_utilisation": 1.0,
+    "consumers": 2,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 22416,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "message_stats": {
+      "ack": 1,
+      "ack_details": {
+        "rate": 0.0
+      },
+      "deliver": 1,
+      "deliver_details": {
+        "rate": 0.0
+      },
+      "deliver_get": 1,
+      "deliver_get_details": {
+        "rate": 0.0
+      },
+      "deliver_no_ack": 0,
+      "deliver_no_ack_details": {
+        "rate": 0.0
+      },
+      "get": 0,
+      "get_details": {
+        "rate": 0.0
+      },
+      "get_empty": 0,
+      "get_empty_details": {
+        "rate": 0.0
+      },
+      "get_no_ack": 0,
+      "get_no_ack_details": {
+        "rate": 0.0
+      },
+      "publish": 1,
+      "publish_details": {
+        "rate": 0.0
+      },
+      "redeliver": 0,
+      "redeliver_details": {
+        "rate": 0.0
+      }
+    },
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "billing.quote.create",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 12339,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-dead-letter-exchange": "oficina.commands",
+      "x-dead-letter-routing-key": "quote.create.v1",
+      "x-message-ttl": 5000,
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 0,
+    "consumer_utilisation": 0,
+    "consumers": 0,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 13912,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "billing.quote.create.retry",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 8861,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 0,
+    "consumer_utilisation": 0,
+    "consumers": 0,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 88792,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "messages": 1,
+    "messages_details": {
+      "rate": 0.2
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 1,
+    "messages_ready_details": {
+      "rate": 0.2
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "execution.commands.dlq",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 10456,
+    "reductions_details": {
+      "rate": 366.4
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 1.0,
+    "consumer_utilisation": 1.0,
+    "consumers": 1,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 27160,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "message_stats": {
+      "ack": 3,
+      "ack_details": {
+        "rate": 0.2
+      },
+      "deliver": 3,
+      "deliver_details": {
+        "rate": 0.2
+      },
+      "deliver_get": 3,
+      "deliver_get_details": {
+        "rate": 0.2
+      },
+      "deliver_no_ack": 0,
+      "deliver_no_ack_details": {
+        "rate": 0.0
+      },
+      "get": 0,
+      "get_details": {
+        "rate": 0.0
+      },
+      "get_empty": 0,
+      "get_empty_details": {
+        "rate": 0.0
+      },
+      "get_no_ack": 0,
+      "get_no_ack_details": {
+        "rate": 0.0
+      },
+      "publish": 3,
+      "publish_details": {
+        "rate": 0.2
+      },
+      "redeliver": 0,
+      "redeliver_details": {
+        "rate": 0.0
+      }
+    },
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "execution.diagnostic.start",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 16472,
+    "reductions_details": {
+      "rate": 291.4
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-dead-letter-exchange": "oficina.commands",
+      "x-dead-letter-routing-key": "diagnostic.start.v1",
+      "x-message-ttl": 5000,
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 0,
+    "consumer_utilisation": 0,
+    "consumers": 0,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 68096,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "execution.diagnostic.start.retry",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 7996,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 1.0,
+    "consumer_utilisation": 1.0,
+    "consumers": 1,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 34768,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "execution.repair.cancel",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 8393,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-dead-letter-exchange": "oficina.commands",
+      "x-dead-letter-routing-key": "repair.cancel.v1",
+      "x-message-ttl": 5000,
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 0,
+    "consumer_utilisation": 0,
+    "consumers": 0,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 68096,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "execution.repair.cancel.retry",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 7990,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 1.0,
+    "consumer_utilisation": 1.0,
+    "consumers": 1,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 22192,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "message_stats": {
+      "ack": 1,
+      "ack_details": {
+        "rate": 0.0
+      },
+      "deliver": 1,
+      "deliver_details": {
+        "rate": 0.0
+      },
+      "deliver_get": 1,
+      "deliver_get_details": {
+        "rate": 0.0
+      },
+      "deliver_no_ack": 0,
+      "deliver_no_ack_details": {
+        "rate": 0.0
+      },
+      "get": 0,
+      "get_details": {
+        "rate": 0.0
+      },
+      "get_empty": 0,
+      "get_empty_details": {
+        "rate": 0.0
+      },
+      "get_no_ack": 0,
+      "get_no_ack_details": {
+        "rate": 0.0
+      },
+      "publish": 1,
+      "publish_details": {
+        "rate": 0.0
+      },
+      "redeliver": 0,
+      "redeliver_details": {
+        "rate": 0.0
+      }
+    },
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "execution.repair.start",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 11689,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-dead-letter-exchange": "oficina.commands",
+      "x-dead-letter-routing-key": "repair.start.v1",
+      "x-message-ttl": 5000,
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 0,
+    "consumer_utilisation": 0,
+    "consumers": 0,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 68096,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "execution.repair.start.retry",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 7987,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-dead-letter-exchange": "oficina.events.dlx",
+      "x-dead-letter-routing-key": "saga.events.dead",
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 1.0,
+    "consumer_utilisation": 1.0,
+    "consumers": 1,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 35208,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "message_stats": {
+      "ack": 9,
+      "ack_details": {
+        "rate": 0.2
+      },
+      "deliver": 9,
+      "deliver_details": {
+        "rate": 0.0
+      },
+      "deliver_get": 9,
+      "deliver_get_details": {
+        "rate": 0.0
+      },
+      "deliver_no_ack": 0,
+      "deliver_no_ack_details": {
+        "rate": 0.0
+      },
+      "get": 0,
+      "get_details": {
+        "rate": 0.0
+      },
+      "get_empty": 0,
+      "get_empty_details": {
+        "rate": 0.0
+      },
+      "get_no_ack": 0,
+      "get_no_ack_details": {
+        "rate": 0.0
+      },
+      "publish": 9,
+      "publish_details": {
+        "rate": 0.0
+      },
+      "redeliver": 0,
+      "redeliver_details": {
+        "rate": 0.0
+      }
+    },
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "os.saga.events",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 29698,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  },
+  {
+    "arguments": {
+      "x-queue-type": "classic"
+    },
+    "auto_delete": false,
+    "consumer_capacity": 0,
+    "consumer_utilisation": 0,
+    "consumers": 0,
+    "durable": true,
+    "effective_policy_definition": {},
+    "exclusive": false,
+    "internal": false,
+    "internal_owner": false,
+    "memory": 34624,
+    "message_bytes": 0,
+    "message_bytes_persistent": 0,
+    "message_bytes_ram": 0,
+    "message_bytes_ready": 0,
+    "message_bytes_unacknowledged": 0,
+    "messages": 0,
+    "messages_details": {
+      "rate": 0.0
+    },
+    "messages_persistent": 0,
+    "messages_ram": 0,
+    "messages_ready": 0,
+    "messages_ready_details": {
+      "rate": 0.0
+    },
+    "messages_ready_ram": 0,
+    "messages_unacknowledged": 0,
+    "messages_unacknowledged_details": {
+      "rate": 0.0
+    },
+    "messages_unacknowledged_ram": 0,
+    "name": "os.saga.events.dlq",
+    "node": "rabbit@dbdaded96849",
+    "reductions": 7837,
+    "reductions_details": {
+      "rate": 0.0
+    },
+    "state": "running",
+    "storage_version": 2,
+    "type": "classic",
+    "vhost": "/"
+  }
+]

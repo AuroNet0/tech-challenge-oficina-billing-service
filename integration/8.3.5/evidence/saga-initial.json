@@ -1,0 +1,10 @@
+{
+  "sagaId": "36765109-3bfa-4c00-ab62-b903b6dbf9e7",
+  "ordemServicoId": "ff9a70fe-706b-40b6-bf7f-320e31bec889",
+  "status": "WAITING_DIAGNOSTIC",
+  "currentStep": "DIAGNOSTIC",
+  "createdAt": "2026-10-26T18:36:19.527267Z",
+  "updatedAt": "2026-10-26T18:36:19.527267Z",
+  "completedAt": null,
+  "lastError": null
+}
