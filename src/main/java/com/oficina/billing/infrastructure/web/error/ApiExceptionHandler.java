@@ -17,6 +17,10 @@ import com.oficina.billing.application.payment.*;
 
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    ResponseEntity<Object> denied(RuntimeException exception, WebRequest request) {
+        return problem(HttpStatus.FORBIDDEN, request);
+    }
     @ExceptionHandler(InvalidSignatureException.class)
     ResponseEntity<Object> invalidSignature(InvalidSignatureException exception, WebRequest request) {
         return problem(HttpStatus.UNAUTHORIZED, request);

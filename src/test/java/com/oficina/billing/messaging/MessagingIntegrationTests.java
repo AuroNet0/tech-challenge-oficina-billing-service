@@ -54,6 +54,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "billing.messaging.enabled=true", "billing.messaging.max-deliveries=3", "billing.messaging.retry-delay=100ms",
         "billing.messaging.confirm-timeout=1s", "billing.outbox.enabled=false",
         "billing.outbox.initial-backoff=100ms", "billing.outbox.max-backoff=300ms", "billing.outbox.max-attempts=3"})
+@org.springframework.context.annotation.Import(com.oficina.billing.security.FinancialTestSecurity.class)
 @AutoConfigureMockMvc
 class MessagingIntegrationTests {
     private static final String OBSERVER = "billing-test-os-events";
@@ -91,8 +92,12 @@ class MessagingIntegrationTests {
     private OutboxRepositoryPort outboxTarget;
     private InboxRepositoryPort inboxTarget;
 
+    @Autowired private com.oficina.billing.application.authorization.FinancialAccessPort financialAccess;
+
     @BeforeEach
     void clean() {
+        org.mockito.Mockito.reset(financialAccess);
+        org.mockito.Mockito.when(financialAccess.authorize(org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any())).thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW);
         listeners.stop();
         outboxTarget = AopTestUtils.getUltimateTargetObject(outbox);
         inboxTarget = AopTestUtils.getUltimateTargetObject(inbox);
@@ -110,6 +115,11 @@ class MessagingIntegrationTests {
 
     @Test
     void consumesRealQuoteAndPublishesOsCompatibleJsonWithPersistedQuoteId() throws Exception {
+        when(financialAccess.authorize(any(), any(), any(), any()))
+                .thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.UNAVAILABLE);
+        mvc.perform(get("/api/v1/orcamentos/{id}", UUID.randomUUID()).header("Authorization",
+                "Bearer " + com.oficina.billing.security.FinancialTestSecurity.expiredToken()))
+                .andExpect(status().isUnauthorized());
         var command = quote();
         send(command);
         awaitBudget(command);
@@ -134,6 +144,7 @@ class MessagingIntegrationTests {
         assertThat(message.getMessageProperties().getReceivedRoutingKey()).isEqualTo("quote.created.v1");
         assertThat(message.getMessageProperties().getMessageId()).isEqualTo(contract.eventId().toString());
         assertThat(count("outbox_events", "status = 'PUBLISHED'")).isEqualTo(1);
+        verifyNoInteractions(financialAccess);
     }
 
     @Test
@@ -144,7 +155,7 @@ class MessagingIntegrationTests {
         publisher.publishOne();
         receiveEvent();
         var budget = orcamentos.findByOsId(command.osId()).orElseThrow();
-        mvc.perform(post("/api/v1/orcamentos/{id}/aprovar", budget.id()).with(httpBasic("billing-test", "test-password"))
+        mvc.perform(post("/api/v1/orcamentos/{id}/aprovar", budget.id()).with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE"))
                         .with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.correlationId").value(command.correlationId().toString()));
         publisher.publishOne();
@@ -152,7 +163,7 @@ class MessagingIntegrationTests {
         assertThat(event.eventType()).isEqualTo("quote.approved.v1");
         assertThat(event.payload()).isEmpty();
         assertThat(event.correlationId()).isEqualTo(command.correlationId());
-        mvc.perform(post("/api/v1/orcamentos/{id}/aprovar", budget.id()).with(httpBasic("billing-test", "test-password"))
+        mvc.perform(post("/api/v1/orcamentos/{id}/aprovar", budget.id()).with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE"))
                         .with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
                 .andExpect(status().isConflict());
         assertThat(count("outbox_events", "true")).isEqualTo(2);
@@ -170,7 +181,7 @@ class MessagingIntegrationTests {
         var budget = orcamentos.findByOsId(command.osId()).orElseThrow();
         var correlation = UUID.randomUUID();
         String request = reason.isEmpty() ? "{}" : mapper.writeValueAsString(Map.of("motivo", reason));
-        mvc.perform(post("/api/v1/orcamentos/{id}/rejeitar", budget.id()).with(httpBasic("billing-test", "test-password"))
+        mvc.perform(post("/api/v1/orcamentos/{id}/rejeitar", budget.id()).with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE"))
                         .with(csrf()).header("X-Correlation-Id", correlation)
                         .contentType(MediaType.APPLICATION_JSON).content(request)).andExpect(status().isOk());
         publisher.publishOne();
@@ -310,7 +321,7 @@ class MessagingIntegrationTests {
     void decisionRollsBackWhenOutboxCannotBePersisted() throws Exception {
         var budget = orcamentos.save(orcamento());
         doThrow(new IllegalStateException("outbox unavailable")).when(outboxTarget).insert(any());
-        mvc.perform(post("/api/v1/orcamentos/{id}/aprovar", budget.id()).with(httpBasic("billing-test", "test-password"))
+        mvc.perform(post("/api/v1/orcamentos/{id}/aprovar", budget.id()).with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE"))
                         .with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
                 .andExpect(status().isInternalServerError());
         assertThat(orcamentos.findById(budget.id()).orElseThrow().status()).isEqualTo(OrcamentoStatus.PENDING_APPROVAL);
@@ -501,7 +512,7 @@ class MessagingIntegrationTests {
     }
 
     private void approve(UUID id) throws Exception {
-        mvc.perform(post("/api/v1/orcamentos/{id}/aprovar", id).with(httpBasic("billing-test", "test-password"))
+        mvc.perform(post("/api/v1/orcamentos/{id}/aprovar", id).with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE"))
                 .with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isOk());
     }
 

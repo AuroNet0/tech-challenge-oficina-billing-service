@@ -24,11 +24,6 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
-  security:
-    user:
-      name: ${BILLING_SECURITY_USERNAME:billing}
-      password: ${BILLING_SECURITY_PASSWORD}
-      roles: ${BILLING_SECURITY_ROLES:USER}
 
 server:
   address: ${SERVER_ADDRESS:127.0.0.1}
@@ -58,6 +53,10 @@ springdoc:
     disable-swagger-default-url: true
 
 billing:
+  security:
+    issuer: ${BILLING_JWT_ISSUER}
+    audience: ${BILLING_JWT_AUDIENCE}
+    jwks-uri: ${BILLING_JWKS_URI}
   mercado-pago:
     enabled: ${MERCADO_PAGO_ENABLED:false}
     reconciliation-enabled: ${MERCADO_PAGO_RECONCILIATION_ENABLED:false}

@@ -36,7 +36,7 @@ Integração e varredura de reconciliação são **desligadas por padrão**. Nã
 | MERCADO_PAGO_BATCH_SIZE | 10; limite 1–100 |
 | MERCADO_PAGO_LEASE_DURATION | 2m; deve superar três timeouts e ser dimensionado para o volume de consultas |
 | MERCADO_PAGO_SYNC_INTERVAL | 1m |
-| BILLING_SECURITY_ROLES | USER; para operador local de checkout, definir explicitamente BILLING_OPERATOR |
+| BILLING_JWT_ISSUER / BILLING_JWT_AUDIENCE / BILLING_JWKS_URI | Emissor, audiencia e JWKS HTTPS confiaveis por ambiente |
 
 Configuração habilitada valida credenciais presentes, tempos e URLs. Os callbacks não aceitam userinfo, fragmento, localhost ou HTTP. HTTP de loopback na API é permitido somente pela propriedade de teste billing.mercado-pago.allow-insecure-local, não exposta como opção operacional padrão no Compose. Não permita essa propriedade fora de testes.
 
@@ -63,12 +63,10 @@ Pesquisas usam páginas de 20, com limite conservador de 100 resultados por refe
 
 ```http
 POST /api/v1/pagamentos/{id}/checkout
-Authorization: Basic ...
-X-CSRF-TOKEN: ...
-Cookie: JSESSIONID=...
+Authorization: Bearer <access-token-RS256>
 ```
 
-Somente pagamento existente e elegível (PENDING/PROCESSING), provider MERCADO_PAGO, com orçamento APPROVED e mesmo valor/OS/Saga. O corpo é ausente ou {}; qualquer campo, inclusive preço/providerPaymentId, retorna 400. A rota exige role BILLING_OPERATOR além de Basic e CSRF. Obter o token por GET financeiro autenticado e manter a mesma sessão. Não há endpoint REST de criação de pagamento ou confirmação manual.
+Somente pagamento existente e elegivel (PENDING/PROCESSING), provider MERCADO_PAGO, com orcamento APPROVED e mesmo valor/OS/Saga. O corpo e ausente ou {}; qualquer campo, inclusive preco/providerPaymentId, retorna 400. A etapa 8.3.4 exige ROLE_CLIENTE e propriedade atual comprovada pela OS antes de criar ou recuperar checkout. Sem canal interno confiavel, retorna 503 antes do workflow. Nao ha Basic, sessao, CSRF ou endpoint REST de confirmacao manual.
 
 Resposta 200 quando pronto; 202 para criação de resultado UNKNOWN ainda não reconciliada:
 
@@ -85,7 +83,7 @@ Resposta 200 quando pronto; 202 para criação de resultado UNKNOWN ainda não r
 
 UNKNOWN tem preferenceId/checkoutUrl nulos. CONFIRMED, FAILED sem nova tentativa ou retenção para revisão retornam conflito; pagamento inexistente retorna 404. Desabilitado/erro externo operacional retorna 503 quando não tratado como criação desconhecida. Conflitos concorrentes retornam 409. Responses ProblemDetail não expõem SQL/stack trace.
 
-**Limite de autorização:** a role identifica um operador de desenvolvimento, não o proprietário da OS. Não abrir esta API ao público. Auth/ownership definitivos, JWT e UI não foram implementados. responsavelId nunca é usado como comprovação de identidade.
+**Limite de autorizacao 8.3.4:** JWT RS256 e politicas estao implementados; o adapter OS permanece indisponivel. Conhecer UUID ou possuir papel nao comprova propriedade. Nenhum mock positivo existe em producao. Consulte [autorizacao Billing](security/billing-authorization-8.3.4.md). A autorizacao distribuida nao esta concluida.
 
 ## Reserva, criação externa e recuperação
 
@@ -113,7 +111,7 @@ As FKs são exclusivamente locais; a identidade composta de checkout/tentativa e
 
 ## Webhook autenticado e durável
 
-Somente POST /api/v1/webhooks/mercado-pago dispensa Basic/CSRF. Isso **não dispensa autenticação HMAC**. Outras rotas mantêm a segurança original.
+POST /api/v1/webhooks/mercado-pago tem cadeia exclusiva sem JWT humano e sem CSRF. Isso **nao dispensa autenticacao HMAC**. Mesmo um Bearer invalido adicional nao substitui nem impede a verificacao HMAC. As rotas de negocio usam Bearer stateless e autorizacao por OS.
 
 O verificador exige x-signature (ts e v1), x-request-id e data.id da query; pagamentos deste produto usam IDs numéricos. O corpo deve ser payment e data.id deve coincidir. Manifesto:
 
@@ -186,9 +184,9 @@ Em 21/10/2026, `mvnw.cmd clean verify` terminou com BUILD SUCCESS: 193 testes, z
 Nenhum teste externo é declarado aprovado: não foram solicitadas/obtidas credenciais automaticamente e não há configuração HTTPS pública fornecida para esta entrega.
 
 1. Criar/configurar a aplicação e usuários **de teste** vendedor/comprador no painel oficial, sem conta/pagamento real. Obter as credenciais e secret manualmente por canal seguro, sem versionar ou imprimir valores.
-2. Configurar URLs HTTPS públicas nomeadas de teste (webhook e três retornos), MERCADO_PAGO_ENABLED=true e MERCADO_PAGO_RECONCILIATION_ENABLED=true. Conceder BILLING_OPERATOR somente ao operador local; manter Basic/CSRF nas rotas de negócio e restringir acesso de rede.
+2. Configurar URLs HTTPS publicas nomeadas de teste, MERCADO_PAGO_ENABLED=true e MERCADO_PAGO_RECONCILIATION_ENABLED=true. Configurar JWT/JWKS confiaveis e o canal autorizado OS/Auth. Este roteiro permanece bloqueado enquanto nao houver comprovacao de propriedade; nao conceder BILLING_OPERATOR como substituto.
 3. Usar a Saga real para criar um pagamento PENDING de orçamento aprovado. Não inserir resultado financeiro nem usar endpoint de confirmação (inexistente).
-4. Com sessão Basic/CSRF, solicitar checkout. Conferir preferenceId, external_reference e metadata, ausência de duplicação em segunda chamada e sandbox_init_point. Confirmar que o vendedor é de testes. Não usar URL de produção como fallback.
+4. Quando a dependencia OS estiver disponivel, solicitar checkout com Bearer CLIENTE e propriedade comprovada. Conferir preferenceId, external_reference, metadata, idempotencia e sandbox_init_point. Confirmar vendedor de testes; nao usar URL de producao como fallback.
 5. Abrir o link com comprador de teste e seguir os cenários oficiais/cartões de teste atuais, primeiro aprovado e depois rejeitado em **outro pagamento de teste**. Não fornecer cartão real ao Billing ou em logs.
 6. Observar apenas status pendente após retorno do navegador até o GET autenticado do provedor comprovar o resultado. Conferir valores, moeda, IDs, receipts/observações, tentativas, Outbox e publicação do evento correto.
 7. A documentação oficial informa que pagamentos com credenciais de teste podem não emitir notificações automáticas. Validar recepção/HMAC pelo simulador oficial em Suas integrações; o recurso consultado ainda precisa ser verificável pela API de teste para alterar o domínio. Se o simulador enviar ID fictício não consultável, validar apenas recebimento/assinatura e não chamar isso de confirmação financeira. Usar reconciliação para o fluxo de teste sem webhook.

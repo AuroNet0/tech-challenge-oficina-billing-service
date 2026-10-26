@@ -21,6 +21,8 @@ public class MercadoPagoWebhookController {
     }
 
     @PostMapping(value = "/api/v1/webhooks/mercado-pago", consumes = "application/json")
+    @io.swagger.v3.oas.annotations.Operation(security = {})
+    @io.swagger.v3.oas.annotations.security.SecurityRequirements()
     public ResponseEntity<Void> receber(@RequestParam(name = "data.id", required = false) String resourceId,
                                         @RequestHeader(name = "x-request-id", required = false) String requestId,
                                         @RequestHeader(name = "x-signature", required = false) String signature,

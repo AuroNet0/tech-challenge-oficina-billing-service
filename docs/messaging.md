@@ -75,7 +75,7 @@ Itens semanticamente inválidos, quando ainda não existe orçamento, geram Inbo
 
 ### Decisões REST
 
-As rotas existentes continuam com HTTP Basic e CSRF. Cada decisão grava orçamento, Aprovacao e Outbox na mesma transação:
+Na etapa 8.3.4, as rotas HTTP usam Bearer RS256 e autorizacao pela OS, com adapter indisponivel por padrao. Os consumidores nao dependem de JWT humano. Cada decisao HTTP autorizada grava orcamento, Aprovacao e Outbox na mesma transacao:
 
 | Decisão | Evento | Payload |
 | --- | --- | --- |
@@ -210,4 +210,4 @@ O reset abre uma nova janela limitada de tentativas; guarde a contagem anterior 
 
 Testcontainers usa PostgreSQL 17 e RabbitMQ 4 reais. A suíte cobre envelope ISO, comandos, valores decimais, deduplicação concorrente, divergências de payload/Saga, quatro eventos quote.*, decisões REST, pagamento PENDING, rollbacks, retry limitado, DLQ, unroutable, workers concorrentes, leases expirados e queda/recuperação do broker. O JSON publicado é lido por um contrato espelho do SagaEnvelope do OS e por assertions de routing key/source/payload.
 
-Isso comprova o contrato e o transporte reais no broker de teste; não substitui a execução ponta a ponta de toda a Saga com os outros serviços. Não existe provedor Mercado Pago, webhook, confirmação financeira simulada, outro orquestrador ou JWT definitivo.
+A evidencia historica da 7.4 comprova contrato e transporte reais no broker de teste, sem substituir a Saga ponta a ponta. Etapas posteriores acrescentaram Mercado Pago simulado/webhook (7.5) e JWT (8.3.4), preservando os contratos de mensageria. Nao ha outro orquestrador ou confirmacao financeira baseada somente em notificacao.

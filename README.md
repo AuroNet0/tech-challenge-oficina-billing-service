@@ -5,8 +5,8 @@ Tech Challenge FIAP — Fase 4, etapas 7.1 a 7.5. Microsserviço de orçamentos,
 ## Checkout Pro — etapa 7.5
 
 - [Documentação completa, segurança e roteiro oficial sandbox](docs/mercado-pago.md).
-- POST `/api/v1/pagamentos/{id}/checkout`: Basic, role `BILLING_OPERATOR` e CSRF da mesma sessão; não aceita valores/IDs externos no corpo. Retorna 200 READY ou 202 UNKNOWN; não cria outra intenção financeira.
-- POST `/api/v1/webhooks/mercado-pago`: somente esta rota POST dispensa Basic/CSRF, exigindo assinatura HMAC-SHA256 válida, headers/IDs consistentes e receipt durável antes de HTTP 200.
+- POST `/api/v1/pagamentos/{id}/checkout`: Bearer RS256, ROLE_CLIENTE e propriedade atual da OS; não aceita valores/IDs externos no corpo. Retorna 200 READY ou 202 UNKNOWN; não cria outra intenção financeira.
+- POST `/api/v1/webhooks/mercado-pago`: cadeia exclusiva sem JWT de usuario e sem CSRF, exigindo assinatura HMAC-SHA256 válida, headers/IDs consistentes e receipt durável antes de HTTP 200.
 - Credenciais/URLs são variáveis `MERCADO_PAGO_*` descritas em `.env.example`, sem defaults secretos. `MERCADO_PAGO_ENABLED=false` e `MERCADO_PAGO_RECONCILIATION_ENABLED=false`; só o modo financeiro de testes é permitido nesta etapa.
 - Reserva/HTTP/finalização, leases e pesquisa por referência protegem criação repetida/resultado desconhecido. Não se presume idempotência de POST /checkout/preferences. UNKNOWN não repete POST automaticamente.
 - Webhook e reconciliação compartilham validação financeira e gravação atômica de pagamento/tentativa/receipt/Outbox. Confirmação tardia preserva o histórico; múltiplos créditos, valores divergentes e estados não mapeados exigem revisão.
@@ -40,7 +40,7 @@ src/main/java/com/oficina/billing/
 │   └── PagamentoRepositoryPort.java
 └── infrastructure/
     ├── config/       SecurityConfig, OpenApiConfig, TimeConfig
-    ├── web/          Controllers, DTOs, ProblemDetail e suporte CSRF
+    ├── web/          Controllers, DTOs, ProblemDetail e autorizacao JWT
     ├── messaging/    Codec, consumidor, broker, publisher e topologia RabbitMQ
     └── persistence/
         ├── entity/   Cinco entidades JPA
@@ -128,15 +128,15 @@ Todas as rotas financeiras exigem autenticação. Não há POST de criação de 
 
 ### Requests e respostas
 
-Aprovação aceita um objeto JSON com identificador provisório opcional:
+Aprovacao aceita objeto JSON; responsavelId e opcional, mas deve coincidir com JWT.sub:
 
 ```http
 POST /api/v1/orcamentos/{id}/aprovar
 Content-Type: application/json
 X-Correlation-Id: 11111111-1111-4111-8111-111111111111
-X-CSRF-TOKEN: <token da mesma sessao>
+Authorization: Bearer <access-token>
 
-{"responsavelId":"cliente-123"}
+{"responsavelId":"00000000-0000-4000-8000-000000000001"}
 ```
 
 Recusa aceita também um motivo opcional:
@@ -144,9 +144,9 @@ Recusa aceita também um motivo opcional:
 ```http
 POST /api/v1/orcamentos/{id}/rejeitar
 Content-Type: application/json
-X-CSRF-TOKEN: <token da mesma sessao>
+Authorization: Bearer <access-token>
 
-{"responsavelId":"cliente-123","motivo":"Orçamento acima do esperado"}
+{"responsavelId":"00000000-0000-4000-8000-000000000001","motivo":"Orçamento acima do esperado"}
 ```
 
 `responsavelId` tem limite de 100 caracteres; `motivo`, de 500. Campos opcionais podem ser omitidos ou null; valores em branco são inválidos. O corpo JSON é obrigatório (`{}` é permitido). Campos desconhecidos, incluindo `valorTotal` e `itens`, são rejeitados com 400. Os casos de uso utilizam as transições existentes do domínio, sem receber totais ou itens do solicitante. `X-Correlation-Id` é UUID opcional, preservado na decisão e no evento. Sem header, reutiliza-se a correlação original de quote.create.v1 da mesma OS/Saga; sem Inbox original, utiliza-se fallback UUID determinístico derivado desses IDs, documentado em [mensageria](docs/messaging.md).
@@ -191,53 +191,11 @@ Somente PENDING_APPROVAL permite aprovação ou recusa. Os casos de uso são tra
 
 **As decisões são persistidas atomicamente com sua Outbox e publicadas assincronamente em RabbitMQ.** Os eventos `quote.approved.v1` e `quote.rejected.v1` preservam IDs e correlação; a recusa sempre publica reason não vazio, mesmo quando motivo foi omitido. O OS Service continua sendo o único orquestrador; nenhum contrato externo foi alterado.
 
-### Segurança provisória e CSRF
+### Autorizacao JWT e propriedade — etapa 8.3.4
 
-A API é destinada a operadores de desenvolvimento com credenciais HTTP Basic controladas. **Não está pronta para acesso público de clientes.** Ainda não há vínculo autenticado entre cliente, OS e orçamento. Um usuário Basic autenticado consegue operar os orçamentos locais; esta etapa não implementa autorização por proprietário.
+O canal de negocio exige Bearer RS256 validado pelo JWKS HTTPS do Auth. Basic e sessoes foram retirados; CSRF esta desabilitado no canal stateless. CLIENTE pode decidir e iniciar checkout somente com propriedade atual comprovada; ATENDENTE e GERENTE consultam apenas uma projecao operacional quando o escopo for autorizado; MECANICO nao recebe acesso financeiro. Sem o canal interno confiavel OS/Auth, o adapter retorna indisponivel e bloqueia essas operacoes com 503.
 
-`responsavelId` é apenas uma declaração do solicitante, não comprova identidade e não concede autorização. Alterar esse campo não autentica uma requisição. A identidade definitiva e a autorização por cliente dependem de integração futura com Auth Service. Não há JWT.
-
-CSRF permanece habilitado, inclusive para Basic. POST exige JSON, a mesma sessão HTTP e header `X-CSRF-TOKEN`. Um GET financeiro retorna esse token em um header de resposta e estabelece a sessão. O token retornado é o token mascarado pelo mecanismo padrão do Spring Security. O Swagger documenta esse header nas operações POST; obtenha o token em um GET na mesma sessão do navegador antes de usar o POST.
-
-Exemplo com curl, sem criar dados financeiros:
-
-```bash
-curl -sS -u billing:billing_local -c target/billing.cookies -D target/billing.headers \
-  "http://localhost:8082/api/v1/pagamentos?osId=33333333-3333-4333-8333-333333333333"
-CSRF_TOKEN=$(awk 'tolower($1)=="x-csrf-token:" {sub(/\r$/, "", $2); print $2}' target/billing.headers)
-curl -i -u billing:billing_local -b target/billing.cookies \
-  -H "X-CSRF-TOKEN: $CSRF_TOKEN" -H "Content-Type: application/json" \
-  -d '{"responsavelId":"cliente-123"}' \
-  "http://localhost:8082/api/v1/orcamentos/<orcamento-existente>/aprovar"
-```
-
-Use um UUID de orçamento já existente. No Windows, utilize curl.exe e preserve o mesmo arquivo de cookies e o token recebido. Sem token válido, POST retorna 403; como o filtro CSRF precede a autenticação, uma requisição sem token pode receber 403 antes de se avaliar HTTP Basic. Com token válido e sem credenciais, retorna 401.
-
-A execução Java no host escuta somente em `127.0.0.1` por padrão. No Compose, o endereço interno é `0.0.0.0`, mas a publicação permanece restrita a `127.0.0.1:8082`. Não remova essa restrição para disponibilizar a API publicamente.
-
-### Erros HTTP
-
-Erros são retornados como `application/problem+json` (ProblemDetail), com type, title, status, detail e instance, sem SQL, stack trace, valores rejeitados ou detalhes internos do PostgreSQL.
-
-| Status | Significado |
-| --- | --- |
-| 400 | JSON/campos inválidos, UUID inválido, parâmetro obrigatório ausente |
-| 401 | Autenticação ausente ou inválida |
-| 403 | Token CSRF ausente/inválido ou acesso negado |
-| 404 | Recurso ou decisão inexistente |
-| 409 | Decisão repetida/oposta, estado terminal, concorrência ou constraint de consistência |
-| 405 / 415 | Método não implementado / tipo de conteúdo não suportado |
-| 500 | Erro inesperado, com mensagem genérica |
-
-```json
-{
-  "type":"about:blank",
-  "title":"Conflict",
-  "status":409,
-  "detail":"Operacao em conflito com o estado atual do recurso.",
-  "instance":"/api/v1/orcamentos/22222222-2222-4222-8222-222222222222/aprovar"
-}
-```
+O campo opcional responsavelId deve coincidir exatamente com JWT.sub. A identidade persistida vem exclusivamente do token. Webhooks usam HMAC em cadeia especifica; consumidores RabbitMQ e reconciliacao nao dependem de JWT humano. Detalhes e evidencias: [etapa 8.3.4](docs/security/billing-authorization-8.3.4.md).
 
 ## RabbitMQ, Inbox e Outbox — etapa 7.4
 
@@ -284,8 +242,9 @@ Readiness continua considerando PostgreSQL. RabbitMQ indisponível não impede d
 | `DB_PASSWORD` | Obrigatória |
 | `RABBITMQ_HOST` / `RABBITMQ_PORT` | localhost/5672 no Java; host.docker.internal/5672 no Compose |
 | `RABBITMQ_USERNAME` / `RABBITMQ_PASSWORD` / `RABBITMQ_VHOST` | Identidade/vhost do broker compartilhado; senha fornecida pelo ambiente |
-| `BILLING_SECURITY_USERNAME` | `billing` |
-| `BILLING_SECURITY_PASSWORD` | Obrigatória |
+| `BILLING_JWT_ISSUER` | Emissor HTTPS confiavel por ambiente |
+| `BILLING_JWT_AUDIENCE` | Audiencia esperada, conforme contrato Auth |
+| `BILLING_JWKS_URI` | URL HTTPS do JWKS publico; cache de ate 60 segundos |
 
 Copie `.env.example` para `.env` e ajuste as senhas. O Compose carrega esse arquivo; Maven/Spring não o carrega automaticamente. Exporte as variáveis no shell ao executar Java no host. Os valores de exemplo são somente para desenvolvimento.
 
@@ -309,11 +268,13 @@ Para executar Java no host:
 ```bash
 docker compose up -d --wait postgres
 export DB_PASSWORD=billing_local
-export BILLING_SECURITY_PASSWORD=billing_local
+export BILLING_JWT_ISSUER=https://auth.example.invalid
+export BILLING_JWT_AUDIENCE=oficina
+export BILLING_JWKS_URI=https://auth.example.invalid/.well-known/jwks.json
 ./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port=8082
 ```
 
-No PowerShell, defina `$env:DB_PASSWORD='billing_local'`, `$env:BILLING_SECURITY_PASSWORD='billing_local'` e execute `./mvnw.cmd spring-boot:run '-Dspring-boot.run.arguments=--server.port=8082'`.
+No PowerShell, defina DB_PASSWORD e as tres variaveis BILLING_JWT_ISSUER, BILLING_JWT_AUDIENCE e BILLING_JWKS_URI via ambiente e execute `./mvnw.cmd spring-boot:run '-Dspring-boot.run.arguments=--server.port=8082'`.
 
 O Dockerfile multi-stage usa JDK 21 no build, JRE 21 na execução e usuário não root. A porta interna é 8080, publicada localmente em **8082**. O PostgreSQL publica em `127.0.0.1:5434`, configurável por DB_PORT, e mantém volume persistente. A aplicação aguarda o banco saudável, usa `postgres:5432` na rede isolada e tem healthcheck de readiness. `docker compose down` preserva o volume; mudanças no .env não alteram usuários de um banco já inicializado. V2 é aplicada também sobre volumes que já possuam V1.
 
@@ -327,14 +288,14 @@ O Dockerfile multi-stage usa JDK 21 no build, JRE 21 na execução e usuário n�
 | http://localhost:8082/swagger-ui/index.html | Swagger UI público |
 | http://localhost:8082/v3/api-docs | OpenAPI JSON público, com os contratos REST autenticados |
 
-Somente os três caminhos exatos de health, `/swagger-ui/**` e `/v3/api-docs/**` são públicos. As demais rotas exigem HTTP Basic temporário. `/swagger-ui.html` continua protegido: utilize a URL indicada. Somente health é exposto no Actuator, sem detalhes internos. CSRF permanece habilitado. Credenciais são mantidas em memória pela autoconfiguração do Spring Security; use HTTPS fora do desenvolvimento local.
+Os tres caminhos exatos de health, `/swagger-ui/**` e `/v3/api-docs/**` sao publicos. Negocios usam exclusivamente Bearer JWT RS256, sem Basic, sessao ou CSRF. O POST de webhook usa cadeia exclusiva com HMAC. Somente health e exposto no Actuator, sem detalhes internos. Sem canal confiavel de autorizacao OS, consultas/decisoes/checkout ficam bloqueados (503). Consulte [autorizacao 8.3.4](docs/security/billing-authorization-8.3.4.md). Exemplos invalidos de hosts devem ser substituidos pela configuracao confiavel do ambiente.
 
 ```bash
 curl -i http://localhost:8082/actuator/health
 curl -i http://localhost:8082/actuator/health/readiness
 curl -i http://localhost:8082/v3/api-docs
 curl -i "http://localhost:8082/api/v1/pagamentos?osId=33333333-3333-4333-8333-333333333333"
-curl -i -u billing:billing_local "http://localhost:8082/api/v1/pagamentos?osId=33333333-3333-4333-8333-333333333333"
+curl -i -H "Authorization: Bearer $ACCESS_TOKEN" "http://localhost:8082/api/v1/pagamentos?osId=33333333-3333-4333-8333-333333333333"
 ```
 
 As últimas chamadas retornam 401 sem credenciais e 200 com credenciais válidas, com lista vazia se a OS não possuir pagamentos.
@@ -365,7 +326,7 @@ Relatórios: `target/surefire-reports/` e `target/site/jacoco/index.html`, com X
 - Aprovação e recusa concorrentes pela API: uma resposta 200, uma 409 e exatamente uma decisão persistida. Repetições sequenciais mantêm ID, timestamps e versão originais.
 - Rollback comprovado tanto com rejeição real do INSERT por trigger PostgreSQL quanto com falha inesperada durante a gravação. Respostas não expõem os detalhes internos simulados.
 - Compose reconstruído e saudável, PostgreSQL próprio, Flyway V1/V2 válidas e Hibernate com `ddl-auto=validate`. Modelagem e migrações da etapa 7.2 preservadas.
-- Pela porta 8082: consulta autenticada de pagamentos retorna 200; sem autenticação, 401; POST sem CSRF, 403; POST com cookie/token reais e orçamento inexistente, 404. Health, liveness, readiness, Swagger e OpenAPI retornam 200.
+- Evidencia historica anterior a 8.3.4: Basic/CSRF foi substituido por Bearer e autorizacao por OS. Consulte o documento 8.3.4 para o comportamento atual e as limitacoes.
 - Tabelas financeiras permaneceram vazias no Compose. Não foram criados dados financeiros nem endpoints de preparação para a validação.
 
 O ajuste encontrado nos novos testes foi comparar itens após a leitura PostgreSQL, que padroniza a escala do preço unitário em seis casas sem alterar seu valor. Não há bloqueios pendentes. Logs locais: `bootstrap-api.log` e `bootstrap-compose.log`.
@@ -394,4 +355,4 @@ Itens do Execution fornecem quantidade e precoPrevisto em strings decimais; o Bi
 
 ## Limitações atuais
 
-Sem criação REST de orçamento/pagamento, edição financeira manual, confirmação manual, Saga Orchestrator próprio, JWT definitivo, Terraform, Kubernetes ou CI/CD. Não há dados fictícios em migrações/startup. Identidade/ownership definitivos, cobrança de produção, refund/chargeback automático e revisão administrativa financeira ficam fora do escopo. Checkout Pro é somente de teste, desabilitado por padrão; teste oficial depende de credenciais e HTTPS público não fornecidos. UNKNOWN/REVIEW podem exigir intervenção humana. Aprovar/recusar e resultados financeiros registram Outbox; somente o OS avança a Saga. Intenção PENDING e preferência READY não comprovam pagamento. Os triggers são invariantes locais, não outro orquestrador.
+Sem criacao REST de orcamento/pagamento, edicao ou confirmacao financeira manual, Saga propria, Terraform, Kubernetes ou CI/CD. JWT RS256 esta implementado; ownership distribuido depende do canal OS/Auth e permanece bloqueado. Nao ha dados ficticios em migracoes/startup. Cobranca de producao, refund/chargeback automatico e revisao administrativa financeira ficam fora do escopo. Checkout Pro e somente de teste, desabilitado por padrao; teste oficial depende de credenciais e HTTPS publico nao fornecidos. UNKNOWN/REVIEW podem exigir intervencao humana. Decisoes e resultados financeiros registram Outbox; somente o OS avanca a Saga. Intencao PENDING e preferencia READY nao comprovam pagamento.

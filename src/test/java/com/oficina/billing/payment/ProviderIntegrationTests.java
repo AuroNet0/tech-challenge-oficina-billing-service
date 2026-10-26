@@ -58,6 +58,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "billing.mercado-pago.notification-url=https://example.test/webhook", "billing.mercado-pago.success-url=https://example.test/success",
         "billing.mercado-pago.failure-url=https://example.test/failure", "billing.mercado-pago.pending-url=https://example.test/pending",
         "billing.mercado-pago.http-timeout=2s", "billing.mercado-pago.worker-delay=1h", "billing.outbox.enabled=false"})
+@org.springframework.context.annotation.Import(com.oficina.billing.security.FinancialTestSecurity.class)
 @AutoConfigureMockMvc
 class ProviderIntegrationTests {
     @Container
@@ -99,8 +100,12 @@ class ProviderIntegrationTests {
     private Pagamento initial;
     private TransactionTemplate transaction;
 
+    @Autowired private com.oficina.billing.application.authorization.FinancialAccessPort financialAccess;
+
     @BeforeEach
     void prepare() {
+        org.mockito.Mockito.reset(financialAccess);
+        org.mockito.Mockito.when(financialAccess.authorize(org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any())).thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW);
         SERVER.reset();
         jdbc.execute("TRUNCATE provider_notifications,outbox_events,inbox_messages,pagamentos_tentativas,pagamentos,aprovacoes,orcamento_itens,orcamentos CASCADE");
         transaction = new TransactionTemplate(transactionManager);
@@ -153,11 +158,11 @@ class ProviderIntegrationTests {
         var posted = SERVER.requests.stream().filter(request -> request.method().equals("POST")).findFirst().orElseThrow();
         assertThat(posted.body()).contains(initial.externalReference()).contains(initial.idempotencyKey());
         assertThat(posted.authorization()).isEqualTo("Bearer TEST-integration-only");
-        mvc.perform(post(checkoutPath()).with(httpBasic("billing-test", "test-password")).with(csrf()))
+        mvc.perform(post(checkoutPath()).with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE")).with(csrf()))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.preferenceId").value(response.preferenceId()));
         mvc.perform(post(checkoutPath()).with(user("ordinary").roles("USER")).with(csrf())).andExpect(status().isForbidden());
         mvc.perform(post(checkoutPath()).with(user("operator").roles("BILLING_OPERATOR"))).andExpect(status().isForbidden());
-        mvc.perform(post(checkoutPath()).with(user("operator").roles("BILLING_OPERATOR")).with(csrf())
+        mvc.perform(post(checkoutPath()).with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE"))
                         .contentType("application/json").content("{\"valor\":1}"))
                 .andExpect(status().isBadRequest());
     }
@@ -207,6 +212,12 @@ class ProviderIntegrationTests {
         assertThat(worker.processNotification()).isTrue();
         assertThat(count("outbox_events")).isZero();
         assertThat(jdbc.queryForObject("SELECT status FROM provider_notifications", String.class)).isEqualTo("PROCESSED");
+        String timestamp = "" + Instant.now().getEpochSecond();
+        mvc.perform(post("/api/v1/webhooks/mercado-pago?data.id=1001").header("Authorization", "Bearer invalid")
+                .header("x-request-id", "additional-bearer")
+                .header("x-signature", ProviderUnitTests.signature("1001", "additional-bearer", timestamp))
+                .contentType("application/json").content("{\"type\":\"payment\",\"data\":{\"id\":\"1001\"}}"))
+                .andExpect(status().isOk());
         mvc.perform(post("/api/v1/webhooks/mercado-pago?data.id=1001").contentType("application/json")
                 .content("{\"type\":\"payment\",\"data\":{\"id\":\"1001\"}}"))
                 .andExpect(status().isUnauthorized());
@@ -516,6 +527,37 @@ class ProviderIntegrationTests {
         assertThat(count("outbox_events")).isZero();
     }
 
+    @Test
+    void checkoutRequiresOwnershipBeforeAnyProviderCallOrReservation() throws Exception {
+        when(financialAccess.authorize(any(), any(), any(), any()))
+                .thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.DENY);
+        mvc.perform(post(checkoutPath()).with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE")))
+                .andExpect(status().isForbidden());
+        when(financialAccess.authorize(any(), any(), any(), any()))
+                .thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.UNAVAILABLE);
+        mvc.perform(post(checkoutPath()).with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE")))
+                .andExpect(status().isServiceUnavailable());
+        assertThat(SERVER.requests).isEmpty();
+        assertThat(count("provider_checkouts")).isZero();
+        assertThat(count("outbox_events")).isZero();
+        assertThat(payments.findById(initial.id()).orElseThrow().status()).isEqualTo(PagamentoStatus.PENDING);
+    }
+
+    @Test
+    void operationalPaymentProjectionDoesNotExposeAttemptsAndMechanicIsDenied() throws Exception {
+        for (String role : List.of("ATENDENTE", "GERENTE")) {
+            mvc.perform(get("/api/v1/pagamentos/{id}", initial.id())
+                    .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role)))
+                    .andExpect(status().isOk()).andExpect(jsonPath("$.status").value("PENDING"))
+                    .andExpect(jsonPath("$.tentativas").doesNotExist()).andExpect(jsonPath("$.provider").doesNotExist())
+                    .andExpect(jsonPath("$.valor").doesNotExist());
+        }
+        mvc.perform(get("/api/v1/pagamentos/{id}", initial.id())
+                .with(com.oficina.billing.security.FinancialTestSecurity.bearer("MECANICO")))
+                .andExpect(status().isForbidden());
+        verify(financialAccess, times(2)).authorize(any(), any(), eq(initial.osId()), any());
+    }
+
     private void notify(String id, String requestId) throws Exception {
         String timestamp = "" + Instant.now().getEpochSecond();
         mvc.perform(post("/api/v1/webhooks/mercado-pago?data.id=" + id).header("x-request-id", requestId)
@@ -528,7 +570,7 @@ class ProviderIntegrationTests {
     private int eventCount(String type) { return jdbc.queryForObject("SELECT count(*) FROM outbox_events WHERE event_type=?", Integer.class, type); }
     private String checkoutPath() { return "/api/v1/pagamentos/" + initial.id() + "/checkout"; }
     private void retryNow() {
-        Timestamp dueAt = Timestamp.from(clock.instant().truncatedTo(ChronoUnit.MICROS));
+        Timestamp dueAt = Timestamp.from(clock.instant().minusSeconds(1).truncatedTo(ChronoUnit.MICROS));
         jdbc.update("UPDATE provider_notifications SET next_attempt_at=? WHERE status='PENDING'", dueAt);
         jdbc.update("UPDATE provider_sync SET next_sync_at=?", dueAt);
     }

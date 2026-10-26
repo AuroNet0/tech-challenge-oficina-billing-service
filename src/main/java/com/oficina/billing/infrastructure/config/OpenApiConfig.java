@@ -18,9 +18,9 @@ public class OpenApiConfig {
                         .title("Oficina Billing Service")
                         .version("v1")
                         .description("API financeira de desenvolvimento com eventos via Outbox. Sem confirmacao simulada de pagamento."))
-                .components(new Components().addSecuritySchemes("basicAuth", new SecurityScheme()
+                .components(new Components().addSecuritySchemes("bearerAuth", new SecurityScheme()
                         .type(SecurityScheme.Type.HTTP)
-                        .scheme("basic")))
-                .addSecurityItem(new SecurityRequirement().addList("basicAuth"));
+                        .scheme("bearer").bearerFormat("JWT")))
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
     }
 }

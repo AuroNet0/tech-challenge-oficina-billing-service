@@ -42,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(properties = {
         "spring.security.user.name=billing-test", "spring.security.user.password=test-password"
 })
+@org.springframework.context.annotation.Import(com.oficina.billing.security.FinancialTestSecurity.class)
 @AutoConfigureMockMvc
 class FinancialApiTests {
     @Container
@@ -62,8 +63,12 @@ class FinancialApiTests {
     @Autowired private JdbcTemplate jdbc;
     @Autowired private PlatformTransactionManager transactionManager;
 
+    @Autowired private com.oficina.billing.application.authorization.FinancialAccessPort financialAccess;
+
     @BeforeEach
     void prepareDatabase() {
+        org.mockito.Mockito.reset(financialAccess);
+        org.mockito.Mockito.when(financialAccess.authorize(org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any())).thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW);
         jdbc.execute("TRUNCATE outbox_events, inbox_messages, pagamentos_tentativas, pagamentos, aprovacoes, orcamento_itens, orcamentos CASCADE");
     }
 
@@ -72,7 +77,7 @@ class FinancialApiTests {
         var budget = orcamentos.save(orcamento());
         mvc.perform(auth(get("/api/v1/orcamentos/{id}", budget.id())))
                 .andExpect(status().isOk())
-                .andExpect(header().exists("X-CSRF-TOKEN"))
+                .andExpect(header().doesNotExist("X-CSRF-TOKEN"))
                 .andExpect(jsonPath("$.osId").value(budget.osId().toString()))
                 .andExpect(jsonPath("$.sagaId").value(budget.sagaId().toString()))
                 .andExpect(jsonPath("$.status").value("PENDING_APPROVAL"))
@@ -90,14 +95,14 @@ class FinancialApiTests {
     void persistsRestDecisionAndPreservesOriginalOnRepeats(String action) throws Exception {
         var budget = orcamentos.findById(orcamentos.save(orcamento()).id()).orElseThrow();
         var correlation = UUID.randomUUID();
-        String body = action.equals("aprovar") ? "{\"responsavelId\":\"id-informado\"}"
-                : "{\"responsavelId\":\"id-informado\",\"motivo\":\"Acima do esperado\"}";
+        String body = action.equals("aprovar") ? "{\"responsavelId\":\"00000000-0000-4000-8000-000000000001\"}"
+                : "{\"responsavelId\":\"00000000-0000-4000-8000-000000000001\",\"motivo\":\"Acima do esperado\"}";
         String expected = action.equals("aprovar") ? "APPROVED" : "REJECTED";
         var response = mvc.perform(auth(post("/api/v1/orcamentos/{id}/{action}", budget.id(), action))
                         .with(csrf()).header("X-Correlation-Id", correlation).contentType(MediaType.APPLICATION_JSON).content(body))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.status").value(expected))
                 .andExpect(jsonPath("$.correlationId").value(correlation.toString()))
-                .andExpect(jsonPath("$.responsavelId").value("id-informado"))
+                .andExpect(jsonPath("$.responsavelId").value("00000000-0000-4000-8000-000000000001"))
                 .andReturn().getResponse().getContentAsString();
         var saved = orcamentos.findById(budget.id()).orElseThrow();
         var decision = aprovacoes.findByOrcamentoId(budget.id()).orElseThrow();
@@ -127,13 +132,13 @@ class FinancialApiTests {
     }
 
     @Test
-    void optionalDecisionMetadataDoesNotInventIdentity() throws Exception {
+    void optionalDecisionMetadataUsesAuthenticatedIdentity() throws Exception {
         var budget = orcamentos.save(orcamento());
         mvc.perform(auth(post("/api/v1/orcamentos/{id}/rejeitar", budget.id()))
                         .with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
                 .andExpect(status().isOk());
         var decision = aprovacoes.findByOrcamentoId(budget.id()).orElseThrow();
-        assertThat(decision.responsavelId()).isNull();
+        assertThat(decision.responsavelId()).isEqualTo(com.oficina.billing.security.FinancialTestSecurity.ACTOR.toString());
         assertThat(decision.motivo()).isNull();
         assertThat(decision.correlationId()).isNotNull();
     }
@@ -283,20 +288,12 @@ class FinancialApiTests {
     }
 
     @Test
-    void requiresValidCsrfTokenAndSupportsTokenFromExistingGet() throws Exception {
+    void bearerDoesNotUseSessionOrCsrf() throws Exception {
         var budget = orcamentos.save(orcamento());
+        var response = mvc.perform(auth(get("/api/v1/orcamentos/{id}", budget.id()))).andExpect(status().isOk()).andReturn();
+        assertThat(response.getRequest().getSession(false)).isNull();
         mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id()))
-                        .contentType(MediaType.APPLICATION_JSON).content("{}"))
-                .andExpect(status().isForbidden()).andExpect(jsonPath("$.status").value(403));
-        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id())).with(csrf().useInvalidToken())
-                        .contentType(MediaType.APPLICATION_JSON).content("{}"))
-                .andExpect(status().isForbidden()).andExpect(jsonPath("$.status").value(403));
-        var getResult = mvc.perform(auth(get("/api/v1/orcamentos/{id}", budget.id()))).andExpect(status().isOk()).andReturn();
-        var session = (MockHttpSession) getResult.getRequest().getSession(false);
-        var token = getResult.getResponse().getHeader("X-CSRF-TOKEN");
-        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id())).session(session)
-                        .header("X-CSRF-TOKEN", token).contentType(MediaType.APPLICATION_JSON).content("{}"))
-                .andExpect(status().isOk());
+                .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isOk());
     }
 
     @Test
@@ -335,18 +332,95 @@ class FinancialApiTests {
     void cannotCreateBudgetsOrPaymentsOrMutatePaymentsThroughRest() throws Exception {
         for (var path : List.of("/api/v1/orcamentos", "/api/v1/pagamentos")) {
             mvc.perform(auth(post(path)).with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
-                    .andExpect(status().isMethodNotAllowed()).andExpect(jsonPath("$.status").value(405));
+                    .andExpect(status().isForbidden()).andExpect(jsonPath("$.status").value(403));
         }
         for (var action : List.of("confirmar", "falhar")) {
             mvc.perform(auth(post("/api/v1/pagamentos/{id}/{action}", UUID.randomUUID(), action)).with(csrf())
-                    .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isNotFound());
+                    .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isForbidden());
         }
         assertThat(jdbc.queryForObject("SELECT count(*) FROM orcamentos", Integer.class)).isZero();
         assertThat(jdbc.queryForObject("SELECT count(*) FROM pagamentos", Integer.class)).isZero();
     }
 
     private MockHttpServletRequestBuilder auth(MockHttpServletRequestBuilder request) {
-        return request.with(httpBasic("billing-test", "test-password"));
+        return request.with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"aprovar", "rejeitar"})
+    void deniedAndUnavailableOwnershipNeverMutatesDecisionOrOutbox(String action) throws Exception {
+        var budget = orcamentos.save(orcamento());
+        for (var decision : com.oficina.billing.application.authorization.FinancialAccessPort.Decision.values()) {
+            if (decision == com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW) continue;
+            when(financialAccess.authorize(any(), any(), any(), any())).thenReturn(decision);
+            mvc.perform(auth(post("/api/v1/orcamentos/{id}/{action}", budget.id(), action))
+                    .contentType(MediaType.APPLICATION_JSON).content("{}"))
+                    .andExpect(status().is(decision == com.oficina.billing.application.authorization.FinancialAccessPort.Decision.DENY ? 403 : 503));
+            assertPendingWithoutDecision(budget.id());
+            assertThat(jdbc.queryForObject("SELECT count(*) FROM outbox_events", Integer.class)).isZero();
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"ATENDENTE", "GERENTE", "MECANICO"})
+    void staffCannotApproveAndMechanicCannotRead(String role) throws Exception {
+        var budget = orcamentos.save(orcamento());
+        mvc.perform(post("/api/v1/orcamentos/{id}/aprovar", budget.id())
+                .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role))
+                .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isForbidden());
+        mvc.perform(get("/api/v1/orcamentos/{id}", budget.id())
+                .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role)))
+                .andExpect(status().is(role.equals("MECANICO") ? 403 : 200));
+        assertPendingWithoutDecision(budget.id());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"ATENDENTE", "GERENTE"})
+    void staffReceivesOnlyOperationalProjection(String role) throws Exception {
+        var budget = orcamentos.save(orcamento());
+        mvc.perform(get("/api/v1/orcamentos/{id}", budget.id())
+                .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role)))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.osId").value(budget.osId().toString()))
+                .andExpect(jsonPath("$.itens").doesNotExist()).andExpect(jsonPath("$.valorTotal").doesNotExist())
+                .andExpect(jsonPath("$.sagaId").doesNotExist());
+    }
+
+    @Test
+    void rejectsImpersonationAndInvalidBearerWithoutBasicOrSessionFallback() throws Exception {
+        var budget = orcamentos.save(orcamento());
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id()))
+                .contentType(MediaType.APPLICATION_JSON).content("{\"responsavelId\":\"" + UUID.randomUUID() + "\"}"))
+                .andExpect(status().isForbidden());
+        mvc.perform(get("/api/v1/orcamentos/{id}", budget.id()).header("Authorization", "Bearer invalid",
+                "Basic " + java.util.Base64.getEncoder().encodeToString("billing-test:test-password".getBytes(java.nio.charset.StandardCharsets.UTF_8))))
+                .andExpect(status().isUnauthorized());
+        var session = new MockHttpSession();
+        var context = org.springframework.security.core.context.SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                "billing-test", "test-password", List.of(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_CLIENTE"))));
+        session.setAttribute("SPRING_SECURITY_CONTEXT", context);
+        mvc.perform(get("/api/v1/orcamentos/{id}", budget.id()).session(session)).andExpect(status().isUnauthorized());
+        assertPendingWithoutDecision(budget.id());
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM outbox_events", Integer.class)).isZero();
+    }
+
+    @Test
+    void persistedOsDeterminesOwnershipEvenWhenAnotherOsIsSupplied() throws Exception {
+        var own = orcamentos.save(orcamento());
+        var other = orcamentos.save(orcamento());
+        when(financialAccess.authorize(any(), any(), any(), any())).thenReturn(
+                com.oficina.billing.application.authorization.FinancialAccessPort.Decision.DENY);
+        when(financialAccess.authorize(eq(com.oficina.billing.security.FinancialTestSecurity.ACTOR), any(),
+                eq(own.osId()), any())).thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW);
+        mvc.perform(auth(get("/api/v1/orcamentos/{id}", own.id()))).andExpect(status().isOk());
+        mvc.perform(auth(get("/api/v1/orcamentos/{id}", other.id())).param("osId", own.osId().toString()))
+                .andExpect(status().isForbidden());
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", other.id())).param("osId", own.osId().toString())
+                .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isForbidden());
+        mvc.perform(auth(get("/api/v1/orcamentos").param("osId", other.osId().toString())))
+                .andExpect(status().isForbidden());
+        assertPendingWithoutDecision(other.id());
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM outbox_events", Integer.class)).isZero();
     }
 
     private void assertPendingWithoutDecision(UUID id) {
