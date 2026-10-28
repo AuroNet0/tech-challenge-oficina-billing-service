@@ -23,15 +23,18 @@ public class CommandHandler {
     private final MessageCodecPort codec;
     private final EventRecorder events;
     private final Clock clock;
+    private final NotificacaoOrcamentoRepositoryPort notificacoes;
 
     public CommandHandler(InboxRepositoryPort inbox, OrcamentoRepositoryPort orcamentos,
-                          PagamentoRepositoryPort pagamentos, MessageCodecPort codec, EventRecorder events, Clock clock) {
+                          PagamentoRepositoryPort pagamentos, MessageCodecPort codec, EventRecorder events, Clock clock,
+                          NotificacaoOrcamentoRepositoryPort notificacoes) {
         this.inbox = inbox;
         this.orcamentos = orcamentos;
         this.pagamentos = pagamentos;
         this.codec = codec;
         this.events = events;
         this.clock = clock;
+        this.notificacoes = notificacoes;
     }
 
     @Transactional
@@ -84,6 +87,7 @@ public class CommandHandler {
             throw new InvalidCommandException("Dados do diagnostico invalidos");
         }
         budget = orcamentos.save(budget);
+        notificacoes.registrar(budget);
         events.record(budget.id(), "Orcamento", budget.osId(), budget.sagaId(), command.correlationId(),
                 "quote.created.v1", Map.of("quoteId", budget.id().toString()), clock.instant());
     }

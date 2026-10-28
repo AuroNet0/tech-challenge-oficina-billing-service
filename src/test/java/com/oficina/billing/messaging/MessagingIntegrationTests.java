@@ -243,6 +243,7 @@ class MessagingIntegrationTests {
         send(duplicate);
         await().atMost(Duration.ofSeconds(20)).untilAsserted(() -> assertThat(count("inbox_messages", "status = 'PROCESSED'")).isEqualTo(2));
         assertThat(count("orcamentos", "true")).isEqualTo(1);
+        assertThat(count("notificacoes_orcamento", "true")).isEqualTo(1);
         assertThat(count("outbox_events", "true")).isEqualTo(1);
     }
 
@@ -277,6 +278,7 @@ class MessagingIntegrationTests {
         send(command);
         receiveDlq();
         assertThat(count("orcamentos", "true")).isZero();
+        assertThat(count("notificacoes_orcamento", "true")).isZero();
         assertThat(count("inbox_messages", "status = 'REJECTED'")).isEqualTo(1);
         publisher.publishOne();
         var event = read(receiveEvent());
@@ -313,6 +315,7 @@ class MessagingIntegrationTests {
                 .isInstanceOf(org.springframework.dao.DataAccessException.class).hasRootCauseInstanceOf(IllegalStateException.class);
         assertThat(count("inbox_messages", "true")).isZero();
         assertThat(count("orcamentos", "true")).isZero();
+        assertThat(count("notificacoes_orcamento", "true")).isZero();
         assertThat(count("orcamento_itens", "true")).isZero();
         assertThat(count("outbox_events", "true")).isZero();
     }

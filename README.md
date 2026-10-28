@@ -1,5 +1,9 @@
 # Oficina Billing Service
 
+## Notificação interna de orçamento — etapa 9.1.3
+
+O Billing persiste um aviso quando o orçamento fica disponível para aprovação. O cliente proprietário autenticado consulta `GET /api/v1/notificacoes?osId={osId}&page=0&size=20`, com autorização atual pelo canal financeiro OS/Auth. Não há envio de e-mail ou mensagem externa. Consulte [funcionamento, API, idempotência e demonstração FIAP](docs/notificacoes-orcamento.md).
+
 Tech Challenge FIAP — Fase 4, etapas 7.1 a 7.5. Microsserviço de orçamentos, decisões e cobranças, com PostgreSQL próprio e Inbox/Outbox RabbitMQ. A Saga cria a intenção PENDING; Checkout Pro de teste pode ser disponibilizado por operação autenticada, e somente consultas verificadas ao Mercado Pago geram resultados financeiros. Integração externa desligada por padrão, sem confirmação simulada.
 
 ## Checkout Pro — etapa 7.5

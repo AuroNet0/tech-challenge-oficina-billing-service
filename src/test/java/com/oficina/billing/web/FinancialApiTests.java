@@ -62,6 +62,8 @@ class FinancialApiTests {
     @Autowired private PagamentoRepositoryPort pagamentos;
     @Autowired private JdbcTemplate jdbc;
     @Autowired private PlatformTransactionManager transactionManager;
+    @Autowired private com.oficina.billing.application.usecase.CommandHandler commandHandler;
+    @Autowired private NotificacaoOrcamentoRepositoryPort notificacoes;
 
     @Autowired private com.oficina.billing.application.authorization.FinancialAccessPort financialAccess;
 
@@ -426,6 +428,164 @@ class FinancialApiTests {
                 .andExpect(status().isForbidden());
         assertPendingWithoutDecision(other.id());
         assertThat(jdbc.queryForObject("SELECT count(*) FROM outbox_events", Integer.class)).isZero();
+    }
+
+    @Test
+    void notificationReferencesCreatedQuoteAndReadDoesNotChangeFinancialState() throws Exception {
+        var command = com.oficina.billing.messaging.MessagingFixtures.quote();
+        commandHandler.handle(command, com.oficina.billing.messaging.MessagingFixtures.body(command));
+        var budget = orcamentos.findByOsId(command.osId()).orElseThrow();
+        var notification = notificacoes.findByOsId(command.osId(), 0, 20).getFirst();
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", command.osId().toString())))
+                .andExpect(status().isOk()).andExpect(header().string("Cache-Control", "no-store"))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(notification.id().toString()))
+                .andExpect(jsonPath("$[0].orcamentoId").value(budget.id().toString()))
+                .andExpect(jsonPath("$[0].osId").value(command.osId().toString()))
+                .andExpect(jsonPath("$[0].tipo").value("ORCAMENTO_DISPONIVEL"))
+                .andExpect(jsonPath("$[0].createdAt").value(budget.createdAt().toString()))
+                .andExpect(jsonPath("$[0].statusOrcamento").value("PENDING_APPROVAL"))
+                .andExpect(jsonPath("$[0].mensagem").value("Existe um orcamento aguardando sua aprovacao."));
+        verify(financialAccess).authorize(eq(com.oficina.billing.security.FinancialTestSecurity.ACTOR), any(),
+                eq(command.osId()), eq(com.oficina.billing.application.authorization.FinancialAccessPort.Action.DECIDE));
+        mvc.perform(auth(get("/api/v1/orcamentos/{id}", notification.orcamentoId()))).andExpect(status().isOk());
+        assertPendingWithoutDecision(budget.id());
+    }
+
+    @Test
+    void notificationAccessRequiresCurrentOwnerEvenForEmptyResults() throws Exception {
+        var own = com.oficina.billing.messaging.MessagingFixtures.quote();
+        var other = com.oficina.billing.messaging.MessagingFixtures.quote();
+        commandHandler.handle(own, com.oficina.billing.messaging.MessagingFixtures.body(own));
+        commandHandler.handle(other, com.oficina.billing.messaging.MessagingFixtures.body(other));
+        when(financialAccess.authorize(any(), any(), any(), any()))
+                .thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.DENY);
+        when(financialAccess.authorize(eq(com.oficina.billing.security.FinancialTestSecurity.ACTOR), any(),
+                eq(own.osId()), eq(com.oficina.billing.application.authorization.FinancialAccessPort.Action.DECIDE)))
+                .thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW);
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", own.osId().toString())))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].osId").value(own.osId().toString()));
+        for (var osId : List.of(other.osId(), UUID.randomUUID())) {
+            mvc.perform(auth(get("/api/v1/notificacoes").param("osId", osId.toString())
+                            .param("clienteId", com.oficina.billing.security.FinancialTestSecurity.ACTOR.toString())
+                            .param("usuarioId", com.oficina.billing.security.FinancialTestSecurity.ACTOR.toString())))
+                    .andExpect(status().isForbidden()).andExpect(jsonPath("$[0]").doesNotExist());
+        }
+        when(financialAccess.authorize(any(), any(), any(), any()))
+                .thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.UNAVAILABLE);
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", own.osId().toString())))
+                .andExpect(status().isServiceUnavailable());
+    }
+
+    @Test
+    void notificationEndpointRequiresAuthenticationAndClientRole() throws Exception {
+        var osId = UUID.randomUUID().toString();
+        mvc.perform(get("/api/v1/notificacoes").param("osId", osId)).andExpect(status().isUnauthorized());
+        for (var role : List.of("ATENDENTE", "GERENTE", "MECANICO")) {
+            mvc.perform(get("/api/v1/notificacoes").param("osId", osId)
+                            .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role)))
+                    .andExpect(status().isForbidden());
+        }
+        verifyNoInteractions(financialAccess);
+    }
+
+    @Test
+    void operationalScopeDoesNotGrantNotificationsToUserWithBothRoles() throws Exception {
+        var osId = UUID.randomUUID();
+        when(financialAccess.authorize(any(), any(), any(), any())).thenAnswer(invocation ->
+                invocation.getArgument(3) == com.oficina.billing.application.authorization.FinancialAccessPort.Action.READ
+                        ? com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW
+                        : com.oficina.billing.application.authorization.FinancialAccessPort.Decision.DENY);
+        for (var role : List.of("ATENDENTE", "GERENTE")) {
+            mvc.perform(get("/api/v1/notificacoes").param("osId", osId.toString())
+                            .with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE", role)))
+                    .andExpect(status().isForbidden());
+        }
+    }
+
+    @Test
+    void notificationPaginationIsBoundedAndEmptyListStillRequiresOwnership() throws Exception {
+        var command = com.oficina.billing.messaging.MessagingFixtures.quote();
+        commandHandler.handle(command, com.oficina.billing.messaging.MessagingFixtures.body(command));
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", command.osId().toString())
+                        .param("page", "1").param("size", "1")))
+                .andExpect(status().isOk()).andExpect(content().json("[]"));
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", UUID.randomUUID().toString())))
+                .andExpect(status().isOk()).andExpect(content().json("[]"));
+        for (var params : List.of(new String[]{"-1", "20"}, new String[]{"0", "0"}, new String[]{"0", "101"})) {
+            mvc.perform(auth(get("/api/v1/notificacoes").param("osId", command.osId().toString())
+                            .param("page", params[0]).param("size", params[1])))
+                    .andExpect(status().isBadRequest());
+        }
+        mvc.perform(auth(get("/api/v1/notificacoes"))).andExpect(status().isBadRequest());
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", "invalid"))).andExpect(status().isBadRequest());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"aprovar", "rejeitar"})
+    void notificationHistorySurvivesDecisionAndRepeatedCreation(String action) throws Exception {
+        var command = com.oficina.billing.messaging.MessagingFixtures.quote();
+        commandHandler.handle(command, com.oficina.billing.messaging.MessagingFixtures.body(command));
+        var budget = orcamentos.findByOsId(command.osId()).orElseThrow();
+        var notification = notificacoes.findByOsId(command.osId(), 0, 20).getFirst();
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/{action}", budget.id(), action))
+                .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isOk());
+        var repeated = com.oficina.billing.messaging.MessagingFixtures.command("quote.create.v1",
+                command.osId(), command.sagaId(), command.payload());
+        commandHandler.handle(repeated, com.oficina.billing.messaging.MessagingFixtures.body(repeated));
+        notificacoes.registrar(orcamentos.findById(budget.id()).orElseThrow());
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", command.osId().toString())))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(notification.id().toString()))
+                .andExpect(jsonPath("$[0].createdAt").value(notification.createdAt().toString()))
+                .andExpect(jsonPath("$[0].statusOrcamento").value(action.equals("aprovar") ? "APPROVED" : "REJECTED"))
+                .andExpect(jsonPath("$[0].mensagem").value("Orcamento disponibilizado anteriormente; consulte a situacao atual."));
+    }
+
+    @Test
+    void terminalQuoteWithoutNotificationDoesNotGeneratePendingNotice() {
+        var budget = orcamentos.save(orcamento());
+        budget.cancelar(NOW.plusSeconds(1));
+        var cancelled = orcamentos.save(budget);
+        notificacoes.registrar(cancelled);
+        assertThat(notificacoes.findByOsId(budget.osId(), 0, 20)).isEmpty();
+    }
+
+    @Test
+    void notificationWriteFailureRollsBackQuoteInboxAndOutboxAndAllowsRetry() {
+        var command = com.oficina.billing.messaging.MessagingFixtures.quote();
+        jdbc.execute("""
+                CREATE FUNCTION test_reject_notification() RETURNS TRIGGER LANGUAGE plpgsql AS $$
+                BEGIN RAISE EXCEPTION 'notification unavailable' USING ERRCODE = '23514'; END $$;
+                """);
+        jdbc.execute("""
+                CREATE TRIGGER test_reject_notification BEFORE INSERT ON notificacoes_orcamento
+                FOR EACH ROW EXECUTE FUNCTION test_reject_notification()
+                """);
+        try {
+            assertThatThrownBy(() -> commandHandler.handle(command,
+                    com.oficina.billing.messaging.MessagingFixtures.body(command)))
+                    .isInstanceOf(org.springframework.dao.DataAccessException.class);
+            for (var table : List.of("orcamentos", "orcamento_itens", "notificacoes_orcamento", "inbox_messages", "outbox_events")) {
+                assertThat(jdbc.queryForObject("SELECT count(*) FROM " + table, Integer.class)).isZero();
+            }
+        } finally {
+            jdbc.execute("DROP TRIGGER test_reject_notification ON notificacoes_orcamento");
+            jdbc.execute("DROP FUNCTION test_reject_notification()");
+        }
+        commandHandler.handle(command, com.oficina.billing.messaging.MessagingFixtures.body(command));
+        var budget = orcamentos.findByOsId(command.osId()).orElseThrow();
+        notificacoes.registrar(budget);
+        assertThat(notificacoes.findByOsId(command.osId(), 0, 20)).hasSize(1);
+        assertThatThrownBy(() -> jdbc.update("""
+                INSERT INTO notificacoes_orcamento VALUES (?, ?, ?, 'ORCAMENTO_DISPONIVEL', CURRENT_TIMESTAMP)
+                """, UUID.randomUUID(), budget.id(), command.osId()))
+                .isInstanceOf(org.springframework.dao.DataIntegrityViolationException.class);
+        assertThatThrownBy(() -> jdbc.update("""
+                INSERT INTO notificacoes_orcamento VALUES (?, ?, ?, 'ORCAMENTO_DISPONIVEL', CURRENT_TIMESTAMP)
+                """, UUID.randomUUID(), UUID.randomUUID(), command.osId()))
+                .isInstanceOf(org.springframework.dao.DataIntegrityViolationException.class);
     }
 
     private void assertPendingWithoutDecision(UUID id) {

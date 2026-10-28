@@ -81,7 +81,7 @@ class BillingApplicationTests {
     @Test
     void preservesBootstrapMigrationAndAppliesFinancialSchema() {
         assertThat(flyway.validateWithResult().validationSuccessful).isTrue();
-        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("4");
+        assertThat(flyway.info().current().getVersion().getVersion()).isEqualTo("5");
         assertThat(flyway.info().pending()).isEmpty();
         assertThat(jdbc.queryForObject(
                 "SELECT success FROM flyway_schema_history WHERE version = '1'", Boolean.class)).isTrue();
@@ -89,7 +89,42 @@ class BillingApplicationTests {
                 "SELECT tablename FROM pg_tables WHERE schemaname = 'public'", String.class);
         assertThat(tables).containsExactlyInAnyOrder("flyway_schema_history", "orcamentos", "orcamento_itens",
                 "aprovacoes", "pagamentos", "pagamentos_tentativas", "inbox_messages", "outbox_events",
-                "provider_sync", "provider_checkouts", "provider_notifications", "provider_payments", "provider_observations");
+                "provider_sync", "provider_checkouts", "provider_notifications", "provider_payments", "provider_observations",
+                "notificacoes_orcamento");
+    }
+
+    @Test
+    void upgradesExistingDatabaseAndNotifiesOnlyPendingQuotes() {
+        String schema = "notification_upgrade";
+        Flyway.configure().dataSource(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
+                .schemas(schema).defaultSchema(schema).target("4").load().migrate();
+        var upgradeDataSource = new org.springframework.jdbc.datasource.DriverManagerDataSource(
+                POSTGRES.getJdbcUrl() + "&currentSchema=" + schema, POSTGRES.getUsername(), POSTGRES.getPassword());
+        var upgradeJdbc = new JdbcTemplate(upgradeDataSource);
+        var pendingId = java.util.UUID.randomUUID();
+        var cancelledId = java.util.UUID.randomUUID();
+        new org.springframework.transaction.support.TransactionTemplate(
+                new org.springframework.jdbc.datasource.DataSourceTransactionManager(upgradeDataSource)).executeWithoutResult(transaction -> {
+            for (var quoteId : List.of(pendingId, cancelledId)) {
+                upgradeJdbc.update("""
+                        INSERT INTO orcamentos (id, os_id, saga_id, status, valor_total, created_at, updated_at)
+                        VALUES (?, ?, ?, 'PENDING_APPROVAL', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+                        """, quoteId, java.util.UUID.randomUUID(), java.util.UUID.randomUUID());
+                upgradeJdbc.update("""
+                        INSERT INTO orcamento_itens (id, orcamento_id, posicao, item_id, descricao, tipo, quantidade,
+                            quantidade_escala, unidade_preco, preco_unitario, valor_total)
+                        VALUES (?, ?, 0, 'diagnostico', 'Servico', 'SERVICO', 1, 0, 'HORA', 1, 1)
+                        """, java.util.UUID.randomUUID(), quoteId);
+            }
+            upgradeJdbc.update("UPDATE orcamentos SET status = 'CANCELLED' WHERE id = ?", cancelledId);
+        });
+        var upgrade = Flyway.configure().dataSource(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(), POSTGRES.getPassword())
+                .schemas(schema).defaultSchema(schema).load();
+        upgrade.migrate();
+        upgrade.migrate();
+        assertThat(upgradeJdbc.queryForList("SELECT orcamento_id FROM notificacoes_orcamento", java.util.UUID.class))
+                .containsExactly(pendingId);
+        assertThat(upgrade.validateWithResult().validationSuccessful).isTrue();
     }
 
     @ParameterizedTest

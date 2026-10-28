@@ -52,6 +52,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/actuator/health", "/actuator/health/liveness", "/actuator/health/readiness",
                                 "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/notificacoes").hasRole("CLIENTE")
                         .requestMatchers(HttpMethod.GET, "/api/v1/orcamentos", "/api/v1/orcamentos/*",
                                 "/api/v1/orcamentos/*/aprovacao", "/api/v1/pagamentos", "/api/v1/pagamentos/*")
                                 .hasAnyRole("CLIENTE", "ATENDENTE", "GERENTE")

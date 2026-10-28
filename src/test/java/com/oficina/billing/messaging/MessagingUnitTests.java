@@ -35,13 +35,14 @@ class MessagingUnitTests {
     @Mock private OrcamentoRepositoryPort orcamentos;
     @Mock private PagamentoRepositoryPort pagamentos;
     @Mock private EventRecorder events;
+    @Mock private NotificacaoOrcamentoRepositoryPort notificacoes;
     @Mock private MessageBrokerPort broker;
     private CommandHandler handler;
     private final Clock clock = Clock.fixed(NOW.plusSeconds(10), ZoneOffset.UTC);
 
     @BeforeEach
     void setUp() {
-        handler = new CommandHandler(inbox, orcamentos, pagamentos, CODEC, events, clock);
+        handler = new CommandHandler(inbox, orcamentos, pagamentos, CODEC, events, clock, notificacoes);
         lenient().when(inbox.claim(any())).thenAnswer(invocation -> invocation.getArgument(0));
     }
 
