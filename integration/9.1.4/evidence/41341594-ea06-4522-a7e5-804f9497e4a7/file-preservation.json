@@ -1,0 +1,15 @@
+﻿{
+    "intentionallyChangedHarnessFiles":  [
+                                             "tech-challenge-oficina-billing-service\\integration\\9.1.4\\collect.ps1",
+                                             "tech-challenge-oficina-billing-service\\integration\\9.1.4\\prepare.ps1",
+                                             "tech-challenge-oficina-billing-service\\integration\\9.1.4\\README.md",
+                                             "tech-challenge-oficina-billing-service\\integration\\9.1.4\\runner.py",
+                                             "tech-challenge-oficina-billing-service\\integration\\9.1.4\\start.ps1",
+                                             "tech-challenge-oficina-billing-service\\integration\\9.1.4\\verify.ps1"
+                                         ],
+    "historicalBaselineRunId":  "54f48b26-570c-414d-a1a3-11b180ff9dfa",
+    "changedHistoricalFiles":  [
+
+                               ],
+    "filesChecked":  354
+}

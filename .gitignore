@@ -2,6 +2,7 @@
 /integration/7.4.1/artifacts/
 /integration/7.6/artifacts/
 /integration/8.3.5/artifacts/
+/integration/9.1.4/artifacts/
 /.idea/
 *.iml
 /.env

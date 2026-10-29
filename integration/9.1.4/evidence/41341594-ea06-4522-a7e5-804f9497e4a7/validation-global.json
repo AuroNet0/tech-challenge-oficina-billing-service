@@ -1,0 +1,15 @@
+﻿{
+    "totalChecks":  206,
+    "status":  "PASSED",
+    "phases":  [
+                   "preflight",
+                   "provision",
+                   "bdd",
+                   "resume-after-approval",
+                   "compensations",
+                   "dependency-unavailable",
+                   "broker-outage",
+                   "broker-recovery"
+               ],
+    "runId":  "41341594-ea06-4522-a7e5-804f9497e4a7"
+}

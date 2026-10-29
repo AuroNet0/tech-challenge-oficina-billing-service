@@ -1,0 +1,10 @@
+﻿{
+    "finalRunningContainers":  10,
+    "originalVolumes":  75,
+    "missingOriginalVolumes":  [
+
+                               ],
+    "previousAttemptStoppedContainers":  10,
+    "finalVolumes":  87,
+    "originalContainersAfterManualCleanup":  0
+}

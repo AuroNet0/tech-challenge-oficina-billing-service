@@ -1,0 +1,43 @@
+{
+  "quotes": [
+    {
+      "id": "a44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "status": "APPROVED",
+      "valor_total": "150.00",
+      "version": 1
+    }
+  ],
+  "payments": [
+    {
+      "id": "29017b71-b955-49f4-b145-485ba6bd99f7",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "status": "CONFIRMED",
+      "valor": "150.00",
+      "moeda": "BRL",
+      "version": 1
+    }
+  ],
+  "attempts": [
+    {
+      "id": "99df58dc-4811-4a61-b49f-4b9168455142",
+      "pagamento_id": "29017b71-b955-49f4-b145-485ba6bd99f7",
+      "status": "CONFIRMED",
+      "posicao": 0
+    }
+  ],
+  "checkouts": [
+    {
+      "payment_id": "29017b71-b955-49f4-b145-485ba6bd99f7",
+      "state": "CLOSED"
+    }
+  ],
+  "sync": [
+    {
+      "payment_id": "29017b71-b955-49f4-b145-485ba6bd99f7",
+      "attempts": 0,
+      "last_sync_at": "2026-10-29 14:42:05.911761+00:00",
+      "review_reason": null
+    }
+  ]
+}

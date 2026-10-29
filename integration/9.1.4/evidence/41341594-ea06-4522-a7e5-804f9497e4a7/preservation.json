@@ -1,0 +1,72 @@
+﻿[
+    {
+        "after":  "exited",
+        "before":  "exited",
+        "name":  "oficina-e2e914-544ddf1e8ca5-mercado-pago-mock-1",
+        "id":  "6e959caea3ce",
+        "kind":  "previous isolated E2E"
+    },
+    {
+        "after":  "exited",
+        "before":  "exited",
+        "name":  "oficina-e2e914-544ddf1e8ca5-billing-service-1",
+        "id":  "113d847bb834",
+        "kind":  "previous isolated E2E"
+    },
+    {
+        "after":  "exited",
+        "before":  "exited",
+        "name":  "oficina-e2e914-544ddf1e8ca5-execution-service-1",
+        "id":  "d8411c695133",
+        "kind":  "previous isolated E2E"
+    },
+    {
+        "after":  "exited",
+        "before":  "exited",
+        "name":  "oficina-e2e914-544ddf1e8ca5-os-service-1",
+        "id":  "5637fe175b9f",
+        "kind":  "previous isolated E2E"
+    },
+    {
+        "after":  "exited",
+        "before":  "exited",
+        "name":  "oficina-e2e914-544ddf1e8ca5-auth-1",
+        "id":  "6eb5685bc193",
+        "kind":  "previous isolated E2E"
+    },
+    {
+        "after":  "exited",
+        "before":  "exited",
+        "name":  "oficina-e2e914-544ddf1e8ca5-rabbitmq-1",
+        "id":  "9737880df162",
+        "kind":  "previous isolated E2E"
+    },
+    {
+        "after":  "exited",
+        "before":  "exited",
+        "name":  "oficina-e2e914-544ddf1e8ca5-mongodb-1",
+        "id":  "d910a6cadd13",
+        "kind":  "previous isolated E2E"
+    },
+    {
+        "after":  "exited",
+        "before":  "exited",
+        "name":  "oficina-e2e914-544ddf1e8ca5-billing-db-1",
+        "id":  "0ecc926914f2",
+        "kind":  "previous isolated E2E"
+    },
+    {
+        "after":  "exited",
+        "before":  "exited",
+        "name":  "oficina-e2e914-544ddf1e8ca5-os-db-1",
+        "id":  "a3cdd8c067e0",
+        "kind":  "previous isolated E2E"
+    },
+    {
+        "after":  "exited",
+        "before":  "exited",
+        "name":  "oficina-e2e914-544ddf1e8ca5-auth-db-1",
+        "id":  "83deab8051a5",
+        "kind":  "previous isolated E2E"
+    }
+]

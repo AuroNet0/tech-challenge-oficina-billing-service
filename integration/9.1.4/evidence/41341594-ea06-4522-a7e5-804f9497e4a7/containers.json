@@ -1,0 +1,82 @@
+﻿[
+    {
+        "id":  "acdbf6972f3fdf1b6d37321bd21a75982d6b095aa15a1726c7b9c5ac6b94b489",
+        "name":  "/oficina-e2e914-41341594ea06-auth-1",
+        "imageId":  "sha256:5d90b26c0784ccf55af55f97cbcf7f3969c66a06299c93bdc72649219942a48f",
+        "health":  "healthy",
+        "image":  "eclipse-temurin:21-jdk",
+        "state":  "running"
+    },
+    {
+        "id":  "2595bcc5ecebfb80b43e4e8fa1fa86389a9ae52fd0f6592b5f70c4f3d8431ae4",
+        "name":  "/oficina-e2e914-41341594ea06-auth-db-1",
+        "imageId":  "sha256:266d3c257594e195b309ae9d1805e54c788f1d7b375f56bf6c367aac6c917e7b",
+        "health":  "healthy",
+        "image":  "postgres:17-alpine",
+        "state":  "running"
+    },
+    {
+        "id":  "393bb566ccc27da8a48c42e83470fa71c4cef4bc33a9c979d26ee734f210762e",
+        "name":  "/oficina-e2e914-41341594ea06-billing-db-1",
+        "imageId":  "sha256:266d3c257594e195b309ae9d1805e54c788f1d7b375f56bf6c367aac6c917e7b",
+        "health":  "healthy",
+        "image":  "postgres:17-alpine",
+        "state":  "running"
+    },
+    {
+        "id":  "add012e0639a9e7ef24128ca7392bf2d304173525852ab35a3afdbc1c19a7524",
+        "name":  "/oficina-e2e914-41341594ea06-billing-service-1",
+        "imageId":  "sha256:5d90b26c0784ccf55af55f97cbcf7f3969c66a06299c93bdc72649219942a48f",
+        "health":  "healthy",
+        "image":  "eclipse-temurin:21-jdk",
+        "state":  "running"
+    },
+    {
+        "id":  "6f724bab2ef0e03fbe727784001c7e4ea1ac3ae6199be951af191d6d38a53a9c",
+        "name":  "/oficina-e2e914-41341594ea06-execution-service-1",
+        "imageId":  "sha256:5d90b26c0784ccf55af55f97cbcf7f3969c66a06299c93bdc72649219942a48f",
+        "health":  "healthy",
+        "image":  "eclipse-temurin:21-jdk",
+        "state":  "running"
+    },
+    {
+        "id":  "379dc8a94e1a0f5e6d8b92f53474f7d8464c27cdab5676fc0ee07da694ed620f",
+        "name":  "/oficina-e2e914-41341594ea06-mercado-pago-mock-1",
+        "imageId":  "sha256:8bcfa47b04b853a17aaf909362b847b2112fd6ec4105ea553ef9a43bafbb5916",
+        "health":  "healthy",
+        "image":  "python:3.13-alpine",
+        "state":  "running"
+    },
+    {
+        "id":  "1db276207f1fdfe2f7c1e3bc5957a61425cbb776aa4c5378c0301e47726c717e",
+        "name":  "/oficina-e2e914-41341594ea06-mongodb-1",
+        "imageId":  "sha256:b9924c330a8bbc5800fe9c69f04a84e221eca7b28fd049a0354147d9908fa142",
+        "health":  "healthy",
+        "image":  "mongo:8.0",
+        "state":  "running"
+    },
+    {
+        "id":  "7bd40a6228b69891bcb537019debc511af89eb89ab6b87468d67d4051bbe0b1d",
+        "name":  "/oficina-e2e914-41341594ea06-os-db-1",
+        "imageId":  "sha256:266d3c257594e195b309ae9d1805e54c788f1d7b375f56bf6c367aac6c917e7b",
+        "health":  "healthy",
+        "image":  "postgres:17-alpine",
+        "state":  "running"
+    },
+    {
+        "id":  "922ac02cd34e650648a7e6d79991a52fea2ff8bbc163518bdbac097fe352e6db",
+        "name":  "/oficina-e2e914-41341594ea06-os-service-1",
+        "imageId":  "sha256:5d90b26c0784ccf55af55f97cbcf7f3969c66a06299c93bdc72649219942a48f",
+        "health":  "healthy",
+        "image":  "eclipse-temurin:21-jdk",
+        "state":  "running"
+    },
+    {
+        "id":  "5d807f58b81d771f622014e448fd43a789e19eb2d7c0cb3f5acb3e7141efc263",
+        "name":  "/oficina-e2e914-41341594ea06-rabbitmq-1",
+        "imageId":  "sha256:0452ee3fd3b9a74160b251e693338616b464f22df4d4ba43304c101bebdca292",
+        "health":  "healthy",
+        "image":  "rabbitmq:4-management-alpine",
+        "state":  "running"
+    }
+]

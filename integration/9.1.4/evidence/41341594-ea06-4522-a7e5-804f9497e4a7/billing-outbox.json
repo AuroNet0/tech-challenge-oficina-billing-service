@@ -1,0 +1,23 @@
+[
+  {
+    "event_id": "14591c83-6fea-4080-90f8-40b631a11848",
+    "event_type": "quote.created.v1",
+    "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+    "status": "PUBLISHED",
+    "attempts": 1
+  },
+  {
+    "event_id": "1b6e9153-602e-43dc-927d-7243987fa787",
+    "event_type": "quote.approved.v1",
+    "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+    "status": "PUBLISHED",
+    "attempts": 1
+  },
+  {
+    "event_id": "0cbea806-10a7-4a9d-8ede-3ab30346d1e7",
+    "event_type": "payment.confirmed.v1",
+    "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+    "status": "PUBLISHED",
+    "attempts": 1
+  }
+]

@@ -1,0 +1,140 @@
+﻿{
+    "runId":  "41341594-ea06-4522-a7e5-804f9497e4a7",
+    "samples":  128,
+    "firstTimestamp":  "2026-10-29T11:26:24.8220156-03:00",
+    "lastTimestamp":  "2026-10-29T11:53:45.0141109-03:00",
+    "metric":  "docker stats --no-stream memory usage; periodic samples, not instantaneous maxima",
+    "windowsMinimumFreeMiB":  701.35,
+    "vmMinimumAvailableMiB":  5077.08,
+    "swapMinimumFreeMiB":  2047.25,
+    "initialOomKills":  0,
+    "finalOomKills":  0,
+    "maximumFullPressureAvg10":  1.27,
+    "finalWindowsFreeMiB":  1470.16,
+    "finalVmAvailableMiB":  5230.27,
+    "finalTotalContainerMiB":  1893.96,
+    "containers":  [
+                       {
+                           "finalMiB":  187.2,
+                           "name":  "oficina-e2e914-41341594ea06-auth-1",
+                           "peakMiB":  218.4
+                       },
+                       {
+                           "finalMiB":  37.39,
+                           "name":  "oficina-e2e914-41341594ea06-auth-db-1",
+                           "peakMiB":  41.13
+                       },
+                       {
+                           "finalMiB":  60.83,
+                           "name":  "oficina-e2e914-41341594ea06-billing-db-1",
+                           "peakMiB":  61.28
+                       },
+                       {
+                           "finalMiB":  422,
+                           "name":  "oficina-e2e914-41341594ea06-billing-service-1",
+                           "peakMiB":  422
+                       },
+                       {
+                           "finalMiB":  353.6,
+                           "name":  "oficina-e2e914-41341594ea06-execution-service-1",
+                           "peakMiB":  494.5
+                       },
+                       {
+                           "finalMiB":  13.74,
+                           "name":  "oficina-e2e914-41341594ea06-mercado-pago-mock-1",
+                           "peakMiB":  23.23
+                       },
+                       {
+                           "finalMiB":  213,
+                           "name":  "oficina-e2e914-41341594ea06-mongodb-1",
+                           "peakMiB":  405.2
+                       },
+                       {
+                           "finalMiB":  56.36,
+                           "name":  "oficina-e2e914-41341594ea06-os-db-1",
+                           "peakMiB":  58.05
+                       },
+                       {
+                           "finalMiB":  460,
+                           "name":  "oficina-e2e914-41341594ea06-os-service-1",
+                           "peakMiB":  460
+                       },
+                       {
+                           "finalMiB":  89.84,
+                           "name":  "oficina-e2e914-41341594ea06-rabbitmq-1",
+                           "peakMiB":  180
+                       }
+                   ],
+    "readinessStages":  [
+                            {
+                                "label":  "ready-auth-db",
+                                "swapFreeMiB":  2048,
+                                "timestamp":  "2026-10-29T11:26:35.3137027-03:00",
+                                "windowsFreeMiB":  1701.12,
+                                "vmAvailableMiB":  6964.97
+                            },
+                            {
+                                "label":  "ready-os-db",
+                                "swapFreeMiB":  2048,
+                                "timestamp":  "2026-10-29T11:26:45.5471125-03:00",
+                                "windowsFreeMiB":  1768.95,
+                                "vmAvailableMiB":  6943.02
+                            },
+                            {
+                                "label":  "ready-billing-db",
+                                "swapFreeMiB":  2048,
+                                "timestamp":  "2026-10-29T11:26:57.5729242-03:00",
+                                "windowsFreeMiB":  1692.79,
+                                "vmAvailableMiB":  6925.84
+                            },
+                            {
+                                "label":  "ready-mongodb",
+                                "swapFreeMiB":  2048,
+                                "timestamp":  "2026-10-29T11:27:31.2637502-03:00",
+                                "windowsFreeMiB":  1358.23,
+                                "vmAvailableMiB":  6814.62
+                            },
+                            {
+                                "label":  "ready-rabbitmq",
+                                "swapFreeMiB":  2048,
+                                "timestamp":  "2026-10-29T11:27:55.6544994-03:00",
+                                "windowsFreeMiB":  1051.43,
+                                "vmAvailableMiB":  6697.79
+                            },
+                            {
+                                "label":  "ready-auth",
+                                "swapFreeMiB":  2048,
+                                "timestamp":  "2026-10-29T11:28:29.3609605-03:00",
+                                "windowsFreeMiB":  1380.14,
+                                "vmAvailableMiB":  6624.78
+                            },
+                            {
+                                "label":  "ready-os-service",
+                                "swapFreeMiB":  2048,
+                                "timestamp":  "2026-10-29T11:29:05.7630908-03:00",
+                                "windowsFreeMiB":  875.83,
+                                "vmAvailableMiB":  6232.05
+                            },
+                            {
+                                "label":  "ready-execution-service",
+                                "swapFreeMiB":  2048,
+                                "timestamp":  "2026-10-29T11:39:46.9629781-03:00",
+                                "windowsFreeMiB":  2295.51,
+                                "vmAvailableMiB":  5913.6
+                            },
+                            {
+                                "label":  "ready-billing-service",
+                                "swapFreeMiB":  2048,
+                                "timestamp":  "2026-10-29T11:40:17.3391218-03:00",
+                                "windowsFreeMiB":  1794.59,
+                                "vmAvailableMiB":  5333.92
+                            },
+                            {
+                                "label":  "ready-mercado-pago-mock",
+                                "swapFreeMiB":  2048,
+                                "timestamp":  "2026-10-29T11:40:31.9727414-03:00",
+                                "windowsFreeMiB":  2106.96,
+                                "vmAvailableMiB":  5518.43
+                            }
+                        ]
+}

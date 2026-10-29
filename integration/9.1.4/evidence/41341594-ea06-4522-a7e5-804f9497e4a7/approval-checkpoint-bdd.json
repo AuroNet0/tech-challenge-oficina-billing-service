@@ -1,0 +1,5 @@
+{
+  "status": "FAILED",
+  "scenario": "Conclus\u00e3o de uma ordem de servi\u00e7o com pagamento aprovado",
+  "error": "AssertionError: billing POST /api/v1/orcamentos/a44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb/aprovar: expected success, received 0"
+}

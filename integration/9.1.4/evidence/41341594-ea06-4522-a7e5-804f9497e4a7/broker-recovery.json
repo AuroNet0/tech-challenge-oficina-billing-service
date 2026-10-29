@@ -1,0 +1,16 @@
+{
+  "osId": "eaae4ae8-bf05-4f43-b26e-30bd57b76619",
+  "diagnosticId": "491acd72-e7ce-4883-85d0-98bd3eced53e",
+  "outbox": [
+    {
+      "id": "99c14b19-ace1-4c46-8366-97fe5ed2f3e9",
+      "status": "PUBLISHED",
+      "attempts": 2,
+      "event_type": "diagnostic.start.v1"
+    }
+  ],
+  "checks": [
+    "recuperacao de broker enfileira diagnostico sem iniciar trabalho fisico",
+    "recuperacao apos falha de broker processa comando sem JWT humano"
+  ]
+}

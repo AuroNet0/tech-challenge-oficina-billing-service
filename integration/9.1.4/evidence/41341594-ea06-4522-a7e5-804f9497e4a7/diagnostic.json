@@ -1,0 +1,21 @@
+{
+  "id": "138e17f9-ba55-4ac5-84e2-0940d9fae70c",
+  "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+  "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+  "status": "COMPLETED",
+  "observacoes": "E2E autenticado 41341594-ea06-4522-a7e5-804f9497e4a7",
+  "items": [
+    {
+      "itemId": "service-1",
+      "descricao": "Servico ficticio",
+      "tipo": "SERVICO",
+      "quantidade": "2",
+      "unidadePreco": "HORA",
+      "precoPrevisto": "75.00"
+    }
+  ],
+  "createdAt": "2026-10-29T14:40:45.182Z",
+  "updatedAt": "2026-10-29T14:41:06.263Z",
+  "completedAt": "2026-10-29T14:41:06.263Z",
+  "version": 3
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "2bb57be5-6160-49f5-b3eb-b4680b712aa9",
+    "orcamentoId": "a44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb",
+    "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+    "tipo": "ORCAMENTO_DISPONIVEL",
+    "createdAt": "2026-10-29T14:41:10.084545Z",
+    "mensagem": "Existe um orcamento aguardando sua aprovacao.",
+    "statusOrcamento": "PENDING_APPROVAL"
+  }
+]

@@ -1,0 +1,189 @@
+﻿{
+  "preferences": [
+    "e2e-preference-1"
+  ],
+  "payments": [
+    {
+      "id": 200001,
+      "status": "approved",
+      "transaction_amount": "150.00",
+      "currency_id": "BRL",
+      "live_mode": false,
+      "external_reference": "billing:a44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb"
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "POST",
+      "path": "/checkout/preferences"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/200001"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant_orders/order-200001"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/search?external_reference=billing%3Aa44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb&limit=20&offset=0"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/200001"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant_orders/order-200001"
+    },
+    {
+      "method": "PUT",
+      "path": "/checkout/preferences/e2e-preference-1"
+    },
+    {
+      "method": "GET",
+      "path": "/checkout/preferences/e2e-preference-1"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/search?external_reference=billing%3Aa44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb&limit=20&offset=0"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/200001"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant_orders/order-200001"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/search?external_reference=billing%3Aa44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb&limit=20&offset=0"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/200001"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant_orders/order-200001"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/search?external_reference=billing%3Aa44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb&limit=20&offset=0"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/200001"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant_orders/order-200001"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/search?external_reference=billing%3Aa44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb&limit=20&offset=0"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/200001"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant_orders/order-200001"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/search?external_reference=billing%3Aa44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb&limit=20&offset=0"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/200001"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant_orders/order-200001"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/search?external_reference=billing%3Aa44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb&limit=20&offset=0"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/200001"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant_orders/order-200001"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/search?external_reference=billing%3Aa44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb&limit=20&offset=0"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/200001"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant_orders/order-200001"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/search?external_reference=billing%3Aa44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb&limit=20&offset=0"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payments/200001"
+    },
+    {
+      "method": "GET",
+      "path": "/users/me"
+    },
+    {
+      "method": "GET",
+      "path": "/merchant_orders/order-200001"
+    }
+  ]
+}

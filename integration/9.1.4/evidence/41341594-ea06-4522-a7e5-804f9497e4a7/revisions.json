@@ -1,0 +1,31 @@
+﻿{
+    "auth":  {
+                 "branch":  "homolog",
+                 "commit":  "88fe949df9216fd861a2ad3844f2b0e5867883f6",
+                 "changes":  [
+
+                             ]
+             },
+    "os-service":  {
+                       "branch":  "homolog",
+                       "commit":  "9391d3b9d4a5949a2c6447fc01becbb87d45142e",
+                       "changes":  [
+
+                                   ]
+                   },
+    "execution-service":  {
+                              "branch":  "homolog",
+                              "commit":  "929c6de05e6b482d82fd097e6cd61ac1d38f9b30",
+                              "changes":  [
+
+                                          ]
+                          },
+    "billing-service":  {
+                            "branch":  "homolog",
+                            "commit":  "bc70ca2bd5bc9032120c77812194ef50ca46c276",
+                            "changes":  [
+                                            " M .gitignore",
+                                            "?? integration/9.1.4/"
+                                        ]
+                        }
+}

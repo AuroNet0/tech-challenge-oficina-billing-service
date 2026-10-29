@@ -1,0 +1,6 @@
+﻿      int ActiveProcessorCount                     = -1                                        {product} {default}
+   size_t InitialHeapSize                          = 130023424                                 {product} {ergonomic}
+   size_t MaxHeapSize                              = 268435456                                 {product} {command line}
+   double MaxRAMPercentage                         = 25.000000                                 {product} {default}
+   size_t SoftMaxHeapSize                          = 268435456                              {manageable} {ergonomic}
+     bool UseContainerSupport                      = true                                      {product} {default}

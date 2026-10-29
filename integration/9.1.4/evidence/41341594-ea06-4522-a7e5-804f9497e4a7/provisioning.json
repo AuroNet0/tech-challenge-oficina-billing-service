@@ -1,0 +1,202 @@
+{
+  "users": {
+    "clienteA": {
+      "id": "8f6042d6-4804-461c-8927-7d4d256234b6",
+      "role": "CLIENTE"
+    },
+    "clienteB": {
+      "id": "9a534eed-6344-4739-a552-2b25df081cb2",
+      "role": "CLIENTE"
+    },
+    "atendente": {
+      "id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "role": "ATENDENTE"
+    },
+    "gerente": {
+      "id": "db3394ee-78a4-42b0-9ea1-cd297a9c193f",
+      "role": "GERENTE"
+    },
+    "mecanico": {
+      "id": "75fc3894-6168-4a7b-8ce1-e2c0a4d235fe",
+      "role": "MECANICO"
+    },
+    "semPapel": {
+      "id": "c71d4223-35e8-478d-8edf-cfdb8ef70b18",
+      "role": ""
+    }
+  },
+  "resources": {
+    "filialA": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+    "filialB": "ea91c1be-5439-4d00-803d-04561c1f4e28",
+    "clienteB": "14dcb330-95b3-45ae-b1b0-bef1545b0d2d",
+    "veiculoB": "29e58853-0927-4b1d-839a-57ae529b4609",
+    "osMain": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+    "clienteA": "86083846-db47-4e5f-a015-33e8af5d4a9c",
+    "veiculoA": "3fed8c96-57b8-4b6a-b12f-e3041a412a12",
+    "osOther": "16db1ee6-7bd2-44a6-816a-1da11450c7ac"
+  },
+  "grantProvenance": "local fixture 41341594-ea06-4522-a7e5-804f9497e4a7",
+  "grants": [
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "capability": "OS_READ",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "capability": "OS_OPEN",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "capability": "CLIENT_READ",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "capability": "CLIENT_CREATE",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "capability": "VEHICLE_READ",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "capability": "VEHICLE_CREATE",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "capability": "BRANCH_READ",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "ea91c1be-5439-4d00-803d-04561c1f4e28",
+      "capability": "OS_READ",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "ea91c1be-5439-4d00-803d-04561c1f4e28",
+      "capability": "OS_OPEN",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "ea91c1be-5439-4d00-803d-04561c1f4e28",
+      "capability": "CLIENT_READ",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "ea91c1be-5439-4d00-803d-04561c1f4e28",
+      "capability": "CLIENT_CREATE",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "ea91c1be-5439-4d00-803d-04561c1f4e28",
+      "capability": "VEHICLE_READ",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "ea91c1be-5439-4d00-803d-04561c1f4e28",
+      "capability": "VEHICLE_CREATE",
+      "ativo": true
+    },
+    {
+      "usuario_id": "4987c5f2-ad96-44e1-8c82-2edcd4912f3f",
+      "filial_id": "ea91c1be-5439-4d00-803d-04561c1f4e28",
+      "capability": "BRANCH_READ",
+      "ativo": true
+    },
+    {
+      "usuario_id": "db3394ee-78a4-42b0-9ea1-cd297a9c193f",
+      "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "capability": "OS_READ",
+      "ativo": true
+    },
+    {
+      "usuario_id": "db3394ee-78a4-42b0-9ea1-cd297a9c193f",
+      "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "capability": "BRANCH_READ",
+      "ativo": true
+    }
+  ],
+  "assignments": [
+    {
+      "usuario_id": "75fc3894-6168-4a7b-8ce1-e2c0a4d235fe",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "capability": "OPERATIONAL_READ",
+      "ativo": true,
+      "concedido_por": "db3394ee-78a4-42b0-9ea1-cd297a9c193f"
+    },
+    {
+      "usuario_id": "75fc3894-6168-4a7b-8ce1-e2c0a4d235fe",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "capability": "VEHICLE_OPERATIONAL_READ",
+      "ativo": true,
+      "concedido_por": "db3394ee-78a4-42b0-9ea1-cd297a9c193f"
+    },
+    {
+      "usuario_id": "75fc3894-6168-4a7b-8ce1-e2c0a4d235fe",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "capability": "DIAGNOSTIC_READ",
+      "ativo": true,
+      "concedido_por": "db3394ee-78a4-42b0-9ea1-cd297a9c193f"
+    },
+    {
+      "usuario_id": "75fc3894-6168-4a7b-8ce1-e2c0a4d235fe",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "capability": "DIAGNOSTIC_WRITE",
+      "ativo": true,
+      "concedido_por": "db3394ee-78a4-42b0-9ea1-cd297a9c193f"
+    },
+    {
+      "usuario_id": "75fc3894-6168-4a7b-8ce1-e2c0a4d235fe",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "capability": "DIAGNOSTIC_COMPLETE",
+      "ativo": true,
+      "concedido_por": "db3394ee-78a4-42b0-9ea1-cd297a9c193f"
+    },
+    {
+      "usuario_id": "75fc3894-6168-4a7b-8ce1-e2c0a4d235fe",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "capability": "REPAIR_READ",
+      "ativo": true,
+      "concedido_por": "db3394ee-78a4-42b0-9ea1-cd297a9c193f"
+    },
+    {
+      "usuario_id": "75fc3894-6168-4a7b-8ce1-e2c0a4d235fe",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "capability": "REPAIR_WRITE",
+      "ativo": true,
+      "concedido_por": "db3394ee-78a4-42b0-9ea1-cd297a9c193f"
+    },
+    {
+      "usuario_id": "75fc3894-6168-4a7b-8ce1-e2c0a4d235fe",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "capability": "REPAIR_COMPLETE",
+      "ativo": true,
+      "concedido_por": "db3394ee-78a4-42b0-9ea1-cd297a9c193f"
+    },
+    {
+      "usuario_id": "75fc3894-6168-4a7b-8ce1-e2c0a4d235fe",
+      "os_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+      "capability": "HISTORY_READ",
+      "ativo": true,
+      "concedido_por": "db3394ee-78a4-42b0-9ea1-cd297a9c193f"
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+﻿[
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-544ddf1e8ca5-mercado-pago-mock-1",
+        "exitCode":  137,
+        "state":  "exited"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-544ddf1e8ca5-billing-service-1",
+        "exitCode":  143,
+        "state":  "exited"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-544ddf1e8ca5-execution-service-1",
+        "exitCode":  143,
+        "state":  "exited"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-544ddf1e8ca5-os-service-1",
+        "exitCode":  143,
+        "state":  "exited"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-544ddf1e8ca5-auth-1",
+        "exitCode":  143,
+        "state":  "exited"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-544ddf1e8ca5-rabbitmq-1",
+        "exitCode":  0,
+        "state":  "exited"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-544ddf1e8ca5-mongodb-1",
+        "exitCode":  0,
+        "state":  "exited"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-544ddf1e8ca5-billing-db-1",
+        "exitCode":  0,
+        "state":  "exited"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-544ddf1e8ca5-os-db-1",
+        "exitCode":  0,
+        "state":  "exited"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-544ddf1e8ca5-auth-db-1",
+        "exitCode":  0,
+        "state":  "exited"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-41341594ea06-mercado-pago-mock-1",
+        "exitCode":  0,
+        "state":  "running"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-41341594ea06-billing-service-1",
+        "exitCode":  0,
+        "state":  "running"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-41341594ea06-execution-service-1",
+        "exitCode":  0,
+        "state":  "running"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-41341594ea06-os-service-1",
+        "exitCode":  0,
+        "state":  "running"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-41341594ea06-auth-1",
+        "exitCode":  0,
+        "state":  "running"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-41341594ea06-rabbitmq-1",
+        "exitCode":  0,
+        "state":  "running"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-41341594ea06-mongodb-1",
+        "exitCode":  0,
+        "state":  "running"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-41341594ea06-billing-db-1",
+        "exitCode":  0,
+        "state":  "running"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-41341594ea06-os-db-1",
+        "exitCode":  0,
+        "state":  "running"
+    },
+    {
+        "restarts":  0,
+        "oomKilled":  false,
+        "name":  "/oficina-e2e914-41341594ea06-auth-db-1",
+        "exitCode":  0,
+        "state":  "running"
+    }
+]

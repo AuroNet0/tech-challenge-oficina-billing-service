@@ -1,0 +1,13 @@
+{
+  "id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+  "clienteId": "14dcb330-95b3-45ae-b1b0-bef1545b0d2d",
+  "veiculoId": "29e58853-0927-4b1d-839a-57ae529b4609",
+  "filialId": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+  "status": "FINALIZADA",
+  "observacoes": "E2E autenticado 41341594-ea06-4522-a7e5-804f9497e4a7",
+  "createdAt": "2026-10-29T14:40:43.567958Z",
+  "updatedAt": "2026-10-29T14:42:07.288193Z",
+  "startedAt": "2026-10-29T14:41:54.742202Z",
+  "finishedAt": "2026-10-29T14:42:07.288193Z",
+  "version": 5
+}
