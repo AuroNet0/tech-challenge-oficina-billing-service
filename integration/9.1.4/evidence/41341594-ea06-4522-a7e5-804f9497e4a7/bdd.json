@@ -1,0 +1,25 @@
+{
+  "status": "PASSED",
+  "scenario": "Conclus\u00e3o de uma ordem de servi\u00e7o com pagamento aprovado",
+  "feature": "oficina.feature",
+  "resumedAfterApproval": true,
+  "steps": [
+    {
+      "text": "Dado que existem usu\u00e1rios autenticados no Auth, uma OS aberta e um mec\u00e2nico atribu\u00eddo",
+      "status": "PASSED"
+    },
+    {
+      "text": "Quando o diagn\u00f3stico \u00e9 iniciado e conclu\u00eddo, o or\u00e7amento \u00e9 notificado e aprovado, o reparo \u00e9 iniciado e conclu\u00eddo e o provedor confirma o pagamento",
+      "status": "PASSED"
+    },
+    {
+      "text": "Ent\u00e3o o pagamento est\u00e1 CONFIRMED, a OS FINALIZADA e a Saga COMPLETED",
+      "status": "PASSED"
+    }
+  ],
+  "finalStates": {
+    "payment": "CONFIRMED",
+    "order": "FINALIZADA",
+    "saga": "COMPLETED"
+  }
+}

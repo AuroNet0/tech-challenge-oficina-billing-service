@@ -1,0 +1,44 @@
+﻿[
+    {
+        "after":  "running",
+        "before":  "running",
+        "name":  "oficina-billing-rabbitmq-1",
+        "id":  "b2dc4cd5b0a1",
+        "kind":  "preexisting user container"
+    },
+    {
+        "after":  "running",
+        "before":  "running",
+        "name":  "oficina-billing-billing-1",
+        "id":  "daf900980f9c",
+        "kind":  "preexisting user container"
+    },
+    {
+        "after":  "running",
+        "before":  "running",
+        "name":  "oficina-billing-postgres-1",
+        "id":  "5ccadf3c467c",
+        "kind":  "preexisting user container"
+    },
+    {
+        "after":  "running",
+        "before":  "running",
+        "name":  "oficina-execution-service",
+        "id":  "34de7afa749a",
+        "kind":  "preexisting user container"
+    },
+    {
+        "after":  "running",
+        "before":  "running",
+        "name":  "tech-challenge-oficina-execution-service-rabbitmq-1",
+        "id":  "f9239e0106c4",
+        "kind":  "preexisting user container"
+    },
+    {
+        "after":  "running",
+        "before":  "running",
+        "name":  "oficina-execution-mongodb",
+        "id":  "e9305f6416f3",
+        "kind":  "preexisting user container"
+    }
+]

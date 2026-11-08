@@ -1,0 +1,22 @@
+﻿[
+    {
+        "version":  "1",
+        "description":  "bootstrap schema",
+        "success":  true
+    },
+    {
+        "version":  "2",
+        "description":  "create os domain",
+        "success":  true
+    },
+    {
+        "version":  "3",
+        "description":  "create outbox events",
+        "success":  true
+    },
+    {
+        "version":  "4",
+        "description":  "create saga and inbox",
+        "success":  true
+    }
+]

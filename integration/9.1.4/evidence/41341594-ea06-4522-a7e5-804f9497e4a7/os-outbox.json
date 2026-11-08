@@ -1,0 +1,37 @@
+[
+  {
+    "id": "753a9683-85f0-4cdf-84ca-9b45d0324beb",
+    "event_type": "diagnostic.start.v1",
+    "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+    "status": "PUBLISHED",
+    "attempts": 0
+  },
+  {
+    "id": "b234b17a-de03-4488-a1d6-5341aa8fd724",
+    "event_type": "diagnostic.start.v1",
+    "aggregate_id": "16db1ee6-7bd2-44a6-816a-1da11450c7ac",
+    "status": "PUBLISHED",
+    "attempts": 0
+  },
+  {
+    "id": "91825b8a-265e-426b-b43a-8c826060901b",
+    "event_type": "quote.create.v1",
+    "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+    "status": "PUBLISHED",
+    "attempts": 0
+  },
+  {
+    "id": "c3b0a443-8a75-44b1-bb59-3c91e3b3fa00",
+    "event_type": "repair.start.v1",
+    "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+    "status": "PUBLISHED",
+    "attempts": 0
+  },
+  {
+    "id": "423ebb42-b3c2-4bca-8c2c-4bca8692d772",
+    "event_type": "payment.request.v1",
+    "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+    "status": "PUBLISHED",
+    "attempts": 0
+  }
+]

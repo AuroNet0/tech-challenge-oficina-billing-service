@@ -1,0 +1,88 @@
+spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:billing}
+    password: ${RABBITMQ_PASSWORD:}
+    virtual-host: ${RABBITMQ_VHOST:/}
+    connection-timeout: 3s
+    publisher-confirm-type: correlated
+    publisher-returns: true
+  application:
+    name: billing-service
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5434}/${DB_NAME:oficina_billing}
+    username: ${DB_USERNAME:billing}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  port: 8080
+
+management:
+  health:
+    rabbit:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState,db
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+
+billing:
+  security:
+    issuer: ${BILLING_JWT_ISSUER}
+    audience: ${BILLING_JWT_AUDIENCE}
+    jwks-uri: ${BILLING_JWKS_URI}
+  mercado-pago:
+    enabled: ${MERCADO_PAGO_ENABLED:false}
+    reconciliation-enabled: ${MERCADO_PAGO_RECONCILIATION_ENABLED:false}
+    access-token: ${MERCADO_PAGO_ACCESS_TOKEN:}
+    webhook-secret: ${MERCADO_PAGO_WEBHOOK_SECRET:}
+    api-base-url: ${MERCADO_PAGO_API_BASE_URL:https://api.mercadopago.com}
+    notification-url: ${MERCADO_PAGO_NOTIFICATION_URL:}
+    success-url: ${MERCADO_PAGO_SUCCESS_URL:}
+    failure-url: ${MERCADO_PAGO_FAILURE_URL:}
+    pending-url: ${MERCADO_PAGO_PENDING_URL:}
+    http-timeout: ${MERCADO_PAGO_HTTP_TIMEOUT:5s}
+    signature-tolerance: ${MERCADO_PAGO_SIGNATURE_TOLERANCE:5m}
+    batch-size: ${MERCADO_PAGO_BATCH_SIZE:10}
+    worker-delay: ${MERCADO_PAGO_WORKER_DELAY:5s}
+    lease-duration: ${MERCADO_PAGO_LEASE_DURATION:2m}
+    sync-interval: ${MERCADO_PAGO_SYNC_INTERVAL:1m}
+  messaging:
+    enabled: ${COMMAND_CONSUMER_ENABLED:true}
+    max-deliveries: ${COMMAND_MAX_DELIVERIES:5}
+    retry-delay: ${COMMAND_RETRY_DELAY:5s}
+    confirm-timeout: ${RABBITMQ_CONFIRM_TIMEOUT:5s}
+  outbox:
+    enabled: ${OUTBOX_PUBLISHER_ENABLED:true}
+    fixed-delay: ${OUTBOX_FIXED_DELAY:5s}
+    batch-size: ${OUTBOX_BATCH_SIZE:10}
+    lease-duration: ${OUTBOX_LEASE_DURATION:2m}
+    max-attempts: ${OUTBOX_MAX_ATTEMPTS:5}
+    initial-backoff: ${OUTBOX_INITIAL_BACKOFF:5s}
+    max-backoff: ${OUTBOX_MAX_BACKOFF:5m}

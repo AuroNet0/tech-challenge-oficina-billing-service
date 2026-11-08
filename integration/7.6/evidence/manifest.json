@@ -1,0 +1,28 @@
+﻿{
+    "runId":  "20261021-125335-4c899f",
+    "project":  "billing-e2e76-20261021-125335-4c899f",
+    "createdAt":  "2026-10-21T15:53:35.7609517Z",
+    "sourceRoot":  "C:/Users/arneto/workspace/tech-challenge-oficina-billing-service/integration/7.6/artifacts/20261021-125335-4c899f/sources",
+    "compose":  "C:\\Users\\arneto\\workspace\\tech-challenge-oficina-billing-service\\integration\\7.6\\compose.yaml",
+    "revisions":  {
+                      "os":  {
+                                 "branch":  "homolog",
+                                 "commit":  "665aea6bffc92d2d2d6183a56d20393745d208b4"
+                             },
+                      "execution":  {
+                                        "branch":  "homolog",
+                                        "commit":  "c1769c390825d12f35841e1b0d8f9508afa926a1"
+                                    },
+                      "billing":  {
+                                      "branch":  "homolog",
+                                      "commit":  "616dd5276f36a66458fbef96f27ec3f5ae708faa"
+                                  }
+                  },
+    "ports":  {
+                  "rabbitManagement":  15680,
+                  "mock":  21099,
+                  "os":  21080,
+                  "execution":  21081,
+                  "billing":  21082
+              }
+}

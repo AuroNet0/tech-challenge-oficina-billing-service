@@ -1,0 +1,427 @@
+{
+  "status": "PASSED",
+  "event": {
+    "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+    "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+    "source": "execution-service",
+    "eventId": "0521ec23-e2be-40ee-bbd7-37b4fba9eeb8",
+    "payload": {
+      "reason": "Falha tardia incompativel E2E 9.1.4"
+    },
+    "eventType": "diagnostic.failed.v1",
+    "occurredAt": "2026-10-29T14:40:43.597594141Z",
+    "correlationId": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+  },
+  "inbox": {
+    "event_id": "0521ec23-e2be-40ee-bbd7-37b4fba9eeb8",
+    "event_type": "diagnostic.failed.v1",
+    "status": "REJECTED",
+    "last_error": "terminal saga cannot process event diagnostic.failed.v1"
+  },
+  "before": {
+    "order": [
+      {
+        "id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "cliente_id": "14dcb330-95b3-45ae-b1b0-bef1545b0d2d",
+        "veiculo_id": "29e58853-0927-4b1d-839a-57ae529b4609",
+        "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+        "status": "FINALIZADA",
+        "observacoes": "E2E autenticado 41341594-ea06-4522-a7e5-804f9497e4a7",
+        "created_at": "2026-10-29 14:40:43.567958+00:00",
+        "updated_at": "2026-10-29 14:42:07.288193+00:00",
+        "started_at": "2026-10-29 14:41:54.742202+00:00",
+        "finished_at": "2026-10-29 14:42:07.288193+00:00",
+        "version": 5
+      }
+    ],
+    "saga": [
+      {
+        "id": "f1087028-433e-4cd0-b903-4d639710ff98",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status": "COMPLETED",
+        "current_step": "DONE",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae",
+        "created_at": "2026-10-29 14:40:43.592953+00:00",
+        "updated_at": "2026-10-29 14:42:07.291644+00:00",
+        "completed_at": "2026-10-29 14:42:07.291644+00:00",
+        "last_error": null,
+        "version": 5
+      }
+    ],
+    "history": [
+      {
+        "id": "02f6c71d-02a3-4ef2-85ea-33a512ba3be0",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": null,
+        "status_novo": "RECEBIDA",
+        "motivo": "Abertura da ordem de servico",
+        "created_at": "2026-10-29 14:40:43.584039+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      },
+      {
+        "id": "57125270-cec4-4d87-8e53-daa6b94c7793",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": "AGUARDANDO_APROVACAO",
+        "status_novo": "EM_EXECUCAO",
+        "motivo": "Reparo iniciado",
+        "created_at": "2026-10-29 14:41:54.742252+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      },
+      {
+        "id": "6f4d7b92-bfdf-4af4-a75f-4c8c1a86fc33",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": "AGUARDANDO_PAGAMENTO",
+        "status_novo": "FINALIZADA",
+        "motivo": "Pagamento confirmado 29017b71-b955-49f4-b145-485ba6bd99f7",
+        "created_at": "2026-10-29 14:42:07.288221+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      },
+      {
+        "id": "b29f7e3a-5735-4613-b04f-52359572106c",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": "EM_DIAGNOSTICO",
+        "status_novo": "AGUARDANDO_APROVACAO",
+        "motivo": "Orcamento criado a44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb",
+        "created_at": "2026-10-29 14:41:12.174508+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      },
+      {
+        "id": "dc2d7a4d-9095-49a7-9418-9a47674b763f",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": "EM_EXECUCAO",
+        "status_novo": "AGUARDANDO_PAGAMENTO",
+        "motivo": "Reparo concluido 1b52f42a-5c68-4e4d-ad1e-b38a51396a8d",
+        "created_at": "2026-10-29 14:41:59.857316+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      },
+      {
+        "id": "f7e7a23c-f89d-4771-8be6-7c2c8578f3a8",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": "RECEBIDA",
+        "status_novo": "EM_DIAGNOSTICO",
+        "motivo": "Diagnostico iniciado",
+        "created_at": "2026-10-29 14:40:54.473770+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      }
+    ],
+    "outbox": [
+      {
+        "id": "423ebb42-b3c2-4bca-8c2c-4bca8692d772",
+        "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "aggregate_type": "OrdemServico",
+        "event_type": "payment.request.v1",
+        "payload": {
+          "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+          "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+          "source": "os-service",
+          "eventId": "423ebb42-b3c2-4bca-8c2c-4bca8692d772",
+          "payload": {
+            "repairId": "1b52f42a-5c68-4e4d-ad1e-b38a51396a8d"
+          },
+          "eventType": "payment.request.v1",
+          "occurredAt": "2026-10-29T14:41:59.859927803Z",
+          "correlationId": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+        },
+        "status": "PUBLISHED",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae",
+        "created_at": "2026-10-29 14:41:59.860267+00:00",
+        "published_at": "2026-10-29 14:42:00.021140+00:00",
+        "attempts": 0,
+        "next_attempt_at": null,
+        "last_error": null,
+        "locked_until": null
+      },
+      {
+        "id": "753a9683-85f0-4cdf-84ca-9b45d0324beb",
+        "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "aggregate_type": "OrdemServico",
+        "event_type": "diagnostic.start.v1",
+        "payload": {
+          "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+          "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+          "source": "os-service",
+          "eventId": "753a9683-85f0-4cdf-84ca-9b45d0324beb",
+          "payload": {
+            "filialId": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+            "clienteId": "14dcb330-95b3-45ae-b1b0-bef1545b0d2d",
+            "veiculoId": "29e58853-0927-4b1d-839a-57ae529b4609",
+            "observacoes": "E2E autenticado 41341594-ea06-4522-a7e5-804f9497e4a7"
+          },
+          "eventType": "diagnostic.start.v1",
+          "occurredAt": "2026-10-29T14:40:43.597594141Z",
+          "correlationId": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+        },
+        "status": "PUBLISHED",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae",
+        "created_at": "2026-10-29 14:40:43.642232+00:00",
+        "published_at": "2026-10-29 14:40:44.583064+00:00",
+        "attempts": 0,
+        "next_attempt_at": null,
+        "last_error": null,
+        "locked_until": null
+      },
+      {
+        "id": "91825b8a-265e-426b-b43a-8c826060901b",
+        "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "aggregate_type": "OrdemServico",
+        "event_type": "quote.create.v1",
+        "payload": {
+          "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+          "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+          "source": "os-service",
+          "eventId": "91825b8a-265e-426b-b43a-8c826060901b",
+          "payload": {
+            "items": [
+              {
+                "tipo": "SERVICO",
+                "itemId": "service-1",
+                "descricao": "Servico ficticio",
+                "quantidade": "2",
+                "unidadePreco": "HORA",
+                "precoPrevisto": "75.00"
+              }
+            ]
+          },
+          "eventType": "quote.create.v1",
+          "occurredAt": "2026-10-29T14:41:09.455978376Z",
+          "correlationId": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+        },
+        "status": "PUBLISHED",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae",
+        "created_at": "2026-10-29 14:41:09.466360+00:00",
+        "published_at": "2026-10-29 14:41:09.718255+00:00",
+        "attempts": 0,
+        "next_attempt_at": null,
+        "last_error": null,
+        "locked_until": null
+      },
+      {
+        "id": "c3b0a443-8a75-44b1-bb59-3c91e3b3fa00",
+        "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "aggregate_type": "OrdemServico",
+        "event_type": "repair.start.v1",
+        "payload": {
+          "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+          "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+          "source": "os-service",
+          "eventId": "c3b0a443-8a75-44b1-bb59-3c91e3b3fa00",
+          "payload": {},
+          "eventType": "repair.start.v1",
+          "occurredAt": "2026-10-29T14:41:22.193195682Z",
+          "correlationId": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+        },
+        "status": "PUBLISHED",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae",
+        "created_at": "2026-10-29 14:41:22.196628+00:00",
+        "published_at": "2026-10-29 14:41:24.828995+00:00",
+        "attempts": 0,
+        "next_attempt_at": null,
+        "last_error": null,
+        "locked_until": null
+      }
+    ]
+  },
+  "after": {
+    "order": [
+      {
+        "id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "cliente_id": "14dcb330-95b3-45ae-b1b0-bef1545b0d2d",
+        "veiculo_id": "29e58853-0927-4b1d-839a-57ae529b4609",
+        "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+        "status": "FINALIZADA",
+        "observacoes": "E2E autenticado 41341594-ea06-4522-a7e5-804f9497e4a7",
+        "created_at": "2026-10-29 14:40:43.567958+00:00",
+        "updated_at": "2026-10-29 14:42:07.288193+00:00",
+        "started_at": "2026-10-29 14:41:54.742202+00:00",
+        "finished_at": "2026-10-29 14:42:07.288193+00:00",
+        "version": 5
+      }
+    ],
+    "saga": [
+      {
+        "id": "f1087028-433e-4cd0-b903-4d639710ff98",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status": "COMPLETED",
+        "current_step": "DONE",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae",
+        "created_at": "2026-10-29 14:40:43.592953+00:00",
+        "updated_at": "2026-10-29 14:42:07.291644+00:00",
+        "completed_at": "2026-10-29 14:42:07.291644+00:00",
+        "last_error": null,
+        "version": 5
+      }
+    ],
+    "history": [
+      {
+        "id": "02f6c71d-02a3-4ef2-85ea-33a512ba3be0",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": null,
+        "status_novo": "RECEBIDA",
+        "motivo": "Abertura da ordem de servico",
+        "created_at": "2026-10-29 14:40:43.584039+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      },
+      {
+        "id": "57125270-cec4-4d87-8e53-daa6b94c7793",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": "AGUARDANDO_APROVACAO",
+        "status_novo": "EM_EXECUCAO",
+        "motivo": "Reparo iniciado",
+        "created_at": "2026-10-29 14:41:54.742252+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      },
+      {
+        "id": "6f4d7b92-bfdf-4af4-a75f-4c8c1a86fc33",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": "AGUARDANDO_PAGAMENTO",
+        "status_novo": "FINALIZADA",
+        "motivo": "Pagamento confirmado 29017b71-b955-49f4-b145-485ba6bd99f7",
+        "created_at": "2026-10-29 14:42:07.288221+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      },
+      {
+        "id": "b29f7e3a-5735-4613-b04f-52359572106c",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": "EM_DIAGNOSTICO",
+        "status_novo": "AGUARDANDO_APROVACAO",
+        "motivo": "Orcamento criado a44fa8e9-36a8-4bd9-9bcc-9a8e3d1667bb",
+        "created_at": "2026-10-29 14:41:12.174508+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      },
+      {
+        "id": "dc2d7a4d-9095-49a7-9418-9a47674b763f",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": "EM_EXECUCAO",
+        "status_novo": "AGUARDANDO_PAGAMENTO",
+        "motivo": "Reparo concluido 1b52f42a-5c68-4e4d-ad1e-b38a51396a8d",
+        "created_at": "2026-10-29 14:41:59.857316+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      },
+      {
+        "id": "f7e7a23c-f89d-4771-8be6-7c2c8578f3a8",
+        "ordem_servico_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "status_anterior": "RECEBIDA",
+        "status_novo": "EM_DIAGNOSTICO",
+        "motivo": "Diagnostico iniciado",
+        "created_at": "2026-10-29 14:40:54.473770+00:00",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+      }
+    ],
+    "outbox": [
+      {
+        "id": "423ebb42-b3c2-4bca-8c2c-4bca8692d772",
+        "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "aggregate_type": "OrdemServico",
+        "event_type": "payment.request.v1",
+        "payload": {
+          "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+          "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+          "source": "os-service",
+          "eventId": "423ebb42-b3c2-4bca-8c2c-4bca8692d772",
+          "payload": {
+            "repairId": "1b52f42a-5c68-4e4d-ad1e-b38a51396a8d"
+          },
+          "eventType": "payment.request.v1",
+          "occurredAt": "2026-10-29T14:41:59.859927803Z",
+          "correlationId": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+        },
+        "status": "PUBLISHED",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae",
+        "created_at": "2026-10-29 14:41:59.860267+00:00",
+        "published_at": "2026-10-29 14:42:00.021140+00:00",
+        "attempts": 0,
+        "next_attempt_at": null,
+        "last_error": null,
+        "locked_until": null
+      },
+      {
+        "id": "753a9683-85f0-4cdf-84ca-9b45d0324beb",
+        "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "aggregate_type": "OrdemServico",
+        "event_type": "diagnostic.start.v1",
+        "payload": {
+          "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+          "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+          "source": "os-service",
+          "eventId": "753a9683-85f0-4cdf-84ca-9b45d0324beb",
+          "payload": {
+            "filialId": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+            "clienteId": "14dcb330-95b3-45ae-b1b0-bef1545b0d2d",
+            "veiculoId": "29e58853-0927-4b1d-839a-57ae529b4609",
+            "observacoes": "E2E autenticado 41341594-ea06-4522-a7e5-804f9497e4a7"
+          },
+          "eventType": "diagnostic.start.v1",
+          "occurredAt": "2026-10-29T14:40:43.597594141Z",
+          "correlationId": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+        },
+        "status": "PUBLISHED",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae",
+        "created_at": "2026-10-29 14:40:43.642232+00:00",
+        "published_at": "2026-10-29 14:40:44.583064+00:00",
+        "attempts": 0,
+        "next_attempt_at": null,
+        "last_error": null,
+        "locked_until": null
+      },
+      {
+        "id": "91825b8a-265e-426b-b43a-8c826060901b",
+        "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "aggregate_type": "OrdemServico",
+        "event_type": "quote.create.v1",
+        "payload": {
+          "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+          "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+          "source": "os-service",
+          "eventId": "91825b8a-265e-426b-b43a-8c826060901b",
+          "payload": {
+            "items": [
+              {
+                "tipo": "SERVICO",
+                "itemId": "service-1",
+                "descricao": "Servico ficticio",
+                "quantidade": "2",
+                "unidadePreco": "HORA",
+                "precoPrevisto": "75.00"
+              }
+            ]
+          },
+          "eventType": "quote.create.v1",
+          "occurredAt": "2026-10-29T14:41:09.455978376Z",
+          "correlationId": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+        },
+        "status": "PUBLISHED",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae",
+        "created_at": "2026-10-29 14:41:09.466360+00:00",
+        "published_at": "2026-10-29 14:41:09.718255+00:00",
+        "attempts": 0,
+        "next_attempt_at": null,
+        "last_error": null,
+        "locked_until": null
+      },
+      {
+        "id": "c3b0a443-8a75-44b1-bb59-3c91e3b3fa00",
+        "aggregate_id": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+        "aggregate_type": "OrdemServico",
+        "event_type": "repair.start.v1",
+        "payload": {
+          "osId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+          "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+          "source": "os-service",
+          "eventId": "c3b0a443-8a75-44b1-bb59-3c91e3b3fa00",
+          "payload": {},
+          "eventType": "repair.start.v1",
+          "occurredAt": "2026-10-29T14:41:22.193195682Z",
+          "correlationId": "7b259832-257c-414b-88de-ffaf5d7f1fae"
+        },
+        "status": "PUBLISHED",
+        "correlation_id": "7b259832-257c-414b-88de-ffaf5d7f1fae",
+        "created_at": "2026-10-29 14:41:22.196628+00:00",
+        "published_at": "2026-10-29 14:41:24.828995+00:00",
+        "attempts": 0,
+        "next_attempt_at": null,
+        "last_error": null,
+        "locked_until": null
+      }
+    ]
+  }
+}

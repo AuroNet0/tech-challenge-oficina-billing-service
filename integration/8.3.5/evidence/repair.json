@@ -1,0 +1,13 @@
+{
+  "id": "de3114f9-40ee-43ca-af68-7cde890d6a9d",
+  "osId": "ff9a70fe-706b-40b6-bf7f-320e31bec889",
+  "sagaId": "36765109-3bfa-4c00-ab62-b903b6dbf9e7",
+  "diagnosticId": "f33ccbe4-3536-44d7-b52b-0ae5a8fb5912",
+  "status": "COMPLETED",
+  "observacoes": "Reparo ficticio concluido",
+  "startedAt": "2026-10-26T18:47:14.429Z",
+  "completedAt": "2026-10-26T18:51:16.364Z",
+  "createdAt": "2026-10-26T18:47:14.373Z",
+  "updatedAt": "2026-10-26T18:51:16.364Z",
+  "version": 2
+}

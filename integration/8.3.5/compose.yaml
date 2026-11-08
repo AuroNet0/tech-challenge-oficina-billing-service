@@ -1,0 +1,226 @@
+x-rabbit: &rabbit
+  RABBITMQ_HOST: rabbitmq
+  RABBITMQ_USERNAME: e2e
+  RABBITMQ_PASSWORD: ${E2E_PASSWORD:?}
+x-security: &security
+  SPRING_PROFILES_ACTIVE: mtls
+  SERVER_ADDRESS: 0.0.0.0
+  SERVER_PORT: 8443
+  SERVER_SSL_ENABLED: 'true'
+  SERVER_SSL_KEY_STORE: file:/tls/identity.p12
+  SERVER_SSL_KEY_STORE_PASSWORD: ${E2E_PASSWORD:?}
+  SERVER_SSL_KEY_STORE_TYPE: PKCS12
+  SERVER_SSL_TRUST_STORE: file:/tls/identity.p12
+  SERVER_SSL_TRUST_STORE_PASSWORD: ${E2E_PASSWORD:?}
+  SERVER_SSL_CLIENT_AUTH: want
+  TLS_PASSWORD: ${E2E_PASSWORD:?}
+  AUTH_JWT_ISSUER: https://auth-service:8443
+  AUTH_JWT_AUDIENCE: oficina
+  AUTH_JWKS_URI: https://auth-service:8443/.well-known/jwks.json
+  EXECUTION_JWT_ISSUER: https://auth-service:8443
+  EXECUTION_JWT_AUDIENCE: oficina
+  EXECUTION_JWT_JWKS_URI: https://auth-service:8443/.well-known/jwks.json
+  BILLING_JWT_ISSUER: https://auth-service:8443
+  BILLING_JWT_AUDIENCE: oficina
+  BILLING_JWKS_URI: https://auth-service:8443/.well-known/jwks.json
+x-start: &start
+  image: eclipse-temurin:21-jdk
+  command: [sh, -ec, 'exec java -Xmx384m -XX:ActiveProcessorCount=2 -Djavax.net.ssl.keyStore=/tls/identity.p12 -Djavax.net.ssl.keyStorePassword=$$TLS_PASSWORD -Djavax.net.ssl.trustStore=/tls/identity.p12 -Djavax.net.ssl.trustStorePassword=$$TLS_PASSWORD -jar /app.jar']
+  healthcheck:
+    test: [CMD, sh, -ec, 'curl --fail --silent --cacert /tls/ca.pem https://localhost:8443/actuator/health/readiness > /dev/null']
+    interval: 5s
+    timeout: 4s
+    retries: 45
+    start_period: 30s
+
+services:
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: e2e
+      RABBITMQ_DEFAULT_PASS: ${E2E_PASSWORD:?}
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: '+S 2:2 +SDcpu 1 +SDio 1'
+    volumes: [rabbit-data:/var/lib/rabbitmq]
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, ping]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+  auth-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: e2e
+      POSTGRES_PASSWORD: ${E2E_PASSWORD:?}
+      POSTGRES_DB: ${AUTH_DB_NAME:?}
+    networks:
+      default:
+        aliases: [auth-service]
+    volumes: [auth-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U e2e -d $$POSTGRES_DB']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  os-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: e2e
+      POSTGRES_PASSWORD: ${E2E_PASSWORD:?}
+      POSTGRES_DB: e2e_os
+    volumes: [os-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD, pg_isready, -U, e2e, -d, e2e_os]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  billing-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: e2e
+      POSTGRES_PASSWORD: ${E2E_PASSWORD:?}
+      POSTGRES_DB: e2e_billing
+    volumes: [billing-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD, pg_isready, -U, e2e, -d, e2e_billing]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  mongodb:
+    image: mongo:8.0
+    entrypoint: [bash, /mongo/mongo-entrypoint.sh]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: e2e
+      MONGO_INITDB_ROOT_PASSWORD: ${E2E_PASSWORD:?}
+      MONGO_INITDB_DATABASE: e2e_execution
+    volumes:
+      - mongo-data:/data/db
+      - ${WORKSPACE_ROOT:?}/tech-challenge-oficina-execution-service/docker:/mongo:ro
+    healthcheck:
+      test: [CMD-SHELL, 'mongosh --quiet --username e2e --password "$$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase admin /mongo/mongo-healthcheck.js']
+      interval: 5s
+      timeout: 5s
+      retries: 40
+  auth:
+    image: eclipse-temurin:21-jdk
+    network_mode: service:auth-db
+    environment:
+      AUTH_ENVIRONMENT: local
+      AUTH_DB_HOST: 127.0.0.1
+      AUTH_DB_NAME: ${AUTH_DB_NAME:?}
+      AUTH_DB_USER: e2e
+      AUTH_DB_PASSWORD: ${E2E_PASSWORD:?}
+      AUTH_DB_SSLMODE: disable
+      AUTH_KEY_PROVIDER: local-file
+      AUTH_LOCAL_KEY_FILE: /run/auth-keys.json
+      AUTH_JWT_ISSUER: https://auth-service:8443
+      AUTH_JWT_AUDIENCE: oficina
+      TLS_PASSWORD: ${E2E_PASSWORD:?}
+      E2E_RUN_ID: ${E2E_RUN_ID:?}
+    volumes:
+      - ${WORKSPACE_ROOT:?}/tech-challenge-oficina-auth/target/tech-challenge-oficina-auth.jar:/auth.jar:ro
+      - ${WORKSPACE_ROOT:?}/tech-challenge-oficina-auth/integration/8.3.5:/src:ro
+      - ${RUN_ROOT:?}/auth:/tls:ro
+      - ${RUN_ROOT:?}/runtime:/run
+    command: [sh, -ec, 'mkdir -p /classes; javac -cp /auth.jar -d /classes /src/*.java; java -cp /auth.jar br.com.fiap.oficina.auth.infrastructure.config.MigrateIdentity; exec java -Xmx256m -Djavax.net.ssl.keyStore=/tls/identity.p12 -Djavax.net.ssl.keyStorePassword=$$TLS_PASSWORD -Djavax.net.ssl.trustStore=/tls/identity.p12 -Djavax.net.ssl.trustStorePassword=$$TLS_PASSWORD -cp /auth.jar:/classes integration.AuthLocalRuntime']
+    depends_on:
+      auth-db: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, sh, -ec, 'curl --fail --silent --cacert /tls/ca.pem https://localhost:8443/health > /dev/null']
+      interval: 5s
+      timeout: 4s
+      retries: 40
+      start_period: 15s
+  os-service:
+    <<: *start
+    environment:
+      <<: [*rabbit, *security]
+      DB_HOST: os-db
+      DB_NAME: e2e_os
+      DB_USERNAME: e2e
+      DB_PASSWORD: ${E2E_PASSWORD:?}
+      OFICINA_INTERNAL_AUTH_URI: https://auth-service:8443/internal/v1/identity/client-access/check
+    volumes:
+      - ${RUN_ROOT:?}/jars/os.jar:/app.jar:ro
+      - ${RUN_ROOT:?}/os:/tls:ro
+    depends_on:
+      os-db: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+  execution-service:
+    <<: *start
+    environment:
+      <<: [*rabbit, *security]
+      MONGO_HOST: mongodb
+      MONGO_DATABASE: e2e_execution
+      MONGO_USERNAME: e2e
+      MONGO_PASSWORD: ${E2E_PASSWORD:?}
+      MONGO_AUTH_DATABASE: admin
+      OFICINA_INTERNAL_OS_URI: https://os-service:8443/internal/technical-authorization
+    volumes:
+      - ${RUN_ROOT:?}/jars/execution.jar:/app.jar:ro
+      - ${RUN_ROOT:?}/execution:/tls:ro
+    depends_on:
+      mongodb: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+  billing-service:
+    <<: *start
+    environment:
+      <<: [*rabbit, *security]
+      DB_HOST: billing-db
+      DB_PORT: 5432
+      DB_NAME: e2e_billing
+      DB_USERNAME: e2e
+      DB_PASSWORD: ${E2E_PASSWORD:?}
+      OFICINA_INTERNAL_OS_URI: https://os-service:8443/internal/financial-authorization
+      MERCADO_PAGO_ENABLED: 'true'
+      MERCADO_PAGO_RECONCILIATION_ENABLED: 'true'
+      SPRING_APPLICATION_JSON: '{"billing":{"mercado-pago":{"allow-insecure-local":true}}}'
+      MERCADO_PAGO_ACCESS_TOKEN: ${MP_ACCESS_TOKEN:?}
+      MERCADO_PAGO_WEBHOOK_SECRET: ${MP_WEBHOOK_SECRET:?}
+      MERCADO_PAGO_API_BASE_URL: http://127.0.0.1:8099
+      MERCADO_PAGO_NOTIFICATION_URL: https://billing-service:8443/api/v1/webhooks/mercado-pago
+      MERCADO_PAGO_SUCCESS_URL: https://checkout.e2e.invalid/success
+      MERCADO_PAGO_FAILURE_URL: https://checkout.e2e.invalid/failure
+      MERCADO_PAGO_PENDING_URL: https://checkout.e2e.invalid/pending
+      MERCADO_PAGO_WORKER_DELAY: 1s
+    volumes:
+      - ${RUN_ROOT:?}/jars/billing.jar:/app.jar:ro
+      - ${RUN_ROOT:?}/billing:/tls:ro
+    depends_on:
+      billing-db: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+  mercado-pago-mock:
+    image: python:3.13-alpine
+    network_mode: service:billing-service
+    command: [python, /mock/server.py]
+    environment:
+      MOCK_ACCESS_TOKEN: ${MP_ACCESS_TOKEN:?}
+    volumes:
+      - ../7.6/mock/server.py:/mock/server.py:ro
+    depends_on:
+      billing-service: {condition: service_started}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8099/health')"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  runner:
+    build:
+      context: .
+      dockerfile: Runner.Dockerfile
+    profiles: [tools]
+    environment:
+      E2E_PASSWORD: ${E2E_PASSWORD:?}
+      AUTH_DB_NAME: ${AUTH_DB_NAME:?}
+      MP_ACCESS_TOKEN: ${MP_ACCESS_TOKEN:?}
+      MP_WEBHOOK_SECRET: ${MP_WEBHOOK_SECRET:?}
+    volumes:
+      - ${RUN_ROOT:?}:/run
+      - ./runner.py:/runner.py:ro
+    command: [python, /runner.py, flow]
+
+volumes:
+  auth-data:
+  os-data:
+  billing-data:
+  mongo-data:
+  rabbit-data:

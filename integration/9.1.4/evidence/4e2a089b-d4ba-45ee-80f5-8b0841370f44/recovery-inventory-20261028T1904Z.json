@@ -1,0 +1,944 @@
+{
+  "observedAt": "2026-10-28T19:04:36Z",
+  "runId": "4e2a089b-d4ba-45ee-80f5-8b0841370f44",
+  "engine": {
+    "version": "29.7.2",
+    "responding": true,
+    "restartedByAgent": false,
+    "infoReportedRunning": 3,
+    "infoReportedStopped": 111,
+    "listedAndInspectedStates": {
+      "exited": 110,
+      "created": 4
+    },
+    "counterDiscrepancy": "docker info counters differ from ps/inspect; cause not determined"
+  },
+  "resources": {
+    "hostTotalGiB": 15.74,
+    "hostFreeGiBRange": [
+      1.07,
+      1.27
+    ],
+    "vmAvailableMiB": 7068,
+    "vmSwapTotalMiB": 2048,
+    "vmSwapUsedMiB": 0,
+    "diskFreeGiB": 190.73
+  },
+  "projects": {
+    "oficina-e2e914-4e2a089bd4ba": {
+      "total": 10,
+      "exited": 10,
+      "oomKilled": 3
+    },
+    "oficina-e2e835-4a21f1818a36": {
+      "total": 10,
+      "exited": 10,
+      "oomKilled": 4
+    },
+    "oficina-e2e835-709b96d05b1a": {
+      "total": 10,
+      "exited": 10,
+      "oomKilled": 0
+    },
+    "oficina-e2e835-67f7b2e4d0e9": {
+      "total": 10,
+      "exited": 10,
+      "oomKilled": 0
+    },
+    "billing-e2e76-20261021-125335-4c899f": {
+      "total": 8,
+      "exited": 8,
+      "oomKilled": 0
+    },
+    "billing-e2e76-20261021-124828-8368d2": {
+      "total": 8,
+      "exited": 8,
+      "oomKilled": 0
+    },
+    "billing-e2e76-20261021-124152-179f5b": {
+      "total": 8,
+      "exited": 8,
+      "oomKilled": 0
+    },
+    "billing-e2e76-20261021-123657-d4b17e": {
+      "total": 8,
+      "exited": 4,
+      "oomKilled": 0
+    },
+    "billing-provider-validation": {
+      "total": 3,
+      "exited": 3,
+      "oomKilled": 0
+    },
+    "billing-e2e-20261020-223342-8aada6": {
+      "total": 7,
+      "exited": 7,
+      "oomKilled": 0
+    },
+    "billing-e2e-20261020-223000-c9e5a9": {
+      "total": 7,
+      "exited": 7,
+      "oomKilled": 0
+    },
+    "billing-e2e-20261020-222200-9d5e83": {
+      "total": 7,
+      "exited": 7,
+      "oomKilled": 0
+    },
+    "billing-e2e-20261020-215858-f96d90": {
+      "total": 7,
+      "exited": 7,
+      "oomKilled": 0
+    },
+    "oficina-billing": {
+      "total": 3,
+      "exited": 3,
+      "oomKilled": 1
+    },
+    "tech-challenge-oficina-execution-service": {
+      "total": 3,
+      "exited": 3,
+      "oomKilled": 2
+    },
+    "tech-challenge-oficina-os-service": {
+      "total": 3,
+      "exited": 3,
+      "oomKilled": 0
+    },
+    "list-market": {
+      "total": 1,
+      "exited": 1,
+      "oomKilled": 0
+    },
+    "(sem projeto Compose)": {
+      "total": 1,
+      "exited": 1,
+      "oomKilled": 0
+    }
+  },
+  "inspectedContainers": [
+    {
+      "id": "8e7a7e1c2f13bd0ba82eed030b07b4fbe253e8213d86b2ffd0452fbb4b8c1824",
+      "name": "oficina-e2e914-4e2a089bd4ba-mercado-pago-mock-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "f08b3768f817dd1391481862530c170a5ab2be57851efd17b6e1f8a65791f94f",
+      "name": "oficina-e2e914-4e2a089bd4ba-billing-service-1",
+      "state": "exited",
+      "oomKilled": true,
+      "exitCode": 137
+    },
+    {
+      "id": "07ef31a50a85121f59dea73f135da98c723289c0bf1d25f618b23a725db09d95",
+      "name": "oficina-e2e914-4e2a089bd4ba-os-service-1",
+      "state": "exited",
+      "oomKilled": true,
+      "exitCode": 137
+    },
+    {
+      "id": "8c49b409f7cf5fa1bd3b56b1f94d83e34234e57cdae65371f902149d2001ab3e",
+      "name": "oficina-e2e914-4e2a089bd4ba-execution-service-1",
+      "state": "exited",
+      "oomKilled": true,
+      "exitCode": 137
+    },
+    {
+      "id": "1236c0470ea27991ff8369df5403b564ca31d1c5b393d0e4cf2e51822a8d1325",
+      "name": "oficina-e2e914-4e2a089bd4ba-auth-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "72c3f72e95aee2d5e31e291bdb8d8031eab59a74c5827855c30093aca1277c1a",
+      "name": "oficina-e2e914-4e2a089bd4ba-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 255
+    },
+    {
+      "id": "dc759c876c63abcf3381a23d783d67127cc958badb3b628bd377138e341e0cf4",
+      "name": "oficina-e2e914-4e2a089bd4ba-auth-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "086833caa3c512beeb71f1b0bb4300680a6d6d72f6de38d8b210cef510bf759c",
+      "name": "oficina-e2e914-4e2a089bd4ba-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "eec90a125e876a5dac1a804616ba1f03ef886cb6c56f4310373699d9fe62e6a6",
+      "name": "oficina-e2e914-4e2a089bd4ba-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "c44e6e8e9998e7deaa5f7ff0cf44d68fd0ff9684450cd6af9f827a3abe2f8e5b",
+      "name": "oficina-e2e914-4e2a089bd4ba-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 255
+    },
+    {
+      "id": "acc9dc3fec846d4c3f16d347605cc783cd542a2d1d21e3edfbb3eef7ed051b9d",
+      "name": "oficina-e2e835-4a21f1818a36-mercado-pago-mock-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "8e11115c7809c6549c67f4aa3725dbc8590681464172a28f923f9e8ada282c02",
+      "name": "oficina-e2e835-4a21f1818a36-execution-service-1",
+      "state": "exited",
+      "oomKilled": true,
+      "exitCode": 137
+    },
+    {
+      "id": "db8f2ffc46057d2c3dd5b567ce2c15b7f1a250c8ed754d2d142a33114fa8b074",
+      "name": "oficina-e2e835-4a21f1818a36-os-service-1",
+      "state": "exited",
+      "oomKilled": true,
+      "exitCode": 137
+    },
+    {
+      "id": "a3736182adfad4669a0b53fe11280778c97a4084d7d6d443cb644bacce7d4e59",
+      "name": "oficina-e2e835-4a21f1818a36-billing-service-1",
+      "state": "exited",
+      "oomKilled": true,
+      "exitCode": 137
+    },
+    {
+      "id": "105890b3b9135f275b881858a49b74ac74f8ac0c8d80e75b7ce376a64ad3242d",
+      "name": "oficina-e2e835-4a21f1818a36-auth-1",
+      "state": "exited",
+      "oomKilled": true,
+      "exitCode": 137
+    },
+    {
+      "id": "35160a408fc031a6e96c9d6b3a5eae01e28a645a9cc186c5856ec18669bd1706",
+      "name": "oficina-e2e835-4a21f1818a36-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "dbdaded968497c14e26382dc4775b0c1f4a10e2f2993e2c18a3ff89aab847dae",
+      "name": "oficina-e2e835-4a21f1818a36-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "6fd9f1ff74df499675b4883c5179cf92e6d133e16d20ebe5c195f2c8f6138c3b",
+      "name": "oficina-e2e835-4a21f1818a36-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "bcba2e77fd94cbb7594cf5c27144cdd31e1182121ac969788d89f0cce3d061b2",
+      "name": "oficina-e2e835-4a21f1818a36-auth-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "3f725e5d13d96ecfcbfbe6ff05b09bf48cdd61190230842d6359de4017c4306a",
+      "name": "oficina-e2e835-4a21f1818a36-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 255
+    },
+    {
+      "id": "7072f1768c5f43683e8f60e99ee34b17f44cc5fa563917bc7b52effdbb2da352",
+      "name": "oficina-e2e835-709b96d05b1a-mercado-pago-mock-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "f3e11a8320e29e412746ad1faf825c4a8f3266728891a3052960dea795335017",
+      "name": "oficina-e2e835-709b96d05b1a-billing-service-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "0b6138a850600406a8c63913ac516c89aa3e6ebcb3c066e386930b285892855f",
+      "name": "oficina-e2e835-709b96d05b1a-execution-service-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "a0bb3372ae2439f6f31ee64a4a7f55fdf891b407b6dc82dcc21b7f6bae689641",
+      "name": "oficina-e2e835-709b96d05b1a-os-service-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "502124a8c5f509ef1cb07f7e14ca156a87459ec8a5201726cd002095a60436f1",
+      "name": "oficina-e2e835-709b96d05b1a-auth-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "afb30f826c27abcd24ee3c660ed3c4300035024c8230a92df04735bd31d718fb",
+      "name": "oficina-e2e835-709b96d05b1a-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "31ccc5d605ac1bf1716de09ed095ca748410f98a6508a8aaa7b2f7c326667c52",
+      "name": "oficina-e2e835-709b96d05b1a-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "8ab0cfa557834ee8ef7e21ace8f2ae40c354ca2b85916a745c132bd184924f82",
+      "name": "oficina-e2e835-709b96d05b1a-auth-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "44f2a3e4760efae051d9363181c188689cc292b48ac82758a6ba405460cc1eba",
+      "name": "oficina-e2e835-709b96d05b1a-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "4ccc9dd3e616b88aaf42edb67937d8ec0118cf1c233b749b6b9bdf332bc0f107",
+      "name": "oficina-e2e835-709b96d05b1a-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "97b78d6884c2dc2150963c8a278895a25f872f22545f50f5697431ad44403928",
+      "name": "oficina-e2e835-67f7b2e4d0e9-mercado-pago-mock-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "7a0fc1ce08c91034ae8404fc6ef7df3c6e4bcc16764b431aedfef944a78cfa81",
+      "name": "oficina-e2e835-67f7b2e4d0e9-os-service-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "7bd603154b106522ab649ce8ed3ec7fe24b0fbb7bf2b4fbabbc02fb69c03bf61",
+      "name": "oficina-e2e835-67f7b2e4d0e9-execution-service-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "44625310a27cc83fbde8fce2419ee79259a443fc07a2ab72059a6a2a39b4c75a",
+      "name": "oficina-e2e835-67f7b2e4d0e9-billing-service-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "91912ad098a25cb051b6ebaeb10d7ad2ccd8933e6385a8c077404c6f3a305d95",
+      "name": "oficina-e2e835-67f7b2e4d0e9-auth-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "5e62fa58b77b1cb08eebeaf5d713799ffc02f6e2f061dc3fa9fbb7a467e916e1",
+      "name": "oficina-e2e835-67f7b2e4d0e9-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "286f6b05119a8b86c591e045f3d3d56140e97f64ae216b80145b06ec41f74f0c",
+      "name": "oficina-e2e835-67f7b2e4d0e9-auth-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "3ad58221364e523c4a024fd752d32c374aaf993171de056217dc663612ae9af2",
+      "name": "oficina-e2e835-67f7b2e4d0e9-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "dbb78f663f2f7e4936b6fd0860bffe79719f3d114c654c39c923c74d08b30892",
+      "name": "oficina-e2e835-67f7b2e4d0e9-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "3a48889f1331897c9214f54ef46978175e515cb7c24a445480526c2f032e2187",
+      "name": "oficina-e2e835-67f7b2e4d0e9-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "219b4869c8c5ebc4fa78bfa7d9db46662fa8fe81d5992bba9dfbd85575f8cec3",
+      "name": "billing-e2e76-20261021-125335-4c899f-mercado-pago-mock-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "a4bcfb813c887948042bd36712a313edd9a47ce7435cf0c4981d3aa96825b5a9",
+      "name": "billing-e2e76-20261021-125335-4c899f-billing-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "6666c04e3781ff875dfdb851a816595e23a82a7c968b3a3ed45d9bd28f34494a",
+      "name": "billing-e2e76-20261021-125335-4c899f-execution-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "aea4d4766045f37fb9e1598e701c1a9dd4132da190a2c215cb16cf44e349d301",
+      "name": "billing-e2e76-20261021-125335-4c899f-os-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "3676845e320f77621b194ae96fbeb801e2c6d474f1cfab22afbff1c69e81f309",
+      "name": "billing-e2e76-20261021-125335-4c899f-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "8cdfed8e2aac458343b3f354d330af4b614356e4ee8ae25c8b1ace4c8574900c",
+      "name": "billing-e2e76-20261021-125335-4c899f-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "ebe8184062aebd4f7e817c9d4c811a801a45f3d4fe3883eaf42d886e094d82ad",
+      "name": "billing-e2e76-20261021-125335-4c899f-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "9d25230e5f30fb5653169e0dc069d70e15bfdbf25f9c3ab92ce10d5a37e6e613",
+      "name": "billing-e2e76-20261021-125335-4c899f-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "d92fb30bc64d78af3dce714daa611b6261fc4c92d6ade3702c836777e912a4dd",
+      "name": "billing-e2e76-20261021-124828-8368d2-mercado-pago-mock-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "5bd2cb3272fb07d193f553bea02eeda0cf70f7fea21d11993ae892fe6b83da49",
+      "name": "billing-e2e76-20261021-124828-8368d2-billing-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "2f2689e4f9d419e109401099a86ce904c7ca3aea761a92a75851308c0ed53859",
+      "name": "billing-e2e76-20261021-124828-8368d2-os-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "1883140c1aa21c1e56913d84996f993502bdaff25858c7899c5b47a2b90016fc",
+      "name": "billing-e2e76-20261021-124828-8368d2-execution-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "7bf1f9333e3fc9ac4dc97e05c045e0ab5b4b1dc94ff7bd2ee464e7bfc71238e1",
+      "name": "billing-e2e76-20261021-124828-8368d2-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "20266c042a292f33d08d3cc5b06dd1e72104d87a66dfdf4ae9d20007c12c458f",
+      "name": "billing-e2e76-20261021-124828-8368d2-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "46e3d3de424f34cb6067beabf08632c9b5cff4b46b84eb05a60ebe6efeeaa8aa",
+      "name": "billing-e2e76-20261021-124828-8368d2-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "d900a153e57255248c4646dad1b50ec41b490ea02b8bac981441f8305b39f9a1",
+      "name": "billing-e2e76-20261021-124828-8368d2-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "4f6df9daeb7632d0120a144e3c5b7c65c41cff94a5624c396bdb359dbcf11d38",
+      "name": "billing-e2e76-20261021-124152-179f5b-mercado-pago-mock-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "0f5c4895a29a986d408bb967fd6a60cfc30845f55d83358e8c4af70c44aa4d43",
+      "name": "billing-e2e76-20261021-124152-179f5b-billing-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "524b43a1bff66371d188a707a2dd4fc6e6a8315033284024629c2fc7d341a251",
+      "name": "billing-e2e76-20261021-124152-179f5b-execution-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "3a3e835dd987829c26ab37f92a8f51715123d2358a92b300332ee27771e7d910",
+      "name": "billing-e2e76-20261021-124152-179f5b-os-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "8a80a4f7f151952e8399ec78fba1f18dfe0aac0461f07aa80f983de64091d2f9",
+      "name": "billing-e2e76-20261021-124152-179f5b-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "9aa86adf49c9c865ec5339431f666d1553ad64500486558c59e848233340ff7d",
+      "name": "billing-e2e76-20261021-124152-179f5b-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "4600daba2be22a52387b97c4596524bf9f4aeca1bbb6f78bd721af522c32c7ba",
+      "name": "billing-e2e76-20261021-124152-179f5b-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "a1a3837f190de01f4b2cb7277fbd520fa3f69cc372baf1d90be9628a2d56cfca",
+      "name": "billing-e2e76-20261021-124152-179f5b-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "6d26b7472902cb2d27c5de1eaf4dc9b88e874dc7d8e935a9aae1dd3a3eb0a7bf",
+      "name": "billing-e2e76-20261021-123657-d4b17e-mercado-pago-mock-1",
+      "state": "created",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "1de77d1361502316c78bb99500a258c26b7b3818aab3c737b60f7de48997add8",
+      "name": "billing-e2e76-20261021-123657-d4b17e-os-1",
+      "state": "created",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "8b3e1542947d7b44c981e235ccf4e0bdf895e2f1080ab58eff06ff639c1cf60b",
+      "name": "billing-e2e76-20261021-123657-d4b17e-execution-1",
+      "state": "created",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "5aa5ed231398f1c01ac773c4d39d51bbf7a025e4a3cd71bc2b641bef02ad4ef9",
+      "name": "billing-e2e76-20261021-123657-d4b17e-billing-1",
+      "state": "created",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "bd66cbca7e33693564ef36be7bf15b36b3120c728ca45877b4e1447c7677f211",
+      "name": "billing-e2e76-20261021-123657-d4b17e-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "45dd2b02915aa7f3ea849cbc6346b61c6f668eef8f640f9d9412674442969be1",
+      "name": "billing-e2e76-20261021-123657-d4b17e-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "db0b2ef7c5e02a831acbe0e2b0074677b93fe4d81604aeedff0f4ed33a2192be",
+      "name": "billing-e2e76-20261021-123657-d4b17e-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "b5ccdc9c6e4e5658b5da672a63bb44315ac275cc1d4e0863b6c0da101cabb005",
+      "name": "billing-e2e76-20261021-123657-d4b17e-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "47f3a2977c62b77ed93201515d4b07c44a6000c7457f9a31403a5c34abd512b0",
+      "name": "billing-provider-validation-billing-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "06dac2f2e1f3ea1c249e56c17ff317fec4273f79d5932b6cac6108f983246abf",
+      "name": "billing-provider-validation-postgres-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "28849fc813c15f8c33f0906c9573276f30a8ee3257740077c04ddd8a3013c26c",
+      "name": "billing-provider-validation-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "8b32876eddd34e06ce6d3e5c1a7354dc9b0563119eda2a4c7ae0061f6db96deb",
+      "name": "billing-e2e-20261020-223342-8aada6-execution-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "84a1be109af09e2dc10506345276b3fbe926a446adb4237b3944a3ab138482b6",
+      "name": "billing-e2e-20261020-223342-8aada6-os-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "ed3e06e258adb89a6cae144fa17e95524699e41c01d0ffa3e6bd8d24f3d45d6e",
+      "name": "billing-e2e-20261020-223342-8aada6-billing-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "cac02ddf402cefe42a4e47950dc6416e61d7a6b978f5514c3927943320fb20f6",
+      "name": "billing-e2e-20261020-223342-8aada6-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "6f6eace43db7e3e0505212a7d11efdf29d784641c69647162b78ee5ec303c958",
+      "name": "billing-e2e-20261020-223342-8aada6-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "a4f8e3717bdfe8cf78d038b727f00d52bf5a15a8f43c9122a610e558ebbc68a8",
+      "name": "billing-e2e-20261020-223342-8aada6-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "2428d4171435985d4b704753d7159bd142ddc4863cf54d31696d910a189e0d1a",
+      "name": "billing-e2e-20261020-223342-8aada6-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "385b81996b34a3bd9ce018d7ce04546acdcda926286796e3fc82d21782e73144",
+      "name": "billing-e2e-20261020-223000-c9e5a9-execution-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "444da7f0f101d90751cf336bb65a900c2f772161487ca258c806be86d2a0726f",
+      "name": "billing-e2e-20261020-223000-c9e5a9-billing-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "96c8238418e51416d087344933e34d57c72b34abbca64fe299110730e2964dfd",
+      "name": "billing-e2e-20261020-223000-c9e5a9-os-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "095c79adaa6cce7a9ee6c7516c6543d4207bc2db58f8539ffc65e50778f2cd9f",
+      "name": "billing-e2e-20261020-223000-c9e5a9-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "5f9ff63a72805b877e866dd63df512dca95ed6c2c434bbfbe0033006fb30950e",
+      "name": "billing-e2e-20261020-223000-c9e5a9-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "da83af4f251dfd720a70e7e4d4540aa75abc9125c8de298ac30f7aea74aa54ed",
+      "name": "billing-e2e-20261020-223000-c9e5a9-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "a348d1637d1ad8583db881af63f59402726cbf3ef9b494ce23b7b37bf181a992",
+      "name": "billing-e2e-20261020-223000-c9e5a9-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "faee735cc1a8067455975abd45de656a64aca08192c003d224514eb7a7ae6229",
+      "name": "billing-e2e-20261020-222200-9d5e83-billing-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "b05947a47f14aba8ecda119403b23f7af2b1858732d15a0f7b154b1c05cd5688",
+      "name": "billing-e2e-20261020-222200-9d5e83-execution-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "f17b56f2831dd4846880d402d817daf3a48919df3a18fce9179e189e2ba2e526",
+      "name": "billing-e2e-20261020-222200-9d5e83-os-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "0a2620c8d971b3434f301b60861481fd10ca1411208b988592e39759ecbc5f14",
+      "name": "billing-e2e-20261020-222200-9d5e83-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "488ae63916530425c68d5c25c0c63d75ff37750c77d7faaa830c2ae4622df1c5",
+      "name": "billing-e2e-20261020-222200-9d5e83-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "fa5f0dd81895d3cb6d0a96a1c554e1cea8738dd02d59096be585c08aea91839d",
+      "name": "billing-e2e-20261020-222200-9d5e83-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "705493d2da8643d2d82c47edc8d4856cda8ceab63c331dac0ea102c613945472",
+      "name": "billing-e2e-20261020-222200-9d5e83-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "c7288f3f322f9ec6275e75e66916faba3f10c98cfa1fd4ffc95546c9b8cbba24",
+      "name": "billing-e2e-20261020-215858-f96d90-billing-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "a958de5e046fbea79a30970d47bacf585f91b0a0274a0551d8762b813dd44104",
+      "name": "billing-e2e-20261020-215858-f96d90-execution-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "b4a698eafa0c33389211adf0cb3f91b8b6629ff107169d33c847daac5869f6b3",
+      "name": "billing-e2e-20261020-215858-f96d90-os-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 143
+    },
+    {
+      "id": "6273bd2f9d7bb13f2a66868123bdd0f3af35ce923a592ffd23e902908a3dffb0",
+      "name": "billing-e2e-20261020-215858-f96d90-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "b22d0119c6609ec8daeb573027a23dd3959a16cff9dec0626ee160ca6a2c45a5",
+      "name": "billing-e2e-20261020-215858-f96d90-billing-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "e09c5c390e5f507ac353d8444a727b6b56cd6bbb595c6ade1e42ec20a73b2d5a",
+      "name": "billing-e2e-20261020-215858-f96d90-os-db-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "f6195ab6dd4e72aaef9dc43a73bb3ca1aea5c5243cf67195b2c2f41d8be7d533",
+      "name": "billing-e2e-20261020-215858-f96d90-mongodb-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 0
+    },
+    {
+      "id": "b2dc4cd5b0a1066e4422f7917c41e3b60dab57ea712d43ede340b196d9dde74f",
+      "name": "oficina-billing-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "daf900980f9c50fccd9d577a16f5f990a55f9692a95a1bcb4e5b5276ba4c5f96",
+      "name": "oficina-billing-billing-1",
+      "state": "exited",
+      "oomKilled": true,
+      "exitCode": 137
+    },
+    {
+      "id": "5ccadf3c467c36f1106651937536fb6e9b645993bf2b8aa7af1088b7c4666b1b",
+      "name": "oficina-billing-postgres-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "34de7afa749a1850b28cf66ed34af05d2e06bf0a3cbbc8fb073b674854d24eb1",
+      "name": "oficina-execution-service",
+      "state": "exited",
+      "oomKilled": true,
+      "exitCode": 137
+    },
+    {
+      "id": "f9239e0106c44635ca34eae2a00aca2f52ab81d774d4cb83121478e162de59f6",
+      "name": "tech-challenge-oficina-execution-service-rabbitmq-1",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 137
+    },
+    {
+      "id": "e9305f6416f35fe7b7ba17bcbe4267ff02032b623bd8b2429ea370bbac6ad85f",
+      "name": "oficina-execution-mongodb",
+      "state": "exited",
+      "oomKilled": true,
+      "exitCode": 137
+    },
+    {
+      "id": "c09f04ed64d170d245c3e94a397e355e5c691fc1dfa543e5fa71b9bf5cd25c2b",
+      "name": "oficina-os-rabbitmq",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 255
+    },
+    {
+      "id": "a564c8fdaca57ef654b02ce1f8132d5268a4fe1ef96c9a0d76dddfb8e5adad2f",
+      "name": "oficina-os-service",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 255
+    },
+    {
+      "id": "edcc5e320818731cbcacd9483a24128ceeae2a83bb0f5df74c6d0ed186a82efb",
+      "name": "oficina-os-postgres",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 255
+    },
+    {
+      "id": "aecbc253db9251fcfe6d1d517344f8ff7d8712192a48856488ebd18fe0aa85bd",
+      "name": "list-market-postgres",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 255
+    },
+    {
+      "id": "4f7df125e4d275f97639a46e5a6de8c3e301b502d92eafd8f91d96775fd07676",
+      "name": "musing_shaw",
+      "state": "exited",
+      "oomKilled": false,
+      "exitCode": 1
+    }
+  ],
+  "volumeNamesVerifiedPresent": [
+    "oficina-e2e835-4a21f1818a36_auth-data",
+    "oficina-e2e835-4a21f1818a36_os-data",
+    "oficina-e2e835-4a21f1818a36_billing-data",
+    "oficina-e2e835-4a21f1818a36_mongo-data",
+    "oficina-e2e835-4a21f1818a36_rabbit-data",
+    "oficina-e2e914-4e2a089bd4ba_auth-data",
+    "oficina-e2e914-4e2a089bd4ba_os-data",
+    "oficina-e2e914-4e2a089bd4ba_billing-data",
+    "oficina-e2e914-4e2a089bd4ba_mongo-data",
+    "oficina-e2e914-4e2a089bd4ba_rabbit-data"
+  ],
+  "volumeDataIntegrity": "Not verified: databases stopped; no data writes performed",
+  "jarCopyHashesMatch": {
+    "os": true,
+    "execution": true,
+    "billing": true
+  },
+  "certificatesValidThroughDate": "2026-10-30",
+  "provisioningCheckpointFilesPresent": false,
+  "e2eExecuted": false,
+  "e2eChecks": 0,
+  "bddExecuted": false,
+  "compensationsExecuted": false,
+  "resumeGate": "WAITING_FOR_HOST_MEMORY"
+}

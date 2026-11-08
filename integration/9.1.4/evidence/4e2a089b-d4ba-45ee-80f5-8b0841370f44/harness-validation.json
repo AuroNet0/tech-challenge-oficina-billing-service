@@ -1,0 +1,11 @@
+{
+  "scope": "Harness checks; does not certify integrated business scenarios",
+  "javaVersion": "Microsoft OpenJDK 21.0.12.1+1-LTS",
+  "repairFailureFixtureCompilation": "PASSED_AGAINST_VERIFIED_EXECUTION_CLASSES",
+  "powershellSyntax": "PASSED",
+  "pythonAstDuringAdaptation": "PASSED",
+  "composeConfigDuringAdaptation": "PASSED",
+  "bddFeatureBindingSmoke": "VALID_FEATURE_ACCEPTED_AND_UNKNOWN_STEP_REJECTED",
+  "integratedBdd": "NOT_EXECUTED",
+  "legacyFilesHashComparison": "46_UNCHANGED"
+}

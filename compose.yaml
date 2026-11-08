@@ -1,0 +1,88 @@
+name: oficina-billing
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME:-oficina_billing}
+      POSTGRES_USER: ${DB_USERNAME:-billing}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Defina DB_PASSWORD no .env}
+    ports:
+      - "127.0.0.1:${DB_PORT:-5434}:5432"
+    volumes:
+      - billing-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  billing:
+    build: .
+    environment:
+      SERVER_ADDRESS: 0.0.0.0
+      RABBITMQ_HOST: ${RABBITMQ_HOST:-host.docker.internal}
+      RABBITMQ_PORT: ${RABBITMQ_PORT:-5672}
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME:-billing}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:?Defina RABBITMQ_PASSWORD no .env}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST:-/}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-oficina_billing}
+      DB_USERNAME: ${DB_USERNAME:-billing}
+      DB_PASSWORD: ${DB_PASSWORD:?Defina DB_PASSWORD no .env}
+      BILLING_JWT_ISSUER: ${BILLING_JWT_ISSUER:?Defina BILLING_JWT_ISSUER no .env}
+      BILLING_JWT_AUDIENCE: ${BILLING_JWT_AUDIENCE:?Defina BILLING_JWT_AUDIENCE no .env}
+      BILLING_JWKS_URI: ${BILLING_JWKS_URI:?Defina BILLING_JWKS_URI HTTPS no .env}
+      MERCADO_PAGO_ENABLED: ${MERCADO_PAGO_ENABLED:-false}
+      MERCADO_PAGO_RECONCILIATION_ENABLED: ${MERCADO_PAGO_RECONCILIATION_ENABLED:-false}
+      MERCADO_PAGO_ACCESS_TOKEN: ${MERCADO_PAGO_ACCESS_TOKEN:-}
+      MERCADO_PAGO_WEBHOOK_SECRET: ${MERCADO_PAGO_WEBHOOK_SECRET:-}
+      MERCADO_PAGO_API_BASE_URL: ${MERCADO_PAGO_API_BASE_URL:-https://api.mercadopago.com}
+      MERCADO_PAGO_NOTIFICATION_URL: ${MERCADO_PAGO_NOTIFICATION_URL:-}
+      MERCADO_PAGO_SUCCESS_URL: ${MERCADO_PAGO_SUCCESS_URL:-}
+      MERCADO_PAGO_FAILURE_URL: ${MERCADO_PAGO_FAILURE_URL:-}
+      MERCADO_PAGO_PENDING_URL: ${MERCADO_PAGO_PENDING_URL:-}
+      MERCADO_PAGO_HTTP_TIMEOUT: ${MERCADO_PAGO_HTTP_TIMEOUT:-5s}
+      MERCADO_PAGO_SIGNATURE_TOLERANCE: ${MERCADO_PAGO_SIGNATURE_TOLERANCE:-5m}
+      MERCADO_PAGO_BATCH_SIZE: ${MERCADO_PAGO_BATCH_SIZE:-10}
+      MERCADO_PAGO_WORKER_DELAY: ${MERCADO_PAGO_WORKER_DELAY:-5s}
+      MERCADO_PAGO_LEASE_DURATION: ${MERCADO_PAGO_LEASE_DURATION:-2m}
+      MERCADO_PAGO_SYNC_INTERVAL: ${MERCADO_PAGO_SYNC_INTERVAL:-1m}
+    ports:
+      - "127.0.0.1:8082:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8080/actuator/health/readiness"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    profiles: [local-broker]
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME:-billing}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:?Defina RABBITMQ_PASSWORD no .env}
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_VHOST:-/}
+    ports:
+      - "127.0.0.1:5674:5672"
+      - "127.0.0.1:15674:15672"
+    volumes:
+      - billing-rabbit-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+
+volumes:
+  billing-postgres-data:
+  billing-rabbit-data:

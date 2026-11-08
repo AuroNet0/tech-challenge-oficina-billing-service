@@ -1,0 +1,10 @@
+﻿[
+    {
+        "body":  "{\"pagamentoId\":\"f010f16a-f8cb-4949-8dc8-9ed11096dcb8\",\"provider\":\"MERCADO_PAGO\",\"preferenceId\":\"e2e-preference-1\",\"checkoutUrl\":\"https://sandbox.mercadopago.com.br/checkout/v1/redirect?pref_id=e2e-preference-1\",\"status\":\"PENDING\",\"checkoutStatus\":\"READY\"}",
+        "status":  200
+    },
+    {
+        "body":  "{\"detail\":\"Operacao em conflito com o estado atual do recurso.\",\"instance\":\"/api/v1/pagamentos/f010f16a-f8cb-4949-8dc8-9ed11096dcb8/checkout\",\"status\":409,\"title\":\"Conflict\"}",
+        "status":  409
+    }
+]

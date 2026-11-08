@@ -1,0 +1,35 @@
+[
+  {
+    "_id": "e16397ff-3af9-4ecc-868c-1efef73684e3",
+    "eventType": "diagnostic.start.v1",
+    "sagaId": "36765109-3bfa-4c00-ab62-b903b6dbf9e7",
+    "osId": "ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "correlationId": "7b032486-082e-457f-84dd-93fd56025882",
+    "status": "PROCESSED",
+    "receivedAt": "2026-10-26 18:36:58.588000",
+    "processedAt": "2026-10-26 18:37:47.644000",
+    "_class": "com.oficina.execution.infrastructure.persistence.document.InboxMessageDocument"
+  },
+  {
+    "_id": "f7823dea-0bb6-456e-9927-db3f2c0cd9a6",
+    "eventType": "diagnostic.start.v1",
+    "sagaId": "d049525a-c777-461f-972b-70b42ea80663",
+    "osId": "e57b3513-eeb4-4f26-87f1-305b669c0bfb",
+    "correlationId": "d8ed28ae-e9b8-405d-98ae-9c5e053ccbd0",
+    "status": "PROCESSED",
+    "receivedAt": "2026-10-26 18:37:55.124000",
+    "processedAt": "2026-10-26 18:37:55.370000",
+    "_class": "com.oficina.execution.infrastructure.persistence.document.InboxMessageDocument"
+  },
+  {
+    "_id": "46e1f367-2415-4bbe-ae9e-f3b0dfbcd4d3",
+    "eventType": "repair.start.v1",
+    "sagaId": "36765109-3bfa-4c00-ab62-b903b6dbf9e7",
+    "osId": "ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "correlationId": "7b032486-082e-457f-84dd-93fd56025882",
+    "status": "PROCESSED",
+    "receivedAt": "2026-10-26 18:47:02.303000",
+    "processedAt": "2026-10-26 18:47:30.339000",
+    "_class": "com.oficina.execution.infrastructure.persistence.document.InboxMessageDocument"
+  }
+]

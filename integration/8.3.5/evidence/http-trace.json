@@ -1,0 +1,1322 @@
+[
+  {
+    "at": "2026-10-26T18:36:05Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "GET",
+    "path": "/actuator/health/readiness",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:05Z",
+    "phase": "provision",
+    "service": "execution",
+    "method": "GET",
+    "path": "/actuator/health/readiness",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:06Z",
+    "phase": "provision",
+    "service": "billing",
+    "method": "GET",
+    "path": "/actuator/health/readiness",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:07Z",
+    "phase": "provision",
+    "service": "auth",
+    "method": "GET",
+    "path": "/.well-known/jwks.json",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:10Z",
+    "phase": "provision",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:11Z",
+    "phase": "provision",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:11Z",
+    "phase": "provision",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:11Z",
+    "phase": "provision",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:12Z",
+    "phase": "provision",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:12Z",
+    "phase": "provision",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:15Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 404,
+    "actor": "mecanico",
+    "certificate": "execution"
+  },
+  {
+    "at": "2026-10-26T18:36:15Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 401,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:15Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 403,
+    "actor": "mecanico",
+    "certificate": "execution"
+  },
+  {
+    "at": "2026-10-26T18:36:16Z",
+    "phase": "provision",
+    "service": "auth",
+    "method": "POST",
+    "path": "/internal/v1/identity/client-access/check",
+    "status": 200,
+    "actor": null,
+    "certificate": "os"
+  },
+  {
+    "at": "2026-10-26T18:36:16Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/financial-authorization",
+    "status": 404,
+    "actor": "clienteA",
+    "certificate": "billing"
+  },
+  {
+    "at": "2026-10-26T18:36:18Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "POST",
+    "path": "/api/v1/clientes?filialId=8f5371b2-899c-41c8-8161-11a778c81605",
+    "status": 201,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:18Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "POST",
+    "path": "/api/v1/veiculos?filialId=8f5371b2-899c-41c8-8161-11a778c81605",
+    "status": 201,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:19Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/filiais/8f5371b2-899c-41c8-8161-11a778c81605",
+    "status": 200,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:20Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "POST",
+    "path": "/api/v1/ordens-servico",
+    "status": 201,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:20Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "POST",
+    "path": "/api/v1/clientes?filialId=426bc0b0-7800-4513-a0f9-5055ee19cec6",
+    "status": 201,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:20Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "POST",
+    "path": "/api/v1/veiculos?filialId=426bc0b0-7800-4513-a0f9-5055ee19cec6",
+    "status": 201,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:21Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/filiais/426bc0b0-7800-4513-a0f9-5055ee19cec6",
+    "status": 200,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:36:21Z",
+    "phase": "provision",
+    "service": "os",
+    "method": "POST",
+    "path": "/api/v1/ordens-servico",
+    "status": 201,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:43:38Z",
+    "phase": "flow",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:43:39Z",
+    "phase": "flow",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:43:39Z",
+    "phase": "flow",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:43:40Z",
+    "phase": "flow",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:43:41Z",
+    "phase": "flow",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:43:41Z",
+    "phase": "flow",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:43:46Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/ff9a70fe-706b-40b6-bf7f-320e31bec889/saga",
+    "status": 200,
+    "actor": "gerente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:43:52Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "GET",
+    "path": "/api/v1/diagnosticos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:43:52Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:43:52Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/e57b3513-eeb4-4f26-87f1-305b669c0bfb",
+    "status": 200,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:00Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 403,
+    "actor": "clienteA",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:01Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/e57b3513-eeb4-4f26-87f1-305b669c0bfb",
+    "status": 403,
+    "actor": "gerente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:02Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "GET",
+    "path": "/api/v1/diagnosticos?osId=e57b3513-eeb4-4f26-87f1-305b669c0bfb",
+    "status": 403,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:03Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "POST",
+    "path": "/api/v1/diagnosticos/6638a3c5-57d0-4a5b-ab1d-6fe721a29810/itens",
+    "status": 403,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:04Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "GET",
+    "path": "/api/v1/diagnosticos/f33ccbe4-3536-44d7-b52b-0ae5a8fb5912",
+    "status": 403,
+    "actor": "semPapel",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:04Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "GET",
+    "path": "/api/v1/diagnosticos/f33ccbe4-3536-44d7-b52b-0ae5a8fb5912",
+    "status": 401,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:05Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "GET",
+    "path": "/api/v1/diagnosticos/f33ccbe4-3536-44d7-b52b-0ae5a8fb5912",
+    "status": 401,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:06Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 401,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:07Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 403,
+    "actor": "mecanico",
+    "certificate": "billing"
+  },
+  {
+    "at": "2026-10-26T18:44:08Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 403,
+    "actor": "mecanico",
+    "certificate": "runner"
+  },
+  {
+    "at": "2026-10-26T18:44:10Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 401,
+    "actor": "mecanico",
+    "certificate": "execution"
+  },
+  {
+    "at": "2026-10-26T18:44:11Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 0,
+    "actor": "mecanico",
+    "certificate": "invalid"
+  },
+  {
+    "at": "2026-10-26T18:44:13Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 403,
+    "actor": "mecanico",
+    "certificate": "execution"
+  },
+  {
+    "at": "2026-10-26T18:44:14Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 403,
+    "actor": "mecanico",
+    "certificate": "execution"
+  },
+  {
+    "at": "2026-10-26T18:44:15Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "POST",
+    "path": "/internal/technical-authorization",
+    "status": 200,
+    "actor": "mecanico",
+    "certificate": "execution"
+  },
+  {
+    "at": "2026-10-26T18:44:15Z",
+    "phase": "flow",
+    "service": "auth",
+    "method": "POST",
+    "path": "/internal/v1/identity/client-access/check",
+    "status": 401,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:17Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "GET",
+    "path": "/api/v1/diagnosticos/f33ccbe4-3536-44d7-b52b-0ae5a8fb5912",
+    "status": 200,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:18Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "POST",
+    "path": "/api/v1/diagnosticos/f33ccbe4-3536-44d7-b52b-0ae5a8fb5912/itens",
+    "status": 403,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:20Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "POST",
+    "path": "/api/v1/diagnosticos/f33ccbe4-3536-44d7-b52b-0ae5a8fb5912/conclusao",
+    "status": 403,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:21Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "POST",
+    "path": "/api/v1/diagnosticos/f33ccbe4-3536-44d7-b52b-0ae5a8fb5912/itens",
+    "status": 200,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:21Z",
+    "phase": "flow",
+    "service": "execution",
+    "method": "POST",
+    "path": "/api/v1/diagnosticos/f33ccbe4-3536-44d7-b52b-0ae5a8fb5912/conclusao",
+    "status": 200,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:33Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 0,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:34Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 404,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:35Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 404,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:35Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 404,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:46Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:48Z",
+    "phase": "flow",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/ff9a70fe-706b-40b6-bf7f-320e31bec889/saga",
+    "status": 200,
+    "actor": "gerente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:44:56Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos/6504d95d-99b2-4ed3-a3ac-7635b518007a",
+    "status": 403,
+    "actor": "clienteA",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:45:14Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/orcamentos/6504d95d-99b2-4ed3-a3ac-7635b518007a/aprovar",
+    "status": 403,
+    "actor": "clienteA",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:45:18Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/orcamentos/6504d95d-99b2-4ed3-a3ac-7635b518007a/aprovar",
+    "status": 403,
+    "actor": "gerente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:45:27Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/orcamentos/6504d95d-99b2-4ed3-a3ac-7635b518007a/aprovar",
+    "status": 403,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:45:34Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos/6504d95d-99b2-4ed3-a3ac-7635b518007a",
+    "status": 403,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:45:41Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos/6504d95d-99b2-4ed3-a3ac-7635b518007a",
+    "status": 200,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:45:42Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos/6504d95d-99b2-4ed3-a3ac-7635b518007a",
+    "status": 200,
+    "actor": "gerente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:45:54Z",
+    "phase": "flow",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/orcamentos/6504d95d-99b2-4ed3-a3ac-7635b518007a/aprovar",
+    "status": 0,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:04Z",
+    "phase": "resume-after-approval",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:06Z",
+    "phase": "resume-after-approval",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:06Z",
+    "phase": "resume-after-approval",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:06Z",
+    "phase": "resume-after-approval",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:07Z",
+    "phase": "resume-after-approval",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:08Z",
+    "phase": "resume-after-approval",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:13Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:13Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/orcamentos/6504d95d-99b2-4ed3-a3ac-7635b518007a/aprovacao",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:14Z",
+    "phase": "resume-after-approval",
+    "service": "execution",
+    "method": "GET",
+    "path": "/api/v1/diagnosticos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:14Z",
+    "phase": "resume-after-approval",
+    "service": "execution",
+    "method": "GET",
+    "path": "/api/v1/reparos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:15Z",
+    "phase": "resume-after-approval",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:15Z",
+    "phase": "resume-after-approval",
+    "service": "execution",
+    "method": "POST",
+    "path": "/api/v1/reparos/de3114f9-40ee-43ca-af68-7cde890d6a9d/conclusao",
+    "status": 403,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:16Z",
+    "phase": "resume-after-approval",
+    "service": "execution",
+    "method": "PATCH",
+    "path": "/api/v1/reparos/de3114f9-40ee-43ca-af68-7cde890d6a9d/observacoes",
+    "status": 200,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:16Z",
+    "phase": "resume-after-approval",
+    "service": "execution",
+    "method": "POST",
+    "path": "/api/v1/reparos/de3114f9-40ee-43ca-af68-7cde890d6a9d/conclusao",
+    "status": 200,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:17Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:17Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:18Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:19Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:19Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:20Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:20Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:21Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:21Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:22Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:23Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:23Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:24Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:24Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:25Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:26Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:26Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:27Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos?osId=ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:27Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522/checkout",
+    "status": 403,
+    "actor": "clienteA",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:28Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522/checkout",
+    "status": 403,
+    "actor": "gerente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:28Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522/checkout",
+    "status": 403,
+    "actor": "atendente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:28Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522",
+    "status": 403,
+    "actor": "clienteA",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:29Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522/checkout",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:29Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522/checkout",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:30Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/webhooks/mercado-pago?data.id=123",
+    "status": 401,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:30Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/webhooks/mercado-pago?data.id=200001",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:30Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/webhooks/mercado-pago?data.id=200001",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:30Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:31Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:31Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:32Z",
+    "phase": "resume-after-approval",
+    "service": "billing",
+    "method": "GET",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:32Z",
+    "phase": "resume-after-approval",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:34Z",
+    "phase": "resume-after-approval",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:34Z",
+    "phase": "resume-after-approval",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/ff9a70fe-706b-40b6-bf7f-320e31bec889",
+    "status": 200,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:34Z",
+    "phase": "resume-after-approval",
+    "service": "os",
+    "method": "GET",
+    "path": "/api/v1/ordens-servico/ff9a70fe-706b-40b6-bf7f-320e31bec889/saga",
+    "status": 200,
+    "actor": "gerente",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:49Z",
+    "phase": "unavailable",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:49Z",
+    "phase": "unavailable",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:50Z",
+    "phase": "unavailable",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:50Z",
+    "phase": "unavailable",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:50Z",
+    "phase": "unavailable",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:50Z",
+    "phase": "unavailable",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:54Z",
+    "phase": "unavailable",
+    "service": "billing",
+    "method": "POST",
+    "path": "/api/v1/pagamentos/4c211506-af40-43ea-b9dc-00dc37fd2522/checkout",
+    "status": 503,
+    "actor": "clienteB",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:51:59Z",
+    "phase": "unavailable",
+    "service": "execution",
+    "method": "PATCH",
+    "path": "/api/v1/diagnosticos/f33ccbe4-3536-44d7-b52b-0ae5a8fb5912/observacoes",
+    "status": 503,
+    "actor": "mecanico",
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:52:50Z",
+    "phase": "outage",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:52:50Z",
+    "phase": "outage",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:52:50Z",
+    "phase": "outage",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:52:50Z",
+    "phase": "outage",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:52:50Z",
+    "phase": "outage",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:52:50Z",
+    "phase": "outage",
+    "service": "auth",
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "status": 200,
+    "actor": null,
+    "certificate": null
+  },
+  {
+    "at": "2026-10-26T18:52:52Z",
+    "phase": "outage",
+    "service": "os",
+    "method": "POST",
+    "path": "/api/v1/ordens-servico",
+    "status": 201,
+    "actor": "atendente",
+    "certificate": null
+  }
+]

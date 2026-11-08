@@ -1,0 +1,28 @@
+{
+  "status": "PASSED",
+  "checks": [
+    "os readiness UP por TLS validado",
+    "execution readiness UP por TLS validado",
+    "billing readiness UP por TLS validado",
+    "JWKS acessivel por TLS validado",
+    "Flyway auth",
+    "Flyway os",
+    "Flyway billing",
+    "MongoDB PRIMARY",
+    "ausencia de mensagens antigas",
+    "exchanges e bindings compartilhados",
+    "Mercado Pago simulado acessivel",
+    "login real clienteA",
+    "login real clienteB",
+    "login real atendente",
+    "login real gerente",
+    "login real mecanico",
+    "login real semPapel",
+    "canal Execution para OS valida mTLS e JWT antes de resolver recurso inexistente",
+    "canal interno rejeita ausencia de certificado",
+    "certificado nao permite escolher usuario de terceiro",
+    "canal OS para Auth valida usuario atual e nega vinculo inexistente",
+    "canal Billing para OS valida mTLS e JWT",
+    "fixtures persistidas com capacidades explicitas e sem acesso global"
+  ]
+}

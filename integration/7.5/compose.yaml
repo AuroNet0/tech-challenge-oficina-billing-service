@@ -1,0 +1,60 @@
+name: billing-provider-validation
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: oficina_billing
+      POSTGRES_USER: validation
+      POSTGRES_PASSWORD: validation_local_only
+    volumes:
+      - provider-validation-db:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD, pg_isready, -U, validation, -d, oficina_billing]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: validation
+      RABBITMQ_DEFAULT_PASS: validation_local_only
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "+S 2:2 +SDcpu 1 +SDio 1"
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, ping]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  billing:
+    build:
+      context: ../..
+    environment:
+      JAVA_TOOL_OPTIONS: -Xmx384m -XX:ActiveProcessorCount=2
+      SERVER_ADDRESS: 0.0.0.0
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: oficina_billing
+      DB_USERNAME: validation
+      DB_PASSWORD: validation_local_only
+      BILLING_SECURITY_USERNAME: validation
+      BILLING_SECURITY_PASSWORD: validation_local_only
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: validation
+      RABBITMQ_PASSWORD: validation_local_only
+      MERCADO_PAGO_ENABLED: "false"
+      MERCADO_PAGO_RECONCILIATION_ENABLED: "false"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:23082:8080"
+    healthcheck:
+      test: [CMD, curl, --fail, --silent, 'http://localhost:8080/actuator/health/readiness']
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 40s
+volumes:
+  provider-validation-db:

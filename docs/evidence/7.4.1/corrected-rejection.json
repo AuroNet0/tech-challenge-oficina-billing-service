@@ -1,0 +1,805 @@
+﻿{
+    "result":  {
+                   "status":  "PASSED",
+                   "scenario":  "Rejection",
+                   "runId":  "20261020-223342-8aada6",
+                   "project":  "billing-e2e-20261020-223342-8aada6",
+                   "revisions":  {
+                                     "os":  {
+                                                "trackedLocalChangesExcluded":  [
+
+                                                                                ],
+                                                "commit":  "665aea6bffc92d2d2d6183a56d20393745d208b4"
+                                            },
+                                     "execution":  {
+                                                       "trackedLocalChangesExcluded":  [
+
+                                                                                       ],
+                                                       "commit":  "c1769c390825d12f35841e1b0d8f9508afa926a1"
+                                                   },
+                                     "billing":  {
+                                                     "trackedLocalChangesExcluded":  [
+
+                                                                                     ],
+                                                     "commit":  "aa72d36da9ad1b516ed7ee9b6632ed26b3740f67"
+                                                 }
+                                 },
+                   "ports":  {
+                                 "rabbitManagement":  15679,
+                                 "os":  22080,
+                                 "execution":  22081,
+                                 "billing":  22082
+                             },
+                   "osId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                   "sagaId":  "c53ae33b-7ec0-4dd4-9971-1adae6d6945f",
+                   "diagnosticId":  "3413b978-fd99-4df0-be3e-302a7150d680",
+                   "correlationId":  "468aa09a-467c-4b2a-9e72-673a21dc5925",
+                   "quoteId":  "abf6934d-f5ee-4eb8-918f-29f37bbb4171",
+                   "finalStates":  {
+                                       "saga":  {
+                                                    "sagaId":  "c53ae33b-7ec0-4dd4-9971-1adae6d6945f",
+                                                    "ordemServicoId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                                                    "status":  "COMPENSATED",
+                                                    "currentStep":  "COMPENSATION",
+                                                    "createdAt":  "2026-10-21T01:36:15.152657Z",
+                                                    "updatedAt":  "2026-10-21T01:36:39.471439Z",
+                                                    "completedAt":  "2026-10-21T01:36:39.471439Z",
+                                                    "lastError":  "quote rejected"
+                                                },
+                                       "order":  {
+                                                     "id":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                                                     "clienteId":  "a559d0e2-f7e8-4636-83b8-1670a47a2222",
+                                                     "veiculoId":  "6a4ceb31-8d9e-49bb-bcbb-f70cc5cb7c1c",
+                                                     "filialId":  "7e846578-09f4-424e-b3c6-9798f6263739",
+                                                     "status":  "CANCELADA",
+                                                     "observacoes":  "E2E 7.4.1 Rejection sem provedor financeiro",
+                                                     "createdAt":  "2026-10-21T01:36:15.139558Z",
+                                                     "updatedAt":  "2026-10-21T01:36:39.466102Z",
+                                                     "startedAt":  null,
+                                                     "finishedAt":  null,
+                                                     "version":  3
+                                                 }
+                                   },
+                   "completedAt":  "2026-10-21T01:36:47.7435223Z",
+                   "checks":  [
+                                  "Readiness os UP",
+                                  "Readiness execution UP",
+                                  "Readiness billing UP",
+                                  "Banco OS inicialmente vazio",
+                                  "Banco Billing inicialmente vazio",
+                                  "Mongo inicialmente sem diagnosticos",
+                                  "Saga inicialmente WAITING_DIAGNOSTIC",
+                                  "diagnostic.start occurredAt e string ISO",
+                                  "Diagnostico concluido pela API",
+                                  "Orcamento pertence a Saga original",
+                                  "Orcamento possui exatamente tres itens",
+                                  "Item unico SVC-E2E",
+                                  "Quantidade e escala preservadas SVC-E2E",
+                                  "Preco preservado SVC-E2E",
+                                  "Contrato de item preservado SVC-E2E",
+                                  "Total exato SVC-E2E",
+                                  "Item unico PECA-E2E",
+                                  "Quantidade e escala preservadas PECA-E2E",
+                                  "Preco preservado PECA-E2E",
+                                  "Contrato de item preservado PECA-E2E",
+                                  "Total exato PECA-E2E",
+                                  "Item unico MAT-E2E",
+                                  "Quantidade e escala preservadas MAT-E2E",
+                                  "Preco preservado MAT-E2E",
+                                  "Contrato de item preservado MAT-E2E",
+                                  "Total exato MAT-E2E",
+                                  "Total BRL 200.14 sem arredondamento",
+                                  "Um unico orcamento",
+                                  "Um unico conjunto de itens",
+                                  "Um unico evento quote.created",
+                                  "Inbox original quote unica e processada",
+                                  "CSRF real obtido na sessao Billing",
+                                  "POST Billing sem CSRF negado com 403",
+                                  "Recusa persistida",
+                                  "Recusa nao gera repair.start",
+                                  "Recusa nao cria pagamento",
+                                  "Recusa nao cria reparo",
+                                  "Uma unica decisao de recusa",
+                                  "Um unico evento de recusa",
+                                  "Timestamp unico do orcamento e decisao",
+                                  "Wire occurredAt ISO string diagnostic.start.v1",
+                                  "Wire correlacao diagnostic.start.v1",
+                                  "Wire routing key diagnostic.start.v1",
+                                  "Wire source diagnostic.start.v1",
+                                  "Wire occurredAt ISO string diagnostic.started.v1",
+                                  "Wire correlacao diagnostic.started.v1",
+                                  "Wire routing key diagnostic.started.v1",
+                                  "Wire source diagnostic.started.v1",
+                                  "Wire occurredAt ISO string diagnostic.completed.v1",
+                                  "Wire correlacao diagnostic.completed.v1",
+                                  "Wire routing key diagnostic.completed.v1",
+                                  "Wire source diagnostic.completed.v1",
+                                  "Wire occurredAt ISO string quote.create.v1",
+                                  "Wire correlacao quote.create.v1",
+                                  "Wire routing key quote.create.v1",
+                                  "Wire source quote.create.v1",
+                                  "Wire occurredAt ISO string quote.created.v1",
+                                  "Wire correlacao quote.created.v1",
+                                  "Wire routing key quote.created.v1",
+                                  "Wire source quote.created.v1",
+                                  "Wire occurredAt ISO string quote.rejected.v1",
+                                  "Wire correlacao quote.rejected.v1",
+                                  "Wire routing key quote.rejected.v1",
+                                  "Wire source quote.rejected.v1",
+                                  "Evento real observado diagnostic.start.v1",
+                                  "Evento real observado diagnostic.started.v1",
+                                  "Evento real observado diagnostic.completed.v1",
+                                  "Evento real observado quote.create.v1",
+                                  "Evento real observado quote.created.v1",
+                                  "Evento real observado quote.rejected.v1",
+                                  "quote.created usa ID real persistido",
+                                  "Recusa publica reason nao vazio",
+                                  "Nenhum resultado financeiro artificial",
+                                  "Wire sem repair.start na recusa",
+                                  "DLQs vazias no ambiente corrigido"
+                              ]
+               },
+    "checkpoints":  [
+                        {
+                            "at":  "2026-10-21T01:36:10.8071113Z",
+                            "name":  "fresh environment and authenticated registration"
+                        },
+                        {
+                            "at":  "2026-10-21T01:36:15.3875863Z",
+                            "name":  "real diagnostic.start and diagnostic.started"
+                        },
+                        {
+                            "at":  "2026-10-21T01:36:23.5088208Z",
+                            "name":  "diagnostic.completed and original quote.create"
+                        },
+                        {
+                            "at":  "2026-10-21T01:36:38.6966670Z",
+                            "name":  "authenticated rejection with real CSRF"
+                        },
+                        {
+                            "at":  "2026-10-21T01:36:47.4868357Z",
+                            "name":  "wire contract and final evidence"
+                        }
+                    ],
+    "quote":  {
+                  "id":  "abf6934d-f5ee-4eb8-918f-29f37bbb4171",
+                  "osId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                  "sagaId":  "c53ae33b-7ec0-4dd4-9971-1adae6d6945f",
+                  "status":  "REJECTED",
+                  "itens":  [
+                                {
+                                    "id":  "9b557033-6427-45e3-864a-762a8a5a83c3",
+                                    "itemId":  "SVC-E2E",
+                                    "descricao":  "Servico E2E",
+                                    "tipo":  "SERVICO",
+                                    "quantidade":  "1.250000",
+                                    "unidadePreco":  "HORA",
+                                    "precoUnitario":  "123.456000",
+                                    "valorTotal":  "154.32"
+                                },
+                                {
+                                    "id":  "c88ff277-38d1-4526-afeb-5d1b10a5d9d0",
+                                    "itemId":  "PECA-E2E",
+                                    "descricao":  "Peca E2E",
+                                    "tipo":  "PECA",
+                                    "quantidade":  "2.500000",
+                                    "unidadePreco":  "UNIDADE",
+                                    "precoUnitario":  "12.340000",
+                                    "valorTotal":  "30.85"
+                                },
+                                {
+                                    "id":  "8546369b-b736-4ce0-a41f-a5064c36b97c",
+                                    "itemId":  "MAT-E2E",
+                                    "descricao":  "Material E2E",
+                                    "tipo":  "MATERIAL",
+                                    "quantidade":  "0.750000",
+                                    "unidadePreco":  "KIT",
+                                    "precoUnitario":  "19.960000",
+                                    "valorTotal":  "14.97"
+                                }
+                            ],
+                  "valorTotal":  "200.14",
+                  "createdAt":  "2026-10-21T01:36:30.569687Z",
+                  "updatedAt":  "2026-10-21T01:36:38.898621Z",
+                  "approvedAt":  null,
+                  "rejectedAt":  "2026-10-21T01:36:38.898621Z"
+              },
+    "decision":  {
+                     "id":  "7d66b911-7a0f-4668-a871-ee511bc3e84f",
+                     "orcamentoId":  "abf6934d-f5ee-4eb8-918f-29f37bbb4171",
+                     "osId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                     "status":  "REJECTED",
+                     "decisionAt":  "2026-10-21T01:36:38.898621Z",
+                     "responsavelId":  "e2e-provisorio",
+                     "motivo":  "Recusa sintetica do cenario E2E",
+                     "correlationId":  "468aa09a-467c-4b2a-9e72-673a21dc5925",
+                     "createdAt":  "2026-10-21T01:36:38.898621Z"
+                 },
+    "payment":  {
+
+                },
+    "diagnostic":  {
+                       "id":  "3413b978-fd99-4df0-be3e-302a7150d680",
+                       "osId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                       "sagaId":  "c53ae33b-7ec0-4dd4-9971-1adae6d6945f",
+                       "status":  "COMPLETED",
+                       "observacoes":  "E2E 7.4.1 Rejection sem provedor financeiro",
+                       "items":  [
+                                     {
+                                         "itemId":  "SVC-E2E",
+                                         "descricao":  "Servico E2E",
+                                         "tipo":  "SERVICO",
+                                         "quantidade":  "1.250000",
+                                         "unidadePreco":  "HORA",
+                                         "precoPrevisto":  "123.456000"
+                                     },
+                                     {
+                                         "itemId":  "PECA-E2E",
+                                         "descricao":  "Peca E2E",
+                                         "tipo":  "PECA",
+                                         "quantidade":  "2.500000",
+                                         "unidadePreco":  "UNIDADE",
+                                         "precoPrevisto":  "12.340000"
+                                     },
+                                     {
+                                         "itemId":  "MAT-E2E",
+                                         "descricao":  "Material E2E",
+                                         "tipo":  "MATERIAL",
+                                         "quantidade":  "0.750000",
+                                         "unidadePreco":  "KIT",
+                                         "precoPrevisto":  "19.960000"
+                                     }
+                                 ],
+                       "createdAt":  "2026-10-21T01:36:20.286Z",
+                       "updatedAt":  "2026-10-21T01:36:23.703Z",
+                       "completedAt":  "2026-10-21T01:36:23.703Z",
+                       "version":  4
+                   },
+    "repair":  {
+
+               },
+    "quoteConcurrency":  {
+
+                         },
+    "approvalConcurrency":  {
+
+                            },
+    "brokerOutage":  {
+
+                     },
+    "timeline":  [
+                     {
+                         "eventType":  "diagnostic.start.v1",
+                         "source":  "os-service",
+                         "correlationId":  "468aa09a-467c-4b2a-9e72-673a21dc5925",
+                         "exchange":  "oficina.commands",
+                         "sagaId":  "c53ae33b-7ec0-4dd4-9971-1adae6d6945f",
+                         "osId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                         "payload":  {
+                                         "filialId":  "7e846578-09f4-424e-b3c6-9798f6263739",
+                                         "clienteId":  "a559d0e2-f7e8-4636-83b8-1670a47a2222",
+                                         "veiculoId":  "6a4ceb31-8d9e-49bb-bcbb-f70cc5cb7c1c",
+                                         "observacoes":  "E2E 7.4.1 Rejection sem provedor financeiro"
+                                     },
+                         "eventId":  "c5362c0c-37ca-42d1-ac3e-457ae68b157d",
+                         "occurredAt":  "2026-10-21T01:36:15.154602854Z"
+                     },
+                     {
+                         "eventType":  "diagnostic.started.v1",
+                         "source":  "execution-service",
+                         "correlationId":  "468aa09a-467c-4b2a-9e72-673a21dc5925",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "c53ae33b-7ec0-4dd4-9971-1adae6d6945f",
+                         "osId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                         "payload":  {
+
+                                     },
+                         "eventId":  "d423d8a6-c8a0-41e1-a97a-e3b43874e289",
+                         "occurredAt":  "2026-10-21T01:36:20.323780336Z"
+                     },
+                     {
+                         "eventType":  "diagnostic.completed.v1",
+                         "source":  "execution-service",
+                         "correlationId":  "468aa09a-467c-4b2a-9e72-673a21dc5925",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "c53ae33b-7ec0-4dd4-9971-1adae6d6945f",
+                         "osId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                         "payload":  {
+                                         "items":  [
+                                                       {
+                                                           "itemId":  "SVC-E2E",
+                                                           "descricao":  "Servico E2E",
+                                                           "tipo":  "SERVICO",
+                                                           "quantidade":  "1.250000",
+                                                           "unidadePreco":  "HORA",
+                                                           "precoPrevisto":  "123.456000"
+                                                       },
+                                                       {
+                                                           "itemId":  "PECA-E2E",
+                                                           "descricao":  "Peca E2E",
+                                                           "tipo":  "PECA",
+                                                           "quantidade":  "2.500000",
+                                                           "unidadePreco":  "UNIDADE",
+                                                           "precoPrevisto":  "12.340000"
+                                                       },
+                                                       {
+                                                           "itemId":  "MAT-E2E",
+                                                           "descricao":  "Material E2E",
+                                                           "tipo":  "MATERIAL",
+                                                           "quantidade":  "0.750000",
+                                                           "unidadePreco":  "KIT",
+                                                           "precoPrevisto":  "19.960000"
+                                                       }
+                                                   ]
+                                     },
+                         "eventId":  "1c08f8f1-0fb2-4eac-b879-4006905bfab3",
+                         "occurredAt":  "2026-10-21T01:36:23.725260722Z"
+                     },
+                     {
+                         "eventType":  "quote.create.v1",
+                         "source":  "os-service",
+                         "correlationId":  "468aa09a-467c-4b2a-9e72-673a21dc5925",
+                         "exchange":  "oficina.commands",
+                         "sagaId":  "c53ae33b-7ec0-4dd4-9971-1adae6d6945f",
+                         "osId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                         "payload":  {
+                                         "items":  [
+                                                       {
+                                                           "tipo":  "SERVICO",
+                                                           "itemId":  "SVC-E2E",
+                                                           "descricao":  "Servico E2E",
+                                                           "quantidade":  "1.250000",
+                                                           "unidadePreco":  "HORA",
+                                                           "precoPrevisto":  "123.456000"
+                                                       },
+                                                       {
+                                                           "tipo":  "PECA",
+                                                           "itemId":  "PECA-E2E",
+                                                           "descricao":  "Peca E2E",
+                                                           "quantidade":  "2.500000",
+                                                           "unidadePreco":  "UNIDADE",
+                                                           "precoPrevisto":  "12.340000"
+                                                       },
+                                                       {
+                                                           "tipo":  "MATERIAL",
+                                                           "itemId":  "MAT-E2E",
+                                                           "descricao":  "Material E2E",
+                                                           "quantidade":  "0.750000",
+                                                           "unidadePreco":  "KIT",
+                                                           "precoPrevisto":  "19.960000"
+                                                       }
+                                                   ]
+                                     },
+                         "eventId":  "ea6dab24-3361-443c-a7a3-2ada2c8c9842",
+                         "occurredAt":  "2026-10-21T01:36:26.404936635Z"
+                     },
+                     {
+                         "eventType":  "quote.created.v1",
+                         "source":  "billing-service",
+                         "correlationId":  "468aa09a-467c-4b2a-9e72-673a21dc5925",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "c53ae33b-7ec0-4dd4-9971-1adae6d6945f",
+                         "osId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                         "payload":  {
+                                         "quoteId":  "abf6934d-f5ee-4eb8-918f-29f37bbb4171"
+                                     },
+                         "eventId":  "ba178c0b-815b-47c1-81e4-b06c1c8f07ae",
+                         "occurredAt":  "2026-10-21T01:36:30.669105224Z"
+                     },
+                     {
+                         "eventType":  "quote.rejected.v1",
+                         "source":  "billing-service",
+                         "correlationId":  "468aa09a-467c-4b2a-9e72-673a21dc5925",
+                         "exchange":  "oficina.events",
+                         "sagaId":  "c53ae33b-7ec0-4dd4-9971-1adae6d6945f",
+                         "osId":  "f20ac177-a636-4bb4-9e47-9ea6f47f0299",
+                         "payload":  {
+                                         "reason":  "Recusa sintetica do cenario E2E"
+                                     },
+                         "eventId":  "8df1862a-7d34-4254-94ba-c1e95bf9459f",
+                         "occurredAt":  "2026-10-21T01:36:38.898621Z"
+                     }
+                 ],
+    "queues":  [
+                   {
+                       "name":  "billing.commands.dlq",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.payment.request",
+                       "consumers":  2,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.payment.request.retry",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.quote.create",
+                       "consumers":  2,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.quote.create.retry",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "e2e.audit",
+                       "consumers":  0,
+                       "messages_ready":  6,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.commands.dlq",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.diagnostic.start",
+                       "consumers":  1,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.diagnostic.start.retry",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.cancel",
+                       "consumers":  1,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.cancel.retry",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.start",
+                       "consumers":  1,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.start.retry",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "os.saga.events",
+                       "consumers":  1,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "os.saga.events.dlq",
+                       "consumers":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   }
+               ],
+    "securityObservations":  [
+                                 {
+                                     "readiness":  200,
+                                     "withoutAuthentication":  401,
+                                     "service":  "os",
+                                     "at":  "2026-10-21T01:37:35.0372205Z"
+                                 },
+                                 {
+                                     "readiness":  200,
+                                     "withoutAuthentication":  401,
+                                     "service":  "execution",
+                                     "at":  "2026-10-21T01:37:35.1734971Z"
+                                 },
+                                 {
+                                     "readiness":  200,
+                                     "withoutAuthentication":  401,
+                                     "service":  "billing",
+                                     "at":  "2026-10-21T01:37:35.2888648Z"
+                                 }
+                             ],
+    "bindings":  [
+                     {
+                         "source":  "billing.commands.dlx",
+                         "destination":  "billing.commands.dlq",
+                         "routing_key":  "#"
+                     },
+                     {
+                         "source":  "billing.commands.retry",
+                         "destination":  "billing.payment.request.retry",
+                         "routing_key":  "payment.request.v1"
+                     },
+                     {
+                         "source":  "billing.commands.retry",
+                         "destination":  "billing.quote.create.retry",
+                         "routing_key":  "quote.create.v1"
+                     },
+                     {
+                         "source":  "execution.commands.dlx",
+                         "destination":  "execution.commands.dlq",
+                         "routing_key":  "#"
+                     },
+                     {
+                         "source":  "execution.commands.retry",
+                         "destination":  "execution.diagnostic.start.retry",
+                         "routing_key":  "diagnostic.start.v1"
+                     },
+                     {
+                         "source":  "execution.commands.retry",
+                         "destination":  "execution.repair.cancel.retry",
+                         "routing_key":  "repair.cancel.v1"
+                     },
+                     {
+                         "source":  "execution.commands.retry",
+                         "destination":  "execution.repair.start.retry",
+                         "routing_key":  "repair.start.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "billing.payment.request",
+                         "routing_key":  "payment.request.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "billing.quote.create",
+                         "routing_key":  "quote.create.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "e2e.audit",
+                         "routing_key":  "#"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "execution.diagnostic.start",
+                         "routing_key":  "diagnostic.start.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "execution.repair.cancel",
+                         "routing_key":  "repair.cancel.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "execution.repair.start",
+                         "routing_key":  "repair.start.v1"
+                     },
+                     {
+                         "source":  "oficina.events",
+                         "destination":  "e2e.audit",
+                         "routing_key":  "#"
+                     },
+                     {
+                         "source":  "oficina.events",
+                         "destination":  "os.saga.events",
+                         "routing_key":  "#.v1"
+                     },
+                     {
+                         "source":  "oficina.events.dlx",
+                         "destination":  "os.saga.events.dlq",
+                         "routing_key":  "saga.events.dead"
+                     }
+                 ],
+    "brokerConnections":  [
+                              {
+                                  "name":  "172.26.0.6:34172 -\u003e 172.26.0.5:5672",
+                                  "peer_host":  "172.26.0.6",
+                                  "vhost":  "/",
+                                  "state":  "running"
+                              },
+                              {
+                                  "name":  "172.26.0.6:37974 -\u003e 172.26.0.5:5672",
+                                  "peer_host":  "172.26.0.6",
+                                  "vhost":  "/",
+                                  "state":  "running"
+                              },
+                              {
+                                  "name":  "172.26.0.7:43716 -\u003e 172.26.0.5:5672",
+                                  "peer_host":  "172.26.0.7",
+                                  "vhost":  "/",
+                                  "state":  "running"
+                              },
+                              {
+                                  "name":  "172.26.0.8:37286 -\u003e 172.26.0.5:5672",
+                                  "peer_host":  "172.26.0.8",
+                                  "vhost":  "/",
+                                  "state":  "running"
+                              }
+                          ],
+    "containersAtCompletion":  [
+                                   {
+                                       "Name":  "billing-e2e-20261020-223342-8aada6-billing-1",
+                                       "Service":  "billing",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "ed3e06e258ad",
+                                       "Image":  "billing-e2e-20261020-223342-8aada6-billing"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223342-8aada6-billing-db-1",
+                                       "Service":  "billing-db",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "a4f8e3717bdf",
+                                       "Image":  "postgres:17-alpine"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223342-8aada6-execution-1",
+                                       "Service":  "execution",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "8b32876eddd3",
+                                       "Image":  "billing-e2e-20261020-223342-8aada6-execution"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223342-8aada6-mongodb-1",
+                                       "Service":  "mongodb",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "6f6eace43db7",
+                                       "Image":  "mongo:8.0"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223342-8aada6-os-1",
+                                       "Service":  "os",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "84a1be109af0",
+                                       "Image":  "billing-e2e-20261020-223342-8aada6-os"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223342-8aada6-os-db-1",
+                                       "Service":  "os-db",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "2428d4171435",
+                                       "Image":  "postgres:17-alpine"
+                                   },
+                                   {
+                                       "Name":  "billing-e2e-20261020-223342-8aada6-rabbitmq-1",
+                                       "Service":  "rabbitmq",
+                                       "State":  "running",
+                                       "Health":  "healthy",
+                                       "ID":  "cac02ddf402c",
+                                       "Image":  "rabbitmq:4-management-alpine"
+                                   }
+                               ],
+    "migrations":  {
+                       "os":  [
+                                  {
+                                      "version":  "1",
+                                      "description":  "bootstrap schema",
+                                      "success":  true
+                                  },
+                                  {
+                                      "version":  "2",
+                                      "description":  "create os domain",
+                                      "success":  true
+                                  },
+                                  {
+                                      "version":  "3",
+                                      "description":  "create outbox events",
+                                      "success":  true
+                                  },
+                                  {
+                                      "version":  "4",
+                                      "description":  "create saga and inbox",
+                                      "success":  true
+                                  }
+                              ],
+                       "billing":  [
+                                       {
+                                           "version":  "1",
+                                           "description":  "bootstrap schema",
+                                           "success":  true
+                                       },
+                                       {
+                                           "version":  "2",
+                                           "description":  "create billing domain",
+                                           "success":  true
+                                       },
+                                       {
+                                           "version":  "3",
+                                           "description":  "create messaging tables",
+                                           "success":  true
+                                       }
+                                   ]
+                   },
+    "originalEnvironments":  [
+                                 {
+                                     "name":  "billing-e2e-20261020-223000-c9e5a9-execution-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "billing-e2e-20261020-223000-c9e5a9-billing-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "billing-e2e-20261020-223000-c9e5a9-os-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "billing-e2e-20261020-223000-c9e5a9-rabbitmq-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "billing-e2e-20261020-223000-c9e5a9-os-db-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "billing-e2e-20261020-223000-c9e5a9-billing-db-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "billing-e2e-20261020-223000-c9e5a9-mongodb-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-billing-rabbitmq-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-billing-billing-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-billing-postgres-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-execution-service",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "tech-challenge-oficina-execution-service-rabbitmq-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-execution-mongodb",
+                                     "sameContainerStillRunning":  true
+                                 }
+                             ],
+    "supplementalChecks":  {
+                               "quoteIdMatchesPersistedRecord":  true,
+                               "decisionTimestampIdentical":  true
+                           },
+    "persistedCounts":  {
+                            "quotes":  1,
+                            "decisions":  1,
+                            "outbox":  2,
+                            "payments":  0,
+                            "inbox":  1,
+                            "items":  3,
+                            "attempts":  0
+                        },
+    "finalOutbox":  [
+                        {
+                            "event_id":  "8df1862a-7d34-4254-94ba-c1e95bf9459f",
+                            "event_type":  "quote.rejected.v1",
+                            "status":  "PUBLISHED",
+                            "attempts":  1,
+                            "published_at":  "2026-10-21T01:36:39.454454+00:00"
+                        },
+                        {
+                            "event_id":  "ba178c0b-815b-47c1-81e4-b06c1c8f07ae",
+                            "event_type":  "quote.created.v1",
+                            "status":  "PUBLISHED",
+                            "attempts":  1,
+                            "published_at":  "2026-10-21T01:36:34.42563+00:00"
+                        }
+                    ]
+}

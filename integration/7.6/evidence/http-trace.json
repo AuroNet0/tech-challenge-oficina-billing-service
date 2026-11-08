@@ -1,0 +1,2214 @@
+﻿[
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/actuator/health/readiness",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:30.5283537Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/actuator/health/readiness",
+        "service":  "execution",
+        "at":  "2026-10-21T15:55:30.9393225Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/actuator/health/readiness",
+        "service":  "billing",
+        "at":  "2026-10-21T15:55:31.2918970Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/clientes",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:37.4069358Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/filiais",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:37.7584986Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/veiculos",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:38.2676066Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/ordens-servico",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:38.7029500Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:38.9274506Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "execution",
+        "at":  "2026-10-21T15:55:39.3264800Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "execution",
+        "at":  "2026-10-21T15:55:40.5441647Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:40.7926326Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:41.9765817Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:43.2183371Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:44.4404917Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:45.7766060Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:55:46.0746781Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/1b5685d5-b5cf-402d-8ed7-f02a45995bfe/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:55:48.0129548Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/1b5685d5-b5cf-402d-8ed7-f02a45995bfe/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:55:48.5284465Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/1b5685d5-b5cf-402d-8ed7-f02a45995bfe/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:55:49.5309919Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/1b5685d5-b5cf-402d-8ed7-f02a45995bfe/conclusao",
+        "service":  "execution",
+        "at":  "2026-10-21T15:55:50.6965957Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:55:52.1166670Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:55:53.9951646Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:55:57.0050586Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:55:58.4268855Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:55:59.6641720Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:00.8646182Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:02.1142524Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:02.2793187Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:03.6133105Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:03.9479781Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=00000000-0000-0000-0000-000000000000",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:04.7242757Z"
+    },
+    {
+        "status":  403,
+        "method":  "Post",
+        "path":  "/api/v1/orcamentos/d3be50a0-d4b9-416e-bfb4-3167d81cb4b2/aprovar",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:04.8606130Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/orcamentos/d3be50a0-d4b9-416e-bfb4-3167d81cb4b2/aprovar",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:05.6665651Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:05.8911222Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:07.0526578Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:08.1808043Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:09.2672163Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:10.3578059Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:11.5226182Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:11.6698591Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:12.8062828Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:13.9662950Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:15.0643984Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:16.1808113Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:16.3192168Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/reparos/3d28f65b-c133-4a2f-b56a-868244c1b0fc/conclusao",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:16.5117217Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:16.6999308Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:17.8549338Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:19.0228919Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:20.2522324Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:21.4121103Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:21.7042768Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:21.9428067Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:23.0567337Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:24.2380807Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:25.4641357Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:26.6860215Z"
+    },
+    {
+        "status":  403,
+        "method":  "Post",
+        "path":  "/api/v1/pagamentos/f010f16a-f8cb-4949-8dc8-9ed11096dcb8/checkout",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:28.8157763Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/pagamentos/f010f16a-f8cb-4949-8dc8-9ed11096dcb8/checkout",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:30.2313448Z"
+    },
+    {
+        "status":  401,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:31.4484061Z"
+    },
+    {
+        "status":  401,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:31.5591629Z"
+    },
+    {
+        "status":  401,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:31.6030430Z"
+    },
+    {
+        "status":  400,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:31.6363256Z"
+    },
+    {
+        "status":  400,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:31.6633156Z"
+    },
+    {
+        "status":  400,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:31.6822273Z"
+    },
+    {
+        "status":  200,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:32.1523688Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/f010f16a-f8cb-4949-8dc8-9ed11096dcb8",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:32.7914219Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:32.9700519Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:33.1410229Z"
+    },
+    {
+        "status":  200,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:33.6567891Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/f010f16a-f8cb-4949-8dc8-9ed11096dcb8",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:33.8482942Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/f010f16a-f8cb-4949-8dc8-9ed11096dcb8",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:35.0573076Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/f010f16a-f8cb-4949-8dc8-9ed11096dcb8",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:35.8432978Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/f010f16a-f8cb-4949-8dc8-9ed11096dcb8",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:36.9833360Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/f010f16a-f8cb-4949-8dc8-9ed11096dcb8",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:37.1391212Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:37.2748673Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:38.4418368Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b3bf9e28-d426-4c44-9c8a-959df30a6964/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:38.6482661Z"
+    },
+    {
+        "status":  200,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:40.7413563Z"
+    },
+    {
+        "status":  200,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:40.7712102Z"
+    },
+    {
+        "status":  409,
+        "method":  "Post",
+        "path":  "/api/v1/pagamentos/f010f16a-f8cb-4949-8dc8-9ed11096dcb8/checkout",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:43.3743676Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/clientes",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:43.5312597Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/filiais",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:43.6650863Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/veiculos",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:43.7873878Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/ordens-servico",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:43.9130331Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:44.0232037Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:44.1133653Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:45.2264657Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:46.3700175Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:46.5020726Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:46.6338204Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/6d099b81-bbb5-44d9-a662-625b73ec894b/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:47.2686795Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/6d099b81-bbb5-44d9-a662-625b73ec894b/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:47.4980876Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/6d099b81-bbb5-44d9-a662-625b73ec894b/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:47.7120492Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/6d099b81-bbb5-44d9-a662-625b73ec894b/conclusao",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:47.9800904Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:48.1724163Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:49.2943493Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:50.3912394Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:51.5023118Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:52.6094510Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:53.7683380Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:54.9208257Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:56.0489578Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:56.1642448Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:57.2950399Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:58.4096607Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:56:58.5128328Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=00000000-0000-0000-0000-000000000000",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:58.6239972Z"
+    },
+    {
+        "status":  403,
+        "method":  "Post",
+        "path":  "/api/v1/orcamentos/2ecc15a5-3c7e-4500-935c-013b5269a6ed/aprovar",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:58.6322858Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/orcamentos/2ecc15a5-3c7e-4500-935c-013b5269a6ed/aprovar",
+        "service":  "billing",
+        "at":  "2026-10-21T15:56:58.7546747Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:58.8694248Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:56:59.9934650Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:01.1159028Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:02.2149894Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:03.3313502Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:04.4979268Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:05.6237429Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:06.8610335Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:07.1288090Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:07.3491845Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/reparos/b9d5bb19-c49a-4d53-a295-a5b67a236f7c/conclusao",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:07.6975686Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:07.9919852Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:09.2577806Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:10.6447307Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:11.8625117Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:12.0549973Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:12.2284666Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:13.3724848Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:14.4920569Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:15.6918661Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:16.8561646Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/pagamentos/0f3fd0d0-49c5-4062-b2bd-4e1d5a7fb863/checkout",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:18.6660788Z"
+    },
+    {
+        "status":  200,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:18.7202059Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/0f3fd0d0-49c5-4062-b2bd-4e1d5a7fb863",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:18.8542016Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/0f3fd0d0-49c5-4062-b2bd-4e1d5a7fb863",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:20.0205980Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/0f3fd0d0-49c5-4062-b2bd-4e1d5a7fb863",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:23.4199804Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:23.5916035Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/28038d3e-736e-4106-9149-dc9f87ab9f94/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:23.7699682Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/clientes",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:24.4603776Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/filiais",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:24.6403782Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/veiculos",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:24.8087861Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/ordens-servico",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:24.9841472Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:25.1475712Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:25.2883382Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:26.5105079Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:26.7485478Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:26.9976424Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/545706c4-b300-403c-a083-a1c2806938d5/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:27.9823250Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/545706c4-b300-403c-a083-a1c2806938d5/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:28.2874171Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/545706c4-b300-403c-a083-a1c2806938d5/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:28.5407438Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/545706c4-b300-403c-a083-a1c2806938d5/conclusao",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:28.7836833Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:28.9328553Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:30.1836995Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:31.3569068Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:32.5157886Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:33.6954931Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:34.8251703Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:35.9543888Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:36.0841461Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:37.2545966Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:38.4076405Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:38.5384843Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=00000000-0000-0000-0000-000000000000",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:38.6744230Z"
+    },
+    {
+        "status":  403,
+        "method":  "Post",
+        "path":  "/api/v1/orcamentos/4c8cc7fc-00fd-403e-95b8-90e756b06d3d/aprovar",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:38.6861487Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/orcamentos/4c8cc7fc-00fd-403e-95b8-90e756b06d3d/aprovar",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:38.8467572Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:38.9874791Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:40.1299822Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:41.2339382Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:42.3344318Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:43.4954829Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:44.6226333Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:45.7533495Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:46.8857429Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:47.0096262Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:47.1470766Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/reparos/26570371-d269-48b2-88a8-9eb047625556/conclusao",
+        "service":  "execution",
+        "at":  "2026-10-21T15:57:47.3687621Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:47.5385492Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:48.6806598Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:49.8952037Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:51.1775511Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:52.3776676Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:57:52.5632903Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:52.7597982Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:53.8850838Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:54.9909052Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:56.0902309Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/pagamentos/60355122-dd62-4c36-9936-d9cc25c98c67/checkout",
+        "service":  "billing",
+        "at":  "2026-10-21T15:57:57.2626317Z"
+    },
+    {
+        "status":  200,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:05.9836084Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/60355122-dd62-4c36-9936-d9cc25c98c67",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:06.1328050Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/60355122-dd62-4c36-9936-d9cc25c98c67",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:07.6775018Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/60355122-dd62-4c36-9936-d9cc25c98c67",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:10.1013606Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:10.8004615Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:10.9577965Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/60355122-dd62-4c36-9936-d9cc25c98c67",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:20.2484823Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:20.3759074Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:21.4773116Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:22.6257638Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:23.8031031Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:25.0446937Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:26.2024021Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/f6ec3f17-9799-443d-b0ea-e29306f860e0/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:26.3455355Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/clientes",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:27.5403928Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/filiais",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:27.8687261Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/veiculos",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:28.1793962Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/ordens-servico",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:28.3888283Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:28.5660045Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:28.7171283Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:29.8434133Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:31.0096220Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:32.1537866Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:32.2845721Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:32.4129831Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/92fa2bd8-b981-4028-b3f3-883abab21f76/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:33.8678331Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/92fa2bd8-b981-4028-b3f3-883abab21f76/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:34.1305602Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/92fa2bd8-b981-4028-b3f3-883abab21f76/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:34.6491926Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/92fa2bd8-b981-4028-b3f3-883abab21f76/conclusao",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:35.0612160Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:35.2760044Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:36.5499911Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:37.8497327Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:38.9961278Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:40.1094878Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:41.2328496Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:41.3346160Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:42.4928142Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:43.7588332Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:44.9779524Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:46.1565155Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:46.3005090Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=00000000-0000-0000-0000-000000000000",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:46.4358134Z"
+    },
+    {
+        "status":  403,
+        "method":  "Post",
+        "path":  "/api/v1/orcamentos/c973ee22-877d-4d58-b806-15f14adb6dba/aprovar",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:46.4501970Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/orcamentos/c973ee22-877d-4d58-b806-15f14adb6dba/aprovar",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:46.6317074Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:46.7365640Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:47.9338890Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:49.0803785Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:50.2622670Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:51.4430071Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:51.6363958Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:52.7774149Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:52.9097994Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/reparos/f9fc907f-c4a1-4298-843c-7fffd9f592c4/conclusao",
+        "service":  "execution",
+        "at":  "2026-10-21T15:58:53.0692218Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:53.1987949Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:54.3564106Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:55.4933662Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:56.6511399Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:57.8328412Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:58:57.9993954Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:58.1544299Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "billing",
+        "at":  "2026-10-21T15:58:59.2595440Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:00.4356215Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:01.6758860Z"
+    },
+    {
+        "status":  202,
+        "method":  "Post",
+        "path":  "/api/v1/pagamentos/dbf939b6-1877-468c-80e9-84e53f336782/checkout",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:06.3121179Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/pagamentos/dbf939b6-1877-468c-80e9-84e53f336782/checkout",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:06.5792141Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/pagamentos/dbf939b6-1877-468c-80e9-84e53f336782/checkout",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:06.7899013Z"
+    },
+    {
+        "status":  200,
+        "method":  "POST",
+        "path":  "/api/v1/webhooks/mercado-pago",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:06.8932313Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/dbf939b6-1877-468c-80e9-84e53f336782",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:07.1136427Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/dbf939b6-1877-468c-80e9-84e53f336782",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:08.2911577Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/dbf939b6-1877-468c-80e9-84e53f336782",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:08.4562273Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:08.6232487Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:09.7208843Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:10.8547182Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:11.9809911Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:12.2018340Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/clientes",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:12.8258851Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/filiais",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:12.9918113Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/veiculos",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:13.2180348Z"
+    },
+    {
+        "status":  201,
+        "method":  "Post",
+        "path":  "/api/v1/ordens-servico",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:13.4394939Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:13.6512214Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:13.8529724Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:14.9613171Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:16.0550624Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/diagnosticos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:17.1904922Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:17.2926067Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:17.4055041Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/18ac77da-60da-472d-873c-583302fcc4e7/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:17.7869951Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/18ac77da-60da-472d-873c-583302fcc4e7/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:17.9248763Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/18ac77da-60da-472d-873c-583302fcc4e7/itens",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:18.1804720Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/diagnosticos/18ac77da-60da-472d-873c-583302fcc4e7/conclusao",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:18.3473086Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:18.4785551Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:19.6540422Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:20.8055761Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:21.8918049Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:23.0120894Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:24.1878531Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:25.4774913Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/orcamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:26.8011287Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:27.0614214Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:28.2971086Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:29.4460078Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:30.5745300Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:31.6965178Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:31.8034398Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=00000000-0000-0000-0000-000000000000",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:31.9233278Z"
+    },
+    {
+        "status":  403,
+        "method":  "Post",
+        "path":  "/api/v1/orcamentos/b27e3925-8e52-4c88-846f-a8965eff19c4/aprovar",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:31.9398278Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/orcamentos/b27e3925-8e52-4c88-846f-a8965eff19c4/aprovar",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:32.0782171Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:32.1888667Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:33.3250234Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:34.7763091Z"
+    },
+    {
+        "status":  404,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:36.1582192Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/reparos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:37.4221932Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:37.7316654Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:38.0751482Z"
+    },
+    {
+        "status":  200,
+        "method":  "Post",
+        "path":  "/api/v1/reparos/46c84b4a-0414-45e0-af18-7767a3a3a43b/conclusao",
+        "service":  "execution",
+        "at":  "2026-10-21T15:59:38.8112252Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:39.1564223Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:40.3810115Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:41.5709253Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:42.7066609Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:42.8188323Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:42.9375242Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:44.0965441Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:45.2183678Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos?osId=b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:46.3276544Z"
+    },
+    {
+        "status":  202,
+        "method":  "Post",
+        "path":  "/api/v1/pagamentos/337c8e75-7308-408c-9aad-7f7b4cbf7305/checkout",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:50.1989009Z"
+    },
+    {
+        "status":  202,
+        "method":  "Post",
+        "path":  "/api/v1/pagamentos/337c8e75-7308-408c-9aad-7f7b4cbf7305/checkout",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:50.4059311Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/pagamentos/337c8e75-7308-408c-9aad-7f7b4cbf7305",
+        "service":  "billing",
+        "at":  "2026-10-21T15:59:50.7082199Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:50.9418979Z"
+    },
+    {
+        "status":  200,
+        "method":  "Get",
+        "path":  "/api/v1/ordens-servico/b83fb8eb-3e7a-48da-9bb5-c3e550d98f92/saga",
+        "service":  "os",
+        "at":  "2026-10-21T15:59:51.2151616Z"
+    }
+]

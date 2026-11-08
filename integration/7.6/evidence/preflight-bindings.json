@@ -1,0 +1,310 @@
+﻿[
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "billing.commands.dlq",
+        "destination_type":  "queue",
+        "routing_key":  "billing.commands.dlq",
+        "arguments":  {
+
+                      },
+        "properties_key":  "billing.commands.dlq"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "billing.payment.request",
+        "destination_type":  "queue",
+        "routing_key":  "billing.payment.request",
+        "arguments":  {
+
+                      },
+        "properties_key":  "billing.payment.request"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "billing.payment.request.retry",
+        "destination_type":  "queue",
+        "routing_key":  "billing.payment.request.retry",
+        "arguments":  {
+
+                      },
+        "properties_key":  "billing.payment.request.retry"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "billing.quote.create",
+        "destination_type":  "queue",
+        "routing_key":  "billing.quote.create",
+        "arguments":  {
+
+                      },
+        "properties_key":  "billing.quote.create"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "billing.quote.create.retry",
+        "destination_type":  "queue",
+        "routing_key":  "billing.quote.create.retry",
+        "arguments":  {
+
+                      },
+        "properties_key":  "billing.quote.create.retry"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "execution.commands.dlq",
+        "destination_type":  "queue",
+        "routing_key":  "execution.commands.dlq",
+        "arguments":  {
+
+                      },
+        "properties_key":  "execution.commands.dlq"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "execution.diagnostic.start",
+        "destination_type":  "queue",
+        "routing_key":  "execution.diagnostic.start",
+        "arguments":  {
+
+                      },
+        "properties_key":  "execution.diagnostic.start"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "execution.diagnostic.start.retry",
+        "destination_type":  "queue",
+        "routing_key":  "execution.diagnostic.start.retry",
+        "arguments":  {
+
+                      },
+        "properties_key":  "execution.diagnostic.start.retry"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "execution.repair.cancel",
+        "destination_type":  "queue",
+        "routing_key":  "execution.repair.cancel",
+        "arguments":  {
+
+                      },
+        "properties_key":  "execution.repair.cancel"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "execution.repair.cancel.retry",
+        "destination_type":  "queue",
+        "routing_key":  "execution.repair.cancel.retry",
+        "arguments":  {
+
+                      },
+        "properties_key":  "execution.repair.cancel.retry"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "execution.repair.start",
+        "destination_type":  "queue",
+        "routing_key":  "execution.repair.start",
+        "arguments":  {
+
+                      },
+        "properties_key":  "execution.repair.start"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "execution.repair.start.retry",
+        "destination_type":  "queue",
+        "routing_key":  "execution.repair.start.retry",
+        "arguments":  {
+
+                      },
+        "properties_key":  "execution.repair.start.retry"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "os.saga.events",
+        "destination_type":  "queue",
+        "routing_key":  "os.saga.events",
+        "arguments":  {
+
+                      },
+        "properties_key":  "os.saga.events"
+    },
+    {
+        "source":  "",
+        "vhost":  "/",
+        "destination":  "os.saga.events.dlq",
+        "destination_type":  "queue",
+        "routing_key":  "os.saga.events.dlq",
+        "arguments":  {
+
+                      },
+        "properties_key":  "os.saga.events.dlq"
+    },
+    {
+        "source":  "billing.commands.dlx",
+        "vhost":  "/",
+        "destination":  "billing.commands.dlq",
+        "destination_type":  "queue",
+        "routing_key":  "#",
+        "arguments":  {
+
+                      },
+        "properties_key":  "%23"
+    },
+    {
+        "source":  "billing.commands.retry",
+        "vhost":  "/",
+        "destination":  "billing.payment.request.retry",
+        "destination_type":  "queue",
+        "routing_key":  "payment.request.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "payment.request.v1"
+    },
+    {
+        "source":  "billing.commands.retry",
+        "vhost":  "/",
+        "destination":  "billing.quote.create.retry",
+        "destination_type":  "queue",
+        "routing_key":  "quote.create.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "quote.create.v1"
+    },
+    {
+        "source":  "execution.commands.dlx",
+        "vhost":  "/",
+        "destination":  "execution.commands.dlq",
+        "destination_type":  "queue",
+        "routing_key":  "#",
+        "arguments":  {
+
+                      },
+        "properties_key":  "%23"
+    },
+    {
+        "source":  "execution.commands.retry",
+        "vhost":  "/",
+        "destination":  "execution.diagnostic.start.retry",
+        "destination_type":  "queue",
+        "routing_key":  "diagnostic.start.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "diagnostic.start.v1"
+    },
+    {
+        "source":  "execution.commands.retry",
+        "vhost":  "/",
+        "destination":  "execution.repair.cancel.retry",
+        "destination_type":  "queue",
+        "routing_key":  "repair.cancel.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "repair.cancel.v1"
+    },
+    {
+        "source":  "execution.commands.retry",
+        "vhost":  "/",
+        "destination":  "execution.repair.start.retry",
+        "destination_type":  "queue",
+        "routing_key":  "repair.start.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "repair.start.v1"
+    },
+    {
+        "source":  "oficina.commands",
+        "vhost":  "/",
+        "destination":  "billing.payment.request",
+        "destination_type":  "queue",
+        "routing_key":  "payment.request.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "payment.request.v1"
+    },
+    {
+        "source":  "oficina.commands",
+        "vhost":  "/",
+        "destination":  "billing.quote.create",
+        "destination_type":  "queue",
+        "routing_key":  "quote.create.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "quote.create.v1"
+    },
+    {
+        "source":  "oficina.commands",
+        "vhost":  "/",
+        "destination":  "execution.diagnostic.start",
+        "destination_type":  "queue",
+        "routing_key":  "diagnostic.start.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "diagnostic.start.v1"
+    },
+    {
+        "source":  "oficina.commands",
+        "vhost":  "/",
+        "destination":  "execution.repair.cancel",
+        "destination_type":  "queue",
+        "routing_key":  "repair.cancel.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "repair.cancel.v1"
+    },
+    {
+        "source":  "oficina.commands",
+        "vhost":  "/",
+        "destination":  "execution.repair.start",
+        "destination_type":  "queue",
+        "routing_key":  "repair.start.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "repair.start.v1"
+    },
+    {
+        "source":  "oficina.events",
+        "vhost":  "/",
+        "destination":  "os.saga.events",
+        "destination_type":  "queue",
+        "routing_key":  "#.v1",
+        "arguments":  {
+
+                      },
+        "properties_key":  "%23.v1"
+    },
+    {
+        "source":  "oficina.events.dlx",
+        "vhost":  "/",
+        "destination":  "os.saga.events.dlq",
+        "destination_type":  "queue",
+        "routing_key":  "saga.events.dead",
+        "arguments":  {
+
+                      },
+        "properties_key":  "saga.events.dead"
+    }
+]

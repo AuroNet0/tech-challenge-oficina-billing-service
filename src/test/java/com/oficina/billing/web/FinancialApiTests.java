@@ -1,0 +1,603 @@
+package com.oficina.billing.web;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import com.jayway.jsonpath.JsonPath;
+import com.oficina.billing.application.port.out.*;
+import com.oficina.billing.domain.enums.*;
+import com.oficina.billing.domain.model.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
+import org.testcontainers.postgresql.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import static com.oficina.billing.TestFixtures.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@Testcontainers
+@SpringBootTest(properties = {
+        "spring.security.user.name=billing-test", "spring.security.user.password=test-password"
+})
+@org.springframework.context.annotation.Import(com.oficina.billing.security.FinancialTestSecurity.class)
+@AutoConfigureMockMvc
+class FinancialApiTests {
+    @Container
+    static final PostgreSQLContainer POSTGRES = new PostgreSQLContainer("postgres:17-alpine")
+            .withDatabaseName("oficina_billing").withUsername("billing").withPassword("test-password");
+
+    @DynamicPropertySource
+    static void databaseProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", POSTGRES::getJdbcUrl);
+        registry.add("spring.datasource.username", POSTGRES::getUsername);
+        registry.add("spring.datasource.password", POSTGRES::getPassword);
+    }
+
+    @Autowired private MockMvc mvc;
+    @MockitoSpyBean private OrcamentoRepositoryPort orcamentos;
+    @MockitoSpyBean private AprovacaoRepositoryPort aprovacoes;
+    @Autowired private PagamentoRepositoryPort pagamentos;
+    @Autowired private JdbcTemplate jdbc;
+    @Autowired private PlatformTransactionManager transactionManager;
+    @Autowired private com.oficina.billing.application.usecase.CommandHandler commandHandler;
+    @Autowired private NotificacaoOrcamentoRepositoryPort notificacoes;
+
+    @Autowired private com.oficina.billing.application.authorization.FinancialAccessPort financialAccess;
+
+    @BeforeEach
+    void prepareDatabase() {
+        org.mockito.Mockito.reset(financialAccess);
+        org.mockito.Mockito.when(financialAccess.authorize(org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any())).thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW);
+        jdbc.execute("TRUNCATE outbox_events, inbox_messages, pagamentos_tentativas, pagamentos, aprovacoes, orcamento_itens, orcamentos CASCADE");
+    }
+
+    @Test
+    void consultsBudgetWithExactDecimalStringsAndUnmodifiedItems() throws Exception {
+        var budget = orcamentos.save(orcamento());
+        mvc.perform(auth(get("/api/v1/orcamentos/{id}", budget.id())))
+                .andExpect(status().isOk())
+                .andExpect(header().doesNotExist("X-CSRF-TOKEN"))
+                .andExpect(jsonPath("$.osId").value(budget.osId().toString()))
+                .andExpect(jsonPath("$.sagaId").value(budget.sagaId().toString()))
+                .andExpect(jsonPath("$.status").value("PENDING_APPROVAL"))
+                .andExpect(jsonPath("$.valorTotal").value("150.00"))
+                .andExpect(jsonPath("$.itens[0].quantidade").value("1.2500"))
+                .andExpect(jsonPath("$.itens[0].precoUnitario").value("80.000000"))
+                .andExpect(jsonPath("$.itens[0].valorTotal").value("100.00"));
+        mvc.perform(auth(get("/api/v1/orcamentos").param("osId", budget.osId().toString())))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.id").value(budget.id().toString()));
+        assertThat(orcamentos.findById(budget.id()).orElseThrow().version()).isZero();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"aprovar", "rejeitar"})
+    void persistsRestDecisionAndPreservesOriginalOnRepeats(String action) throws Exception {
+        var budget = orcamentos.findById(orcamentos.save(orcamento()).id()).orElseThrow();
+        var correlation = UUID.randomUUID();
+        String body = action.equals("aprovar") ? "{\"responsavelId\":\"00000000-0000-4000-8000-000000000001\"}"
+                : "{\"responsavelId\":\"00000000-0000-4000-8000-000000000001\",\"motivo\":\"Acima do esperado\"}";
+        String expected = action.equals("aprovar") ? "APPROVED" : "REJECTED";
+        var response = mvc.perform(auth(post("/api/v1/orcamentos/{id}/{action}", budget.id(), action))
+                        .with(csrf()).header("X-Correlation-Id", correlation).contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.status").value(expected))
+                .andExpect(jsonPath("$.correlationId").value(correlation.toString()))
+                .andExpect(jsonPath("$.responsavelId").value("00000000-0000-4000-8000-000000000001"))
+                .andReturn().getResponse().getContentAsString();
+        var saved = orcamentos.findById(budget.id()).orElseThrow();
+        var decision = aprovacoes.findByOrcamentoId(budget.id()).orElseThrow();
+        assertThat(saved.status().name()).isEqualTo(expected);
+        assertThat(decision.decisionAt()).isEqualTo(saved.updatedAt()).isEqualTo(decision.createdAt());
+        assertThat(JsonPath.<String>read(response, "$.decisionAt")).isEqualTo(decision.decisionAt().toString());
+        assertThat(saved.itens()).isEqualTo(budget.itens());
+        assertThat(saved.valorTotal()).isEqualTo(budget.valorTotal());
+        if (action.equals("rejeitar")) {
+            assertThat(decision.motivo()).isEqualTo("Acima do esperado");
+            assertThat(saved.rejectedAt()).isEqualTo(decision.decisionAt());
+        } else {
+            assertThat(saved.approvedAt()).isEqualTo(decision.decisionAt());
+        }
+        for (var repeated : List.of("aprovar", "rejeitar")) {
+            mvc.perform(auth(post("/api/v1/orcamentos/{id}/{action}", budget.id(), repeated))
+                            .with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
+                    .andExpect(status().isConflict())
+                    .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
+                    .andExpect(jsonPath("$.status").value(409));
+        }
+        mvc.perform(auth(get("/api/v1/orcamentos/{id}/aprovacao", budget.id())))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.id").value(decision.id().toString()));
+        assertThat(aprovacoes.findByOrcamentoId(budget.id()).orElseThrow()).isEqualTo(decision);
+        assertThat(orcamentos.findById(budget.id()).orElseThrow().version()).isEqualTo(saved.version());
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM aprovacoes", Integer.class)).isEqualTo(1);
+    }
+
+    @Test
+    void optionalDecisionMetadataUsesAuthenticatedIdentity() throws Exception {
+        var budget = orcamentos.save(orcamento());
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/rejeitar", budget.id()))
+                        .with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isOk());
+        var decision = aprovacoes.findByOrcamentoId(budget.id()).orElseThrow();
+        assertThat(decision.responsavelId()).isEqualTo(com.oficina.billing.security.FinancialTestSecurity.ACTOR.toString());
+        assertThat(decision.motivo()).isNull();
+        assertThat(decision.correlationId()).isNotNull();
+    }
+
+    @Test
+    void rollsBackBudgetWhenDatabaseRejectsDecision() throws Exception {
+        var budget = orcamentos.save(orcamento());
+        jdbc.execute("""
+                CREATE FUNCTION test_reject_decision() RETURNS TRIGGER LANGUAGE plpgsql AS $$
+                BEGIN RAISE EXCEPTION 'internal SQL detail secret' USING ERRCODE = '23514'; END $$;
+                """);
+        jdbc.execute("""
+                CREATE TRIGGER test_reject_decision BEFORE INSERT ON aprovacoes
+                FOR EACH ROW EXECUTE FUNCTION test_reject_decision()
+                """);
+        try {
+            mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id()))
+                            .with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
+                    .andExpect(status().isConflict())
+                    .andExpect(jsonPath("$.detail").value("Operacao em conflito com o estado atual do recurso."))
+                    .andExpect(content().string(org.hamcrest.Matchers.not(containsString("secret"))));
+        } finally {
+            jdbc.execute("DROP TRIGGER test_reject_decision ON aprovacoes");
+            jdbc.execute("DROP FUNCTION test_reject_decision()");
+        }
+        assertPendingWithoutDecision(budget.id());
+    }
+
+    @Test
+    void unexpectedFailureReturnsSanitizedProblemAndRollsBack() throws Exception {
+        var budget = orcamentos.save(orcamento());
+        doThrow(new IllegalStateException("SQL password secret")).when(aprovacoes).save(any());
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id()))
+                        .with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.status").value(500))
+                .andExpect(jsonPath("$.detail").value("Nao foi possivel concluir a requisicao."))
+                .andExpect(jsonPath("$.trace").doesNotExist())
+                .andExpect(content().string(org.hamcrest.Matchers.not(containsString("secret"))));
+        assertPendingWithoutDecision(budget.id());
+    }
+
+    @Test
+    void concurrentRestDecisionsCommitOneAndReturnOneConflict() throws Exception {
+        var budget = orcamentos.save(orcamento());
+        var barrier = new CyclicBarrier(2);
+        doAnswer(invocation -> {
+            var result = invocation.callRealMethod();
+            barrier.await(15, TimeUnit.SECONDS);
+            return result;
+        }).when(aprovacoes).findByOrcamentoId(budget.id());
+        try (var executor = Executors.newFixedThreadPool(2)) {
+            var approval = executor.submit(() -> decide(budget.id(), "aprovar"));
+            var rejection = executor.submit(() -> decide(budget.id(), "rejeitar"));
+            assertThat(List.of(approval.get(30, TimeUnit.SECONDS), rejection.get(30, TimeUnit.SECONDS)))
+                    .containsExactlyInAnyOrder(200, 409);
+        } finally {
+            reset(aprovacoes);
+        }
+        var decision = aprovacoes.findByOrcamentoId(budget.id()).orElseThrow();
+        assertThat(orcamentos.findById(budget.id()).orElseThrow().status().name()).isEqualTo(decision.status().name());
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM aprovacoes", Integer.class)).isEqualTo(1);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"aprovar", "rejeitar"})
+    void cancelledBudgetCannotBeDecided(String action) throws Exception {
+        var budget = orcamentos.save(orcamento());
+        budget.cancelar(NOW.plusSeconds(1));
+        orcamentos.save(budget);
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/{action}", budget.id(), action))
+                        .with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isConflict());
+        assertThat(aprovacoes.findByOrcamentoId(budget.id())).isEmpty();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"/api/v1/orcamentos/", "/api/v1/pagamentos/"})
+    void returns404ForMissingFinancialResource(String path) throws Exception {
+        mvc.perform(auth(get(path + UUID.randomUUID()))).andExpect(status().isNotFound())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.status").value(404));
+    }
+
+    @Test
+    void missingBudgetDecisionAndMissingOsHaveExplicitSemantics() throws Exception {
+        var missing = UUID.randomUUID();
+        mvc.perform(auth(get("/api/v1/orcamentos").param("osId", missing.toString()))).andExpect(status().isNotFound());
+        mvc.perform(auth(get("/api/v1/pagamentos").param("osId", missing.toString())))
+                .andExpect(status().isOk()).andExpect(content().json("[]"));
+        mvc.perform(auth(get("/api/v1/orcamentos/{id}/aprovacao", missing))).andExpect(status().isNotFound());
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", missing)).with(csrf())
+                .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isNotFound());
+        var budget = orcamentos.save(orcamento());
+        mvc.perform(auth(get("/api/v1/orcamentos/{id}/aprovacao", budget.id()))).andExpect(status().isNotFound());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"{\"valorTotal\":1}", "{\"itens\":[]}", "{\"responsavelId\":\" \"}",
+            "{\"responsavelId\":[]}", "null", "{invalid"})
+    void rejectsInvalidOrFinanciallyTamperedApprovalBody(String body) throws Exception {
+        var budget = orcamentos.save(orcamento());
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id())).with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.status").value(400));
+        assertPendingWithoutDecision(budget.id());
+    }
+
+    @Test
+    void validatesUuidParametersCorrelationAndDecisionTextLengths() throws Exception {
+        mvc.perform(auth(get("/api/v1/orcamentos/not-uuid"))).andExpect(status().isBadRequest());
+        mvc.perform(auth(get("/api/v1/orcamentos"))).andExpect(status().isBadRequest());
+        mvc.perform(auth(get("/api/v1/pagamentos").param("osId", "invalid"))).andExpect(status().isBadRequest());
+        var budget = orcamentos.save(orcamento());
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id())).with(csrf())
+                        .header("X-Correlation-Id", "invalid").contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isBadRequest());
+        for (var body : List.of("{\"responsavelId\":\"" + "x".repeat(101) + "\"}",
+                "{\"motivo\":\"" + "x".repeat(501) + "\"}", "{\"motivo\":\" \"}")) {
+            mvc.perform(auth(post("/api/v1/orcamentos/{id}/rejeitar", budget.id())).with(csrf())
+                            .contentType(MediaType.APPLICATION_JSON).content(body))
+                    .andExpect(status().isBadRequest());
+        }
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id())).with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+        assertPendingWithoutDecision(budget.id());
+    }
+
+    @Test
+    void requiresAuthenticationAndRejectsInvalidCredentialsWithProblemDetails() throws Exception {
+        var id = UUID.randomUUID();
+        for (var path : List.of("/api/v1/orcamentos/" + id, "/api/v1/pagamentos/" + id,
+                "/api/v1/orcamentos/" + id + "/aprovacao", "/api/v1/orcamentos?osId=" + id,
+                "/api/v1/pagamentos?osId=" + id)) {
+            mvc.perform(get(path)).andExpect(status().isUnauthorized())
+                    .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
+                    .andExpect(jsonPath("$.status").value(401));
+        }
+        for (var action : List.of("aprovar", "rejeitar")) {
+            mvc.perform(post("/api/v1/orcamentos/{id}/{action}", id, action).with(csrf())
+                            .contentType(MediaType.APPLICATION_JSON).content("{\"responsavelId\":\"billing-test\"}"))
+                    .andExpect(status().isUnauthorized()).andExpect(jsonPath("$.status").value(401));
+        }
+        mvc.perform(get("/api/v1/orcamentos/{id}", id).with(httpBasic("billing-test", "incorrect")))
+                .andExpect(status().isUnauthorized()).andExpect(jsonPath("$.status").value(401));
+    }
+
+    @Test
+    void bearerDoesNotUseSessionOrCsrf() throws Exception {
+        var budget = orcamentos.save(orcamento());
+        var response = mvc.perform(auth(get("/api/v1/orcamentos/{id}", budget.id()))).andExpect(status().isOk()).andReturn();
+        assertThat(response.getRequest().getSession(false)).isNull();
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id()))
+                .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isOk());
+    }
+
+    @Test
+    void exposesPaymentHistoryWithoutProviderSecretsOrKeys() throws Exception {
+        var pending = orcamentos.save(orcamento());
+        var approved = new TransactionTemplate(transactionManager).execute(status -> {
+            pending.aprovar(NOW.plusSeconds(1));
+            var saved = orcamentos.save(pending);
+            aprovacoes.save(Aprovacao.registrar(saved, null, null, null, NOW.plusSeconds(1)));
+            return saved;
+        });
+        var payment = pagamentos.save(Pagamento.criar(approved, "MERCADO_PAGO", "internal-reference",
+                "internal-key", NOW.plusSeconds(2)));
+        payment.falhar("internal-key", "upstream token=secret", NOW.plusSeconds(3));
+        payment = pagamentos.save(payment);
+        payment.novaTentativa("retry-key", NOW.plusSeconds(4));
+        payment = pagamentos.save(payment);
+        payment.confirmar("retry-key", "provider-internal", NOW.plusSeconds(5));
+        var confirmed = pagamentos.save(payment);
+        for (var path : List.of("/api/v1/pagamentos/" + confirmed.id(),
+                "/api/v1/pagamentos?osId=" + confirmed.osId())) {
+            mvc.perform(auth(get(path))).andExpect(status().isOk())
+                    .andExpect(content().string(org.hamcrest.Matchers.not(containsString("secret"))))
+                    .andExpect(content().string(org.hamcrest.Matchers.not(containsString("idempotencyKey"))))
+                    .andExpect(content().string(org.hamcrest.Matchers.not(containsString("providerPaymentId"))));
+        }
+        mvc.perform(auth(get("/api/v1/pagamentos/{id}", confirmed.id())))
+                .andExpect(jsonPath("$.valor").value("150.00"))
+                .andExpect(jsonPath("$.status").value("CONFIRMED"))
+                .andExpect(jsonPath("$.tentativas.length()").value(2))
+                .andExpect(jsonPath("$.tentativas[0].status").value("FAILED"))
+                .andExpect(jsonPath("$.tentativas[1].status").value("CONFIRMED"));
+    }
+
+    @Test
+    void cannotCreateBudgetsOrPaymentsOrMutatePaymentsThroughRest() throws Exception {
+        for (var path : List.of("/api/v1/orcamentos", "/api/v1/pagamentos")) {
+            mvc.perform(auth(post(path)).with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
+                    .andExpect(status().isForbidden()).andExpect(jsonPath("$.status").value(403));
+        }
+        for (var action : List.of("confirmar", "falhar")) {
+            mvc.perform(auth(post("/api/v1/pagamentos/{id}/{action}", UUID.randomUUID(), action)).with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isForbidden());
+        }
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM orcamentos", Integer.class)).isZero();
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM pagamentos", Integer.class)).isZero();
+    }
+
+    private MockHttpServletRequestBuilder auth(MockHttpServletRequestBuilder request) {
+        return request.with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"aprovar", "rejeitar"})
+    void deniedAndUnavailableOwnershipNeverMutatesDecisionOrOutbox(String action) throws Exception {
+        var budget = orcamentos.save(orcamento());
+        for (var decision : com.oficina.billing.application.authorization.FinancialAccessPort.Decision.values()) {
+            if (decision == com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW) continue;
+            when(financialAccess.authorize(any(), any(), any(), any())).thenReturn(decision);
+            mvc.perform(auth(post("/api/v1/orcamentos/{id}/{action}", budget.id(), action))
+                    .contentType(MediaType.APPLICATION_JSON).content("{}"))
+                    .andExpect(status().is(decision == com.oficina.billing.application.authorization.FinancialAccessPort.Decision.DENY ? 403 : 503));
+            assertPendingWithoutDecision(budget.id());
+            assertThat(jdbc.queryForObject("SELECT count(*) FROM outbox_events", Integer.class)).isZero();
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"ATENDENTE", "GERENTE", "MECANICO"})
+    void staffCannotApproveAndMechanicCannotRead(String role) throws Exception {
+        var budget = orcamentos.save(orcamento());
+        mvc.perform(post("/api/v1/orcamentos/{id}/aprovar", budget.id())
+                .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role))
+                .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isForbidden());
+        mvc.perform(get("/api/v1/orcamentos/{id}", budget.id())
+                .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role)))
+                .andExpect(status().is(role.equals("MECANICO") ? 403 : 200));
+        assertPendingWithoutDecision(budget.id());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"ATENDENTE", "GERENTE"})
+    void staffProjectionMatchesAuthorizedRole(String role) throws Exception {
+        var budget = orcamentos.save(orcamento());
+        var response = mvc.perform(get("/api/v1/orcamentos/{id}", budget.id())
+                .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role)))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.osId").value(budget.osId().toString()));
+        if (role.equals("ATENDENTE")) {
+            response.andExpect(jsonPath("$.itens").doesNotExist()).andExpect(jsonPath("$.valorTotal").doesNotExist())
+                    .andExpect(jsonPath("$.sagaId").doesNotExist());
+        } else {
+            response.andExpect(jsonPath("$.itens").isArray()).andExpect(jsonPath("$.valorTotal").exists())
+                    .andExpect(jsonPath("$.sagaId").exists());
+        }
+    }
+
+    @Test
+    void rejectsImpersonationAndInvalidBearerWithoutBasicOrSessionFallback() throws Exception {
+        var budget = orcamentos.save(orcamento());
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", budget.id()))
+                .contentType(MediaType.APPLICATION_JSON).content("{\"responsavelId\":\"" + UUID.randomUUID() + "\"}"))
+                .andExpect(status().isForbidden());
+        mvc.perform(get("/api/v1/orcamentos/{id}", budget.id()).header("Authorization", "Bearer invalid",
+                "Basic " + java.util.Base64.getEncoder().encodeToString("billing-test:test-password".getBytes(java.nio.charset.StandardCharsets.UTF_8))))
+                .andExpect(status().isUnauthorized());
+        var session = new MockHttpSession();
+        var context = org.springframework.security.core.context.SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                "billing-test", "test-password", List.of(new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_CLIENTE"))));
+        session.setAttribute("SPRING_SECURITY_CONTEXT", context);
+        mvc.perform(get("/api/v1/orcamentos/{id}", budget.id()).session(session)).andExpect(status().isUnauthorized());
+        assertPendingWithoutDecision(budget.id());
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM outbox_events", Integer.class)).isZero();
+    }
+
+    @Test
+    void persistedOsDeterminesOwnershipEvenWhenAnotherOsIsSupplied() throws Exception {
+        var own = orcamentos.save(orcamento());
+        var other = orcamentos.save(orcamento());
+        when(financialAccess.authorize(any(), any(), any(), any())).thenReturn(
+                com.oficina.billing.application.authorization.FinancialAccessPort.Decision.DENY);
+        when(financialAccess.authorize(eq(com.oficina.billing.security.FinancialTestSecurity.ACTOR), any(),
+                eq(own.osId()), any())).thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW);
+        mvc.perform(auth(get("/api/v1/orcamentos/{id}", own.id()))).andExpect(status().isOk());
+        mvc.perform(auth(get("/api/v1/orcamentos/{id}", other.id())).param("osId", own.osId().toString()))
+                .andExpect(status().isForbidden());
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/aprovar", other.id())).param("osId", own.osId().toString())
+                .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isForbidden());
+        mvc.perform(auth(get("/api/v1/orcamentos").param("osId", other.osId().toString())))
+                .andExpect(status().isForbidden());
+        assertPendingWithoutDecision(other.id());
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM outbox_events", Integer.class)).isZero();
+    }
+
+    @Test
+    void notificationReferencesCreatedQuoteAndReadDoesNotChangeFinancialState() throws Exception {
+        var command = com.oficina.billing.messaging.MessagingFixtures.quote();
+        commandHandler.handle(command, com.oficina.billing.messaging.MessagingFixtures.body(command));
+        var budget = orcamentos.findByOsId(command.osId()).orElseThrow();
+        var notification = notificacoes.findByOsId(command.osId(), 0, 20).getFirst();
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", command.osId().toString())))
+                .andExpect(status().isOk()).andExpect(header().string("Cache-Control", "no-store"))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(notification.id().toString()))
+                .andExpect(jsonPath("$[0].orcamentoId").value(budget.id().toString()))
+                .andExpect(jsonPath("$[0].osId").value(command.osId().toString()))
+                .andExpect(jsonPath("$[0].tipo").value("ORCAMENTO_DISPONIVEL"))
+                .andExpect(jsonPath("$[0].createdAt").value(budget.createdAt().toString()))
+                .andExpect(jsonPath("$[0].statusOrcamento").value("PENDING_APPROVAL"))
+                .andExpect(jsonPath("$[0].mensagem").value("Existe um orcamento aguardando sua aprovacao."));
+        verify(financialAccess).authorize(eq(com.oficina.billing.security.FinancialTestSecurity.ACTOR), any(),
+                eq(command.osId()), eq(com.oficina.billing.application.authorization.FinancialAccessPort.Action.DECIDE));
+        mvc.perform(auth(get("/api/v1/orcamentos/{id}", notification.orcamentoId()))).andExpect(status().isOk());
+        assertPendingWithoutDecision(budget.id());
+    }
+
+    @Test
+    void notificationAccessRequiresCurrentOwnerEvenForEmptyResults() throws Exception {
+        var own = com.oficina.billing.messaging.MessagingFixtures.quote();
+        var other = com.oficina.billing.messaging.MessagingFixtures.quote();
+        commandHandler.handle(own, com.oficina.billing.messaging.MessagingFixtures.body(own));
+        commandHandler.handle(other, com.oficina.billing.messaging.MessagingFixtures.body(other));
+        when(financialAccess.authorize(any(), any(), any(), any()))
+                .thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.DENY);
+        when(financialAccess.authorize(eq(com.oficina.billing.security.FinancialTestSecurity.ACTOR), any(),
+                eq(own.osId()), eq(com.oficina.billing.application.authorization.FinancialAccessPort.Action.DECIDE)))
+                .thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW);
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", own.osId().toString())))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].osId").value(own.osId().toString()));
+        for (var osId : List.of(other.osId(), UUID.randomUUID())) {
+            mvc.perform(auth(get("/api/v1/notificacoes").param("osId", osId.toString())
+                            .param("clienteId", com.oficina.billing.security.FinancialTestSecurity.ACTOR.toString())
+                            .param("usuarioId", com.oficina.billing.security.FinancialTestSecurity.ACTOR.toString())))
+                    .andExpect(status().isForbidden()).andExpect(jsonPath("$[0]").doesNotExist());
+        }
+        when(financialAccess.authorize(any(), any(), any(), any()))
+                .thenReturn(com.oficina.billing.application.authorization.FinancialAccessPort.Decision.UNAVAILABLE);
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", own.osId().toString())))
+                .andExpect(status().isServiceUnavailable());
+    }
+
+    @Test
+    void notificationEndpointRequiresAuthenticationAndClientRole() throws Exception {
+        var osId = UUID.randomUUID().toString();
+        mvc.perform(get("/api/v1/notificacoes").param("osId", osId)).andExpect(status().isUnauthorized());
+        for (var role : List.of("ATENDENTE", "GERENTE", "MECANICO")) {
+            mvc.perform(get("/api/v1/notificacoes").param("osId", osId)
+                            .with(com.oficina.billing.security.FinancialTestSecurity.bearer(role)))
+                    .andExpect(status().isForbidden());
+        }
+        verifyNoInteractions(financialAccess);
+    }
+
+    @Test
+    void operationalScopeDoesNotGrantNotificationsToUserWithBothRoles() throws Exception {
+        var osId = UUID.randomUUID();
+        when(financialAccess.authorize(any(), any(), any(), any())).thenAnswer(invocation ->
+                invocation.getArgument(3) == com.oficina.billing.application.authorization.FinancialAccessPort.Action.READ
+                        ? com.oficina.billing.application.authorization.FinancialAccessPort.Decision.ALLOW
+                        : com.oficina.billing.application.authorization.FinancialAccessPort.Decision.DENY);
+        for (var role : List.of("ATENDENTE", "GERENTE")) {
+            mvc.perform(get("/api/v1/notificacoes").param("osId", osId.toString())
+                            .with(com.oficina.billing.security.FinancialTestSecurity.bearer("CLIENTE", role)))
+                    .andExpect(status().isForbidden());
+        }
+    }
+
+    @Test
+    void notificationPaginationIsBoundedAndEmptyListStillRequiresOwnership() throws Exception {
+        var command = com.oficina.billing.messaging.MessagingFixtures.quote();
+        commandHandler.handle(command, com.oficina.billing.messaging.MessagingFixtures.body(command));
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", command.osId().toString())
+                        .param("page", "1").param("size", "1")))
+                .andExpect(status().isOk()).andExpect(content().json("[]"));
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", UUID.randomUUID().toString())))
+                .andExpect(status().isOk()).andExpect(content().json("[]"));
+        for (var params : List.of(new String[]{"-1", "20"}, new String[]{"0", "0"}, new String[]{"0", "101"})) {
+            mvc.perform(auth(get("/api/v1/notificacoes").param("osId", command.osId().toString())
+                            .param("page", params[0]).param("size", params[1])))
+                    .andExpect(status().isBadRequest());
+        }
+        mvc.perform(auth(get("/api/v1/notificacoes"))).andExpect(status().isBadRequest());
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", "invalid"))).andExpect(status().isBadRequest());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"aprovar", "rejeitar"})
+    void notificationHistorySurvivesDecisionAndRepeatedCreation(String action) throws Exception {
+        var command = com.oficina.billing.messaging.MessagingFixtures.quote();
+        commandHandler.handle(command, com.oficina.billing.messaging.MessagingFixtures.body(command));
+        var budget = orcamentos.findByOsId(command.osId()).orElseThrow();
+        var notification = notificacoes.findByOsId(command.osId(), 0, 20).getFirst();
+        mvc.perform(auth(post("/api/v1/orcamentos/{id}/{action}", budget.id(), action))
+                .contentType(MediaType.APPLICATION_JSON).content("{}")).andExpect(status().isOk());
+        var repeated = com.oficina.billing.messaging.MessagingFixtures.command("quote.create.v1",
+                command.osId(), command.sagaId(), command.payload());
+        commandHandler.handle(repeated, com.oficina.billing.messaging.MessagingFixtures.body(repeated));
+        notificacoes.registrar(orcamentos.findById(budget.id()).orElseThrow());
+        mvc.perform(auth(get("/api/v1/notificacoes").param("osId", command.osId().toString())))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(notification.id().toString()))
+                .andExpect(jsonPath("$[0].createdAt").value(notification.createdAt().toString()))
+                .andExpect(jsonPath("$[0].statusOrcamento").value(action.equals("aprovar") ? "APPROVED" : "REJECTED"))
+                .andExpect(jsonPath("$[0].mensagem").value("Orcamento disponibilizado anteriormente; consulte a situacao atual."));
+    }
+
+    @Test
+    void terminalQuoteWithoutNotificationDoesNotGeneratePendingNotice() {
+        var budget = orcamentos.save(orcamento());
+        budget.cancelar(NOW.plusSeconds(1));
+        var cancelled = orcamentos.save(budget);
+        notificacoes.registrar(cancelled);
+        assertThat(notificacoes.findByOsId(budget.osId(), 0, 20)).isEmpty();
+    }
+
+    @Test
+    void notificationWriteFailureRollsBackQuoteInboxAndOutboxAndAllowsRetry() {
+        var command = com.oficina.billing.messaging.MessagingFixtures.quote();
+        jdbc.execute("""
+                CREATE FUNCTION test_reject_notification() RETURNS TRIGGER LANGUAGE plpgsql AS $$
+                BEGIN RAISE EXCEPTION 'notification unavailable' USING ERRCODE = '23514'; END $$;
+                """);
+        jdbc.execute("""
+                CREATE TRIGGER test_reject_notification BEFORE INSERT ON notificacoes_orcamento
+                FOR EACH ROW EXECUTE FUNCTION test_reject_notification()
+                """);
+        try {
+            assertThatThrownBy(() -> commandHandler.handle(command,
+                    com.oficina.billing.messaging.MessagingFixtures.body(command)))
+                    .isInstanceOf(org.springframework.dao.DataAccessException.class);
+            for (var table : List.of("orcamentos", "orcamento_itens", "notificacoes_orcamento", "inbox_messages", "outbox_events")) {
+                assertThat(jdbc.queryForObject("SELECT count(*) FROM " + table, Integer.class)).isZero();
+            }
+        } finally {
+            jdbc.execute("DROP TRIGGER test_reject_notification ON notificacoes_orcamento");
+            jdbc.execute("DROP FUNCTION test_reject_notification()");
+        }
+        commandHandler.handle(command, com.oficina.billing.messaging.MessagingFixtures.body(command));
+        var budget = orcamentos.findByOsId(command.osId()).orElseThrow();
+        notificacoes.registrar(budget);
+        assertThat(notificacoes.findByOsId(command.osId(), 0, 20)).hasSize(1);
+        assertThatThrownBy(() -> jdbc.update("""
+                INSERT INTO notificacoes_orcamento VALUES (?, ?, ?, 'ORCAMENTO_DISPONIVEL', CURRENT_TIMESTAMP)
+                """, UUID.randomUUID(), budget.id(), command.osId()))
+                .isInstanceOf(org.springframework.dao.DataIntegrityViolationException.class);
+        assertThatThrownBy(() -> jdbc.update("""
+                INSERT INTO notificacoes_orcamento VALUES (?, ?, ?, 'ORCAMENTO_DISPONIVEL', CURRENT_TIMESTAMP)
+                """, UUID.randomUUID(), UUID.randomUUID(), command.osId()))
+                .isInstanceOf(org.springframework.dao.DataIntegrityViolationException.class);
+    }
+
+    private void assertPendingWithoutDecision(UUID id) {
+        var budget = orcamentos.findById(id).orElseThrow();
+        assertThat(budget.status()).isEqualTo(OrcamentoStatus.PENDING_APPROVAL);
+        assertThat(budget.approvedAt()).isNull();
+        assertThat(budget.version()).isZero();
+        assertThat(aprovacoes.findByOrcamentoId(id)).isEmpty();
+    }
+
+    private int decide(UUID id, String action) throws Exception {
+        return mvc.perform(auth(post("/api/v1/orcamentos/{id}/{action}", id, action)).with(csrf())
+                .contentType(MediaType.APPLICATION_JSON).content("{}")).andReturn().getResponse().getStatus();
+    }
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "event_id": "c0971833-a8e7-42ba-949f-ec2be0bb9975",
+    "event_type": "diagnostic.started.v1",
+    "saga_id": "f1087028-433e-4cd0-b903-4d639710ff98",
+    "status": "PROCESSED"
+  },
+  {
+    "event_id": "c80de7a3-b344-495e-b572-73aff5b0d4bb",
+    "event_type": "diagnostic.completed.v1",
+    "saga_id": "f1087028-433e-4cd0-b903-4d639710ff98",
+    "status": "PROCESSED"
+  },
+  {
+    "event_id": "14591c83-6fea-4080-90f8-40b631a11848",
+    "event_type": "quote.created.v1",
+    "saga_id": "f1087028-433e-4cd0-b903-4d639710ff98",
+    "status": "PROCESSED"
+  },
+  {
+    "event_id": "1b6e9153-602e-43dc-927d-7243987fa787",
+    "event_type": "quote.approved.v1",
+    "saga_id": "f1087028-433e-4cd0-b903-4d639710ff98",
+    "status": "PROCESSED"
+  },
+  {
+    "event_id": "81c2c0cd-5125-49a4-a800-70e8ece9deef",
+    "event_type": "repair.started.v1",
+    "saga_id": "f1087028-433e-4cd0-b903-4d639710ff98",
+    "status": "PROCESSED"
+  },
+  {
+    "event_id": "a97f0ccd-da31-4f4b-bae7-31316988b83d",
+    "event_type": "repair.completed.v1",
+    "saga_id": "f1087028-433e-4cd0-b903-4d639710ff98",
+    "status": "PROCESSED"
+  },
+  {
+    "event_id": "0cbea806-10a7-4a9d-8ede-3ab30346d1e7",
+    "event_type": "payment.confirmed.v1",
+    "saga_id": "f1087028-433e-4cd0-b903-4d639710ff98",
+    "status": "PROCESSED"
+  }
+]

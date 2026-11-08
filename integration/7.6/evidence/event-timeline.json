@@ -1,0 +1,915 @@
+﻿[
+    {
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "source":  "os-service",
+        "eventId":  "7e196c11-fc0e-4213-a794-15293d67eff8",
+        "payload":  {
+                        "filialId":  "f2586c97-1ed7-4378-bfb5-731c3754aa10",
+                        "clienteId":  "4498eb0d-8ff4-4c92-a8f4-e42bb56fa127",
+                        "veiculoId":  "8095c95c-f059-4390-abde-677bb019acbf",
+                        "observacoes":  "E2E7.6 Approved sem pagamento real"
+                    },
+        "eventType":  "diagnostic.start.v1",
+        "occurredAt":  "2026-10-21T15:55:38.570219380Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742"
+    },
+    {
+        "eventId":  "c2e5348d-f0d1-4b46-8cb8-819c728fd7cc",
+        "eventType":  "diagnostic.started.v1",
+        "occurredAt":  "2026-10-21T15:55:40.367290820Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "source":  "execution-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "eventId":  "51f80a88-6006-4959-81a7-ee5e92abd273",
+        "eventType":  "diagnostic.completed.v1",
+        "occurredAt":  "2026-10-21T15:55:50.244246473Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "source":  "execution-service",
+        "payload":  {
+                        "items":  [
+                                      {
+                                          "itemId":  "SVC-E76",
+                                          "descricao":  "Servico E2E",
+                                          "tipo":  "SERVICO",
+                                          "quantidade":  "1.250000",
+                                          "unidadePreco":  "HORA",
+                                          "precoPrevisto":  "123.456000"
+                                      },
+                                      {
+                                          "itemId":  "PECA-E76",
+                                          "descricao":  "Peca E2E",
+                                          "tipo":  "PECA",
+                                          "quantidade":  "2.500000",
+                                          "unidadePreco":  "UNIDADE",
+                                          "precoPrevisto":  "12.340000"
+                                      },
+                                      {
+                                          "itemId":  "MAT-E76",
+                                          "descricao":  "Material E2E",
+                                          "tipo":  "MATERIAL",
+                                          "quantidade":  "0.750000",
+                                          "unidadePreco":  "KIT",
+                                          "precoPrevisto":  "19.960000"
+                                      }
+                                  ]
+                    }
+    },
+    {
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "source":  "os-service",
+        "eventId":  "116b271e-e89d-46a9-a363-e422c5932869",
+        "payload":  {
+                        "items":  [
+                                      {
+                                          "tipo":  "SERVICO",
+                                          "itemId":  "SVC-E76",
+                                          "descricao":  "Servico E2E",
+                                          "quantidade":  "1.250000",
+                                          "unidadePreco":  "HORA",
+                                          "precoPrevisto":  "123.456000"
+                                      },
+                                      {
+                                          "tipo":  "PECA",
+                                          "itemId":  "PECA-E76",
+                                          "descricao":  "Peca E2E",
+                                          "quantidade":  "2.500000",
+                                          "unidadePreco":  "UNIDADE",
+                                          "precoPrevisto":  "12.340000"
+                                      },
+                                      {
+                                          "tipo":  "MATERIAL",
+                                          "itemId":  "MAT-E76",
+                                          "descricao":  "Material E2E",
+                                          "quantidade":  "0.750000",
+                                          "unidadePreco":  "KIT",
+                                          "precoPrevisto":  "19.960000"
+                                      }
+                                  ]
+                    },
+        "eventType":  "quote.create.v1",
+        "occurredAt":  "2026-10-21T15:55:55.782099857Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742"
+    },
+    {
+        "eventId":  "eddb656d-87ee-4531-8d11-bd75f766da45",
+        "eventType":  "quote.created.v1",
+        "occurredAt":  "2026-10-21T15:56:00.872903034Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "source":  "billing-service",
+        "payload":  {
+                        "quoteId":  "d3be50a0-d4b9-416e-bfb4-3167d81cb4b2"
+                    }
+    },
+    {
+        "eventId":  "955f2619-da49-4164-a434-8ba52691a737",
+        "eventType":  "quote.approved.v1",
+        "occurredAt":  "2026-10-21T15:56:05.497750Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "source":  "billing-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "source":  "os-service",
+        "eventId":  "74c90713-15e2-4ff1-979a-76d5ff026fff",
+        "payload":  {
+
+                    },
+        "eventType":  "repair.start.v1",
+        "occurredAt":  "2026-10-21T15:56:07.482515932Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742"
+    },
+    {
+        "eventId":  "28255f5a-5b94-425b-9552-8d7f36c29601",
+        "eventType":  "repair.started.v1",
+        "occurredAt":  "2026-10-21T15:56:10.655075285Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "source":  "execution-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "eventId":  "28a93f00-9814-4976-8448-ccedd4583518",
+        "eventType":  "repair.completed.v1",
+        "occurredAt":  "2026-10-21T15:56:16.465485862Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "source":  "execution-service",
+        "payload":  {
+                        "repairId":  "3d28f65b-c133-4a2f-b56a-868244c1b0fc"
+                    }
+    },
+    {
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "source":  "os-service",
+        "eventId":  "9c764ab1-e9f0-495c-8558-21f0b8aa8d17",
+        "payload":  {
+                        "repairId":  "3d28f65b-c133-4a2f-b56a-868244c1b0fc"
+                    },
+        "eventType":  "payment.request.v1",
+        "occurredAt":  "2026-10-21T15:56:20.805195690Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742"
+    },
+    {
+        "eventId":  "e8bc5e89-c6c4-4d47-a4ba-80b949fa6dfe",
+        "eventType":  "payment.confirmed.v1",
+        "occurredAt":  "2026-10-21T15:56:35.755242Z",
+        "correlationId":  "41660435-d63d-46cc-9f63-edb7e5409742",
+        "sagaId":  "9b0d6a72-3b94-4124-8add-e256b6aed736",
+        "osId":  "b3bf9e28-d426-4c44-9c8a-959df30a6964",
+        "source":  "billing-service",
+        "payload":  {
+                        "paymentId":  "f010f16a-f8cb-4949-8dc8-9ed11096dcb8"
+                    }
+    },
+    {
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "source":  "os-service",
+        "eventId":  "ac889f3c-a0cd-4948-9753-f3ab6c837313",
+        "payload":  {
+                        "filialId":  "0e1520d0-9165-4f88-a470-5b4d51411bf2",
+                        "clienteId":  "2222e4fb-6a4e-478c-9fbc-490628450690",
+                        "veiculoId":  "84f8f6df-7fcf-44e5-9cc8-b39e561e2209",
+                        "observacoes":  "E2E7.6 Rejected sem pagamento real"
+                    },
+        "eventType":  "diagnostic.start.v1",
+        "occurredAt":  "2026-10-21T15:56:43.891198681Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7"
+    },
+    {
+        "eventId":  "6e48ba9e-635e-4da6-9dc0-fb6dcd3ca3a7",
+        "eventType":  "diagnostic.started.v1",
+        "occurredAt":  "2026-10-21T15:56:45.762158842Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "source":  "execution-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "eventId":  "75e9e989-eaca-4388-b95e-b63348c4a082",
+        "eventType":  "diagnostic.completed.v1",
+        "occurredAt":  "2026-10-21T15:56:47.927964522Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "source":  "execution-service",
+        "payload":  {
+                        "items":  [
+                                      {
+                                          "itemId":  "SVC-E76",
+                                          "descricao":  "Servico E2E",
+                                          "tipo":  "SERVICO",
+                                          "quantidade":  "1.250000",
+                                          "unidadePreco":  "HORA",
+                                          "precoPrevisto":  "123.456000"
+                                      },
+                                      {
+                                          "itemId":  "PECA-E76",
+                                          "descricao":  "Peca E2E",
+                                          "tipo":  "PECA",
+                                          "quantidade":  "2.500000",
+                                          "unidadePreco":  "UNIDADE",
+                                          "precoPrevisto":  "12.340000"
+                                      },
+                                      {
+                                          "itemId":  "MAT-E76",
+                                          "descricao":  "Material E2E",
+                                          "tipo":  "MATERIAL",
+                                          "quantidade":  "0.750000",
+                                          "unidadePreco":  "KIT",
+                                          "precoPrevisto":  "19.960000"
+                                      }
+                                  ]
+                    }
+    },
+    {
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "source":  "os-service",
+        "eventId":  "218d7fe0-6bf3-4a1b-af34-8a85ca9b1e83",
+        "payload":  {
+                        "items":  [
+                                      {
+                                          "tipo":  "SERVICO",
+                                          "itemId":  "SVC-E76",
+                                          "descricao":  "Servico E2E",
+                                          "quantidade":  "1.250000",
+                                          "unidadePreco":  "HORA",
+                                          "precoPrevisto":  "123.456000"
+                                      },
+                                      {
+                                          "tipo":  "PECA",
+                                          "itemId":  "PECA-E76",
+                                          "descricao":  "Peca E2E",
+                                          "quantidade":  "2.500000",
+                                          "unidadePreco":  "UNIDADE",
+                                          "precoPrevisto":  "12.340000"
+                                      },
+                                      {
+                                          "tipo":  "MATERIAL",
+                                          "itemId":  "MAT-E76",
+                                          "descricao":  "Material E2E",
+                                          "quantidade":  "0.750000",
+                                          "unidadePreco":  "KIT",
+                                          "precoPrevisto":  "19.960000"
+                                      }
+                                  ]
+                    },
+        "eventType":  "quote.create.v1",
+        "occurredAt":  "2026-10-21T15:56:50.919456679Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7"
+    },
+    {
+        "eventId":  "67eaf3de-8012-4db9-8813-aaa04f9cd393",
+        "eventType":  "quote.created.v1",
+        "occurredAt":  "2026-10-21T15:56:55.780817962Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "source":  "billing-service",
+        "payload":  {
+                        "quoteId":  "2ecc15a5-3c7e-4500-935c-013b5269a6ed"
+                    }
+    },
+    {
+        "eventId":  "3616af13-74e1-4ba8-b254-34bdfb663b0d",
+        "eventType":  "quote.approved.v1",
+        "occurredAt":  "2026-10-21T15:56:58.724704Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "source":  "billing-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "source":  "os-service",
+        "eventId":  "293f4b3b-5ad8-4b7d-b78c-2bae78684d0d",
+        "payload":  {
+
+                    },
+        "eventType":  "repair.start.v1",
+        "occurredAt":  "2026-10-21T15:57:02.599233284Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7"
+    },
+    {
+        "eventId":  "0d53cc1a-27d8-4285-80c1-71fef1b0d031",
+        "eventType":  "repair.started.v1",
+        "occurredAt":  "2026-10-21T15:57:05.804794136Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "source":  "execution-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "eventId":  "0407e898-f50e-4a46-87b6-536e76beb748",
+        "eventType":  "repair.completed.v1",
+        "occurredAt":  "2026-10-21T15:57:07.590739427Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "source":  "execution-service",
+        "payload":  {
+                        "repairId":  "b9d5bb19-c49a-4d53-a295-a5b67a236f7c"
+                    }
+    },
+    {
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "source":  "os-service",
+        "eventId":  "6fe20dec-db25-4a09-a481-26884b9d5c48",
+        "payload":  {
+                        "repairId":  "b9d5bb19-c49a-4d53-a295-a5b67a236f7c"
+                    },
+        "eventType":  "payment.request.v1",
+        "occurredAt":  "2026-10-21T15:57:11.062266937Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7"
+    },
+    {
+        "eventId":  "c88cff13-4d7b-41b2-b565-f3a14b59ea65",
+        "eventType":  "payment.failed.v1",
+        "occurredAt":  "2026-10-21T15:57:18.824339Z",
+        "correlationId":  "18b5f988-29ff-4912-92db-7ae8e4b70af7",
+        "sagaId":  "1ac679c3-0277-4d60-b702-b776c248004a",
+        "osId":  "28038d3e-736e-4106-9149-dc9f87ab9f94",
+        "source":  "billing-service",
+        "payload":  {
+                        "reason":  "Pagamento recusado ou cancelado pelo provedor."
+                    }
+    },
+    {
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "source":  "os-service",
+        "eventId":  "fb8114ee-62f7-448f-b0a3-ac821959d104",
+        "payload":  {
+                        "filialId":  "49dbb88c-299b-45d4-9b20-97d5a4a90d3d",
+                        "clienteId":  "8b93dd23-90ef-4d9c-a970-5288922a19ae",
+                        "veiculoId":  "1e822661-4392-466b-adf5-f623de48b064",
+                        "observacoes":  "E2E7.6 BrokerOutage sem pagamento real"
+                    },
+        "eventType":  "diagnostic.start.v1",
+        "occurredAt":  "2026-10-21T15:57:24.939899329Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35"
+    },
+    {
+        "eventId":  "806e4de0-e01f-400a-bafa-59e945a5e769",
+        "eventType":  "diagnostic.started.v1",
+        "occurredAt":  "2026-10-21T15:57:25.889624284Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "source":  "execution-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "eventId":  "62085d97-642a-472c-9ea1-68650696d17b",
+        "eventType":  "diagnostic.completed.v1",
+        "occurredAt":  "2026-10-21T15:57:28.723358014Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "source":  "execution-service",
+        "payload":  {
+                        "items":  [
+                                      {
+                                          "itemId":  "SVC-E76",
+                                          "descricao":  "Servico E2E",
+                                          "tipo":  "SERVICO",
+                                          "quantidade":  "1.250000",
+                                          "unidadePreco":  "HORA",
+                                          "precoPrevisto":  "123.456000"
+                                      },
+                                      {
+                                          "itemId":  "PECA-E76",
+                                          "descricao":  "Peca E2E",
+                                          "tipo":  "PECA",
+                                          "quantidade":  "2.500000",
+                                          "unidadePreco":  "UNIDADE",
+                                          "precoPrevisto":  "12.340000"
+                                      },
+                                      {
+                                          "itemId":  "MAT-E76",
+                                          "descricao":  "Material E2E",
+                                          "tipo":  "MATERIAL",
+                                          "quantidade":  "0.750000",
+                                          "unidadePreco":  "KIT",
+                                          "precoPrevisto":  "19.960000"
+                                      }
+                                  ]
+                    }
+    },
+    {
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "source":  "os-service",
+        "eventId":  "db29f23a-d52c-4d54-a22a-ee8e090e3284",
+        "payload":  {
+                        "items":  [
+                                      {
+                                          "tipo":  "SERVICO",
+                                          "itemId":  "SVC-E76",
+                                          "descricao":  "Servico E2E",
+                                          "quantidade":  "1.250000",
+                                          "unidadePreco":  "HORA",
+                                          "precoPrevisto":  "123.456000"
+                                      },
+                                      {
+                                          "tipo":  "PECA",
+                                          "itemId":  "PECA-E76",
+                                          "descricao":  "Peca E2E",
+                                          "quantidade":  "2.500000",
+                                          "unidadePreco":  "UNIDADE",
+                                          "precoPrevisto":  "12.340000"
+                                      },
+                                      {
+                                          "tipo":  "MATERIAL",
+                                          "itemId":  "MAT-E76",
+                                          "descricao":  "Material E2E",
+                                          "quantidade":  "0.750000",
+                                          "unidadePreco":  "KIT",
+                                          "precoPrevisto":  "19.960000"
+                                      }
+                                  ]
+                    },
+        "eventType":  "quote.create.v1",
+        "occurredAt":  "2026-10-21T15:57:31.251937048Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35"
+    },
+    {
+        "eventId":  "c71d4f22-c773-4d35-b5b2-d36c7122cf70",
+        "eventType":  "quote.created.v1",
+        "occurredAt":  "2026-10-21T15:57:35.896380888Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "source":  "billing-service",
+        "payload":  {
+                        "quoteId":  "4c8cc7fc-00fd-403e-95b8-90e756b06d3d"
+                    }
+    },
+    {
+        "eventId":  "4957b809-6c96-4b32-9029-562bdfbbf4b5",
+        "eventType":  "quote.approved.v1",
+        "occurredAt":  "2026-10-21T15:57:38.811146Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "source":  "billing-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "source":  "os-service",
+        "eventId":  "8772a289-7e89-4dd5-9455-6140fe0d11ff",
+        "payload":  {
+
+                    },
+        "eventType":  "repair.start.v1",
+        "occurredAt":  "2026-10-21T15:57:42.715920035Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35"
+    },
+    {
+        "eventId":  "8a44c3ff-7df3-4255-8d41-18c14f4e6d7b",
+        "eventType":  "repair.started.v1",
+        "occurredAt":  "2026-10-21T15:57:45.922294443Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "source":  "execution-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "eventId":  "b55a587c-b173-461e-b9e1-41148272c5aa",
+        "eventType":  "repair.completed.v1",
+        "occurredAt":  "2026-10-21T15:57:47.293103733Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "source":  "execution-service",
+        "payload":  {
+                        "repairId":  "26570371-d269-48b2-88a8-9eb047625556"
+                    }
+    },
+    {
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "source":  "os-service",
+        "eventId":  "3b827bd3-81cd-47b9-b6bc-92158c095526",
+        "payload":  {
+                        "repairId":  "26570371-d269-48b2-88a8-9eb047625556"
+                    },
+        "eventType":  "payment.request.v1",
+        "occurredAt":  "2026-10-21T15:57:51.409724396Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35"
+    },
+    {
+        "eventId":  "e97e5770-82ef-44af-a5e6-bc5c28abd6de",
+        "eventType":  "payment.confirmed.v1",
+        "occurredAt":  "2026-10-21T15:58:07.057299Z",
+        "correlationId":  "a9b5cfa1-4996-4c29-9b4e-a6b2a0ca6d35",
+        "sagaId":  "e46bd17b-916a-4a94-8acf-34dee75e686d",
+        "osId":  "f6ec3f17-9799-443d-b0ea-e29306f860e0",
+        "source":  "billing-service",
+        "payload":  {
+                        "paymentId":  "60355122-dd62-4c36-9936-d9cc25c98c67"
+                    }
+    },
+    {
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "source":  "os-service",
+        "eventId":  "ebe1f4c6-1800-43b0-8d7f-4aefe00f09a2",
+        "payload":  {
+                        "filialId":  "780c8ad9-fa94-4b9b-b132-dcacffdaceb3",
+                        "clienteId":  "5f9ac279-50c5-455c-9718-557ef9837672",
+                        "veiculoId":  "9e851f51-11cc-4d0a-8e0e-70e9e202daf6",
+                        "observacoes":  "E2E7.6 UnknownRecovered sem pagamento real"
+                    },
+        "eventType":  "diagnostic.start.v1",
+        "occurredAt":  "2026-10-21T15:58:28.345139723Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2"
+    },
+    {
+        "eventId":  "0265d3b5-b859-4570-9501-67299f39a7b1",
+        "eventType":  "diagnostic.started.v1",
+        "occurredAt":  "2026-10-21T15:58:31.071100628Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "source":  "execution-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "eventId":  "c2970b00-e312-47f9-a081-0501f5db9d34",
+        "eventType":  "diagnostic.completed.v1",
+        "occurredAt":  "2026-10-21T15:58:34.944486526Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "source":  "execution-service",
+        "payload":  {
+                        "items":  [
+                                      {
+                                          "itemId":  "SVC-E76",
+                                          "descricao":  "Servico E2E",
+                                          "tipo":  "SERVICO",
+                                          "quantidade":  "1.250000",
+                                          "unidadePreco":  "HORA",
+                                          "precoPrevisto":  "123.456000"
+                                      },
+                                      {
+                                          "itemId":  "PECA-E76",
+                                          "descricao":  "Peca E2E",
+                                          "tipo":  "PECA",
+                                          "quantidade":  "2.500000",
+                                          "unidadePreco":  "UNIDADE",
+                                          "precoPrevisto":  "12.340000"
+                                      },
+                                      {
+                                          "itemId":  "MAT-E76",
+                                          "descricao":  "Material E2E",
+                                          "tipo":  "MATERIAL",
+                                          "quantidade":  "0.750000",
+                                          "unidadePreco":  "KIT",
+                                          "precoPrevisto":  "19.960000"
+                                      }
+                                  ]
+                    }
+    },
+    {
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "source":  "os-service",
+        "eventId":  "c97830d5-19aa-4e6d-8fb6-d9712ceeacfd",
+        "payload":  {
+                        "items":  [
+                                      {
+                                          "tipo":  "SERVICO",
+                                          "itemId":  "SVC-E76",
+                                          "descricao":  "Servico E2E",
+                                          "quantidade":  "1.250000",
+                                          "unidadePreco":  "HORA",
+                                          "precoPrevisto":  "123.456000"
+                                      },
+                                      {
+                                          "tipo":  "PECA",
+                                          "itemId":  "PECA-E76",
+                                          "descricao":  "Peca E2E",
+                                          "quantidade":  "2.500000",
+                                          "unidadePreco":  "UNIDADE",
+                                          "precoPrevisto":  "12.340000"
+                                      },
+                                      {
+                                          "tipo":  "MATERIAL",
+                                          "itemId":  "MAT-E76",
+                                          "descricao":  "Material E2E",
+                                          "quantidade":  "0.750000",
+                                          "unidadePreco":  "KIT",
+                                          "precoPrevisto":  "19.960000"
+                                      }
+                                  ]
+                    },
+        "eventType":  "quote.create.v1",
+        "occurredAt":  "2026-10-21T15:58:36.607680748Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2"
+    },
+    {
+        "eventId":  "d9be6832-6409-4925-8e88-d140caf5828b",
+        "eventType":  "quote.created.v1",
+        "occurredAt":  "2026-10-21T15:58:41.085981170Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "source":  "billing-service",
+        "payload":  {
+                        "quoteId":  "c973ee22-877d-4d58-b806-15f14adb6dba"
+                    }
+    },
+    {
+        "eventId":  "a2b665fa-21a1-4f83-9e89-7be157e62d60",
+        "eventType":  "quote.approved.v1",
+        "occurredAt":  "2026-10-21T15:58:46.599096Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "source":  "billing-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "source":  "os-service",
+        "eventId":  "efc86f94-5ac6-4e65-b94f-4bf0fbd9e9a3",
+        "payload":  {
+
+                    },
+        "eventType":  "repair.start.v1",
+        "occurredAt":  "2026-10-21T15:58:50.916592982Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2"
+    },
+    {
+        "eventId":  "36a4eb60-3490-4adb-a523-8dccf2d28a3b",
+        "eventType":  "repair.started.v1",
+        "occurredAt":  "2026-10-21T15:58:51.132073385Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "source":  "execution-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "eventId":  "64ae9661-6d91-40fe-95d0-214917839730",
+        "eventType":  "repair.completed.v1",
+        "occurredAt":  "2026-10-21T15:58:53.036106737Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "source":  "execution-service",
+        "payload":  {
+                        "repairId":  "f9fc907f-c4a1-4298-843c-7fffd9f592c4"
+                    }
+    },
+    {
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "source":  "os-service",
+        "eventId":  "4e3213d6-3751-460c-ad54-172b32e3fe13",
+        "payload":  {
+                        "repairId":  "f9fc907f-c4a1-4298-843c-7fffd9f592c4"
+                    },
+        "eventType":  "payment.request.v1",
+        "occurredAt":  "2026-10-21T15:58:56.739060341Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2"
+    },
+    {
+        "eventId":  "94537fd2-1158-4306-8374-7b2998fe77a3",
+        "eventType":  "payment.confirmed.v1",
+        "occurredAt":  "2026-10-21T15:59:07.383353Z",
+        "correlationId":  "022d730b-5e7f-46c5-b314-617f0d6cb1b2",
+        "sagaId":  "d32f66df-0428-4a6d-b593-5984251002df",
+        "osId":  "9e8cf12f-ed1d-4ef7-a133-5f6d5405a2ff",
+        "source":  "billing-service",
+        "payload":  {
+                        "paymentId":  "dbf939b6-1877-468c-80e9-84e53f336782"
+                    }
+    },
+    {
+        "osId":  "b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "sagaId":  "65890f0a-bcb7-441a-b6af-65b1827fd2d8",
+        "source":  "os-service",
+        "eventId":  "50803316-6c06-4425-a54e-9b6b092dcbb9",
+        "payload":  {
+                        "filialId":  "3b4b9832-d9d6-49cb-965c-dedc6f6a71e3",
+                        "clienteId":  "ac57a7e6-dc12-459c-92e3-9960d818b395",
+                        "veiculoId":  "5bf9d9fc-a8d1-471c-b128-766e5fa71f4a",
+                        "observacoes":  "E2E7.6 UnknownUnproven sem pagamento real"
+                    },
+        "eventType":  "diagnostic.start.v1",
+        "occurredAt":  "2026-10-21T15:59:13.400502861Z",
+        "correlationId":  "d1c31a96-8886-4f5e-bead-2a09200fb37e"
+    },
+    {
+        "eventId":  "2da7200d-62c0-4786-aa61-b9addcd2eed3",
+        "eventType":  "diagnostic.started.v1",
+        "occurredAt":  "2026-10-21T15:59:16.175050310Z",
+        "correlationId":  "d1c31a96-8886-4f5e-bead-2a09200fb37e",
+        "sagaId":  "65890f0a-bcb7-441a-b6af-65b1827fd2d8",
+        "osId":  "b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "source":  "execution-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "eventId":  "4cee5e4b-bfed-45e5-a0ba-ad668d86af13",
+        "eventType":  "diagnostic.completed.v1",
+        "occurredAt":  "2026-10-21T15:59:18.308779841Z",
+        "correlationId":  "d1c31a96-8886-4f5e-bead-2a09200fb37e",
+        "sagaId":  "65890f0a-bcb7-441a-b6af-65b1827fd2d8",
+        "osId":  "b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "source":  "execution-service",
+        "payload":  {
+                        "items":  [
+                                      {
+                                          "itemId":  "SVC-E76",
+                                          "descricao":  "Servico E2E",
+                                          "tipo":  "SERVICO",
+                                          "quantidade":  "1.250000",
+                                          "unidadePreco":  "HORA",
+                                          "precoPrevisto":  "123.456000"
+                                      },
+                                      {
+                                          "itemId":  "PECA-E76",
+                                          "descricao":  "Peca E2E",
+                                          "tipo":  "PECA",
+                                          "quantidade":  "2.500000",
+                                          "unidadePreco":  "UNIDADE",
+                                          "precoPrevisto":  "12.340000"
+                                      },
+                                      {
+                                          "itemId":  "MAT-E76",
+                                          "descricao":  "Material E2E",
+                                          "tipo":  "MATERIAL",
+                                          "quantidade":  "0.750000",
+                                          "unidadePreco":  "KIT",
+                                          "precoPrevisto":  "19.960000"
+                                      }
+                                  ]
+                    }
+    },
+    {
+        "osId":  "b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "sagaId":  "65890f0a-bcb7-441a-b6af-65b1827fd2d8",
+        "source":  "os-service",
+        "eventId":  "5f4848ae-1cd4-470d-8906-7b0db2e0bad2",
+        "payload":  {
+                        "items":  [
+                                      {
+                                          "tipo":  "SERVICO",
+                                          "itemId":  "SVC-E76",
+                                          "descricao":  "Servico E2E",
+                                          "quantidade":  "1.250000",
+                                          "unidadePreco":  "HORA",
+                                          "precoPrevisto":  "123.456000"
+                                      },
+                                      {
+                                          "tipo":  "PECA",
+                                          "itemId":  "PECA-E76",
+                                          "descricao":  "Peca E2E",
+                                          "quantidade":  "2.500000",
+                                          "unidadePreco":  "UNIDADE",
+                                          "precoPrevisto":  "12.340000"
+                                      },
+                                      {
+                                          "tipo":  "MATERIAL",
+                                          "itemId":  "MAT-E76",
+                                          "descricao":  "Material E2E",
+                                          "quantidade":  "0.750000",
+                                          "unidadePreco":  "KIT",
+                                          "precoPrevisto":  "19.960000"
+                                      }
+                                  ]
+                    },
+        "eventType":  "quote.create.v1",
+        "occurredAt":  "2026-10-21T15:59:21.840495685Z",
+        "correlationId":  "d1c31a96-8886-4f5e-bead-2a09200fb37e"
+    },
+    {
+        "eventId":  "67940196-ab56-4f19-bc7b-5a55541989e9",
+        "eventType":  "quote.created.v1",
+        "occurredAt":  "2026-10-21T15:59:26.212662673Z",
+        "correlationId":  "d1c31a96-8886-4f5e-bead-2a09200fb37e",
+        "sagaId":  "65890f0a-bcb7-441a-b6af-65b1827fd2d8",
+        "osId":  "b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "source":  "billing-service",
+        "payload":  {
+                        "quoteId":  "b27e3925-8e52-4c88-846f-a8965eff19c4"
+                    }
+    },
+    {
+        "eventId":  "9e7fbb99-9a08-4e0c-ad44-1b8aa38e67d1",
+        "eventType":  "quote.approved.v1",
+        "occurredAt":  "2026-10-21T15:59:32.040253Z",
+        "correlationId":  "d1c31a96-8886-4f5e-bead-2a09200fb37e",
+        "sagaId":  "65890f0a-bcb7-441a-b6af-65b1827fd2d8",
+        "osId":  "b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "source":  "billing-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "osId":  "b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "sagaId":  "65890f0a-bcb7-441a-b6af-65b1827fd2d8",
+        "source":  "os-service",
+        "eventId":  "74f43c8d-2886-49d7-86c3-b49b4061d2b9",
+        "payload":  {
+
+                    },
+        "eventType":  "repair.start.v1",
+        "occurredAt":  "2026-10-21T15:59:36.083077724Z",
+        "correlationId":  "d1c31a96-8886-4f5e-bead-2a09200fb37e"
+    },
+    {
+        "eventId":  "82605c97-a1a8-4fdd-a58d-27fcbd0286c6",
+        "eventType":  "repair.started.v1",
+        "occurredAt":  "2026-10-21T15:59:36.294294864Z",
+        "correlationId":  "d1c31a96-8886-4f5e-bead-2a09200fb37e",
+        "sagaId":  "65890f0a-bcb7-441a-b6af-65b1827fd2d8",
+        "osId":  "b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "source":  "execution-service",
+        "payload":  {
+
+                    }
+    },
+    {
+        "eventId":  "8275d753-e884-49b1-8274-e3bb798a8b9f",
+        "eventType":  "repair.completed.v1",
+        "occurredAt":  "2026-10-21T15:59:38.681147938Z",
+        "correlationId":  "d1c31a96-8886-4f5e-bead-2a09200fb37e",
+        "sagaId":  "65890f0a-bcb7-441a-b6af-65b1827fd2d8",
+        "osId":  "b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "source":  "execution-service",
+        "payload":  {
+                        "repairId":  "46c84b4a-0414-45e0-af18-7767a3a3a43b"
+                    }
+    },
+    {
+        "osId":  "b83fb8eb-3e7a-48da-9bb5-c3e550d98f92",
+        "sagaId":  "65890f0a-bcb7-441a-b6af-65b1827fd2d8",
+        "source":  "os-service",
+        "eventId":  "213825ad-808f-4de6-979d-8182f60f50f1",
+        "payload":  {
+                        "repairId":  "46c84b4a-0414-45e0-af18-7767a3a3a43b"
+                    },
+        "eventType":  "payment.request.v1",
+        "occurredAt":  "2026-10-21T15:59:41.981247902Z",
+        "correlationId":  "d1c31a96-8886-4f5e-bead-2a09200fb37e"
+    }
+]

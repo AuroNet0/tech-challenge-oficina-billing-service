@@ -1,0 +1,427 @@
+﻿{
+    "runId":  "20261020-215858-f96d90",
+    "project":  "billing-e2e-20261020-215858-f96d90",
+    "revisions":  {
+                      "os":  "b4c98bc08d573534dc680ab26ad5edfcba9fbb38",
+                      "execution":  "c1769c390825d12f35841e1b0d8f9508afa926a1",
+                      "billing":  "aa72d36da9ad1b516ed7ee9b6632ed26b3740f67"
+                  },
+    "result":  {
+                   "checkpoint":  "diagnostic.start.v1 -\u003e Execution",
+                   "nextScenariosExecuted":  false,
+                   "osId":  "be45668d-a320-485a-95d5-cd924a4a256c",
+                   "sagaId":  "2f32de03-80fa-4e97-bae2-72ebc4f10a02",
+                   "capturedAt":  "2026-10-21T01:04:12.5601965Z",
+                   "status":  "BLOCKED"
+               },
+    "initialDatabase":  {
+                            "ordensServico":  0,
+                            "verifiedAt":  "2026-10-21T01:02:49.5711698Z"
+                        },
+    "readiness":  {
+                      "os":  {
+                                 "status":  "UP"
+                             },
+                      "execution":  {
+                                        "status":  "UP"
+                                    },
+                      "billing":  {
+                                      "status":  "UP"
+                                  }
+                  },
+    "containers":  [
+                       {
+                           "Name":  "billing-e2e-20261020-215858-f96d90-billing-1",
+                           "Service":  "billing",
+                           "State":  "running",
+                           "Health":  "healthy",
+                           "ID":  "c7288f3f322f",
+                           "Image":  "billing-e2e-20261020-215858-f96d90-billing"
+                       },
+                       {
+                           "Name":  "billing-e2e-20261020-215858-f96d90-billing-db-1",
+                           "Service":  "billing-db",
+                           "State":  "running",
+                           "Health":  "healthy",
+                           "ID":  "b22d0119c660",
+                           "Image":  "postgres:17-alpine"
+                       },
+                       {
+                           "Name":  "billing-e2e-20261020-215858-f96d90-execution-1",
+                           "Service":  "execution",
+                           "State":  "running",
+                           "Health":  "healthy",
+                           "ID":  "a958de5e046f",
+                           "Image":  "billing-e2e-20261020-215858-f96d90-execution"
+                       },
+                       {
+                           "Name":  "billing-e2e-20261020-215858-f96d90-mongodb-1",
+                           "Service":  "mongodb",
+                           "State":  "running",
+                           "Health":  "healthy",
+                           "ID":  "f6195ab6dd4e",
+                           "Image":  "mongo:8.0"
+                       },
+                       {
+                           "Name":  "billing-e2e-20261020-215858-f96d90-os-1",
+                           "Service":  "os",
+                           "State":  "running",
+                           "Health":  "healthy",
+                           "ID":  "b4a698eafa0c",
+                           "Image":  "billing-e2e-20261020-215858-f96d90-os"
+                       },
+                       {
+                           "Name":  "billing-e2e-20261020-215858-f96d90-os-db-1",
+                           "Service":  "os-db",
+                           "State":  "running",
+                           "Health":  "healthy",
+                           "ID":  "e09c5c390e5f",
+                           "Image":  "postgres:17-alpine"
+                       },
+                       {
+                           "Name":  "billing-e2e-20261020-215858-f96d90-rabbitmq-1",
+                           "Service":  "rabbitmq",
+                           "State":  "running",
+                           "Health":  "healthy",
+                           "ID":  "6273bd2f9d7b",
+                           "Image":  "rabbitmq:4-management-alpine"
+                       }
+                   ],
+    "registration":  {
+                         "filialId":  "3b8b2b27-6629-44ca-a033-816aca080b55",
+                         "clienteId":  "7d236980-fbb2-4d9d-aa4b-a31096fd4254",
+                         "veiculoId":  "430bf1bd-7c25-4316-8af7-d7383fecfc55"
+                     },
+    "finalOrder":  {
+                       "id":  "be45668d-a320-485a-95d5-cd924a4a256c",
+                       "clienteId":  "7d236980-fbb2-4d9d-aa4b-a31096fd4254",
+                       "veiculoId":  "430bf1bd-7c25-4316-8af7-d7383fecfc55",
+                       "filialId":  "3b8b2b27-6629-44ca-a033-816aca080b55",
+                       "status":  "RECEBIDA",
+                       "observacoes":  "Integracao isolada 7.4.1, sem pagamento externo",
+                       "createdAt":  "2026-10-21T01:02:51.395621Z",
+                       "updatedAt":  "2026-10-21T01:02:51.395621Z",
+                       "startedAt":  null,
+                       "finishedAt":  null,
+                       "version":  0
+                   },
+    "finalSaga":  {
+                      "sagaId":  "2f32de03-80fa-4e97-bae2-72ebc4f10a02",
+                      "ordemServicoId":  "be45668d-a320-485a-95d5-cd924a4a256c",
+                      "status":  "WAITING_DIAGNOSTIC",
+                      "currentStep":  "DIAGNOSTIC",
+                      "createdAt":  "2026-10-21T01:02:51.423112Z",
+                      "updatedAt":  "2026-10-21T01:02:51.423112Z",
+                      "completedAt":  null,
+                      "lastError":  null
+                  },
+    "originalDelivery":  {
+                             "routingKey":  "diagnostic.start.v1",
+                             "eventId":  "10099661-f9b8-424f-8308-5a7ccf689bc3",
+                             "executionAttempt":  1,
+                             "payloadSha256":  "c9f51f2bd956ce7a8adbdf8d5b094938dd0bab39d139ca4b3ad34a0e3a0e1b8b",
+                             "executionResult":  "rejected",
+                             "sagaId":  "2f32de03-80fa-4e97-bae2-72ebc4f10a02",
+                             "originalEnvelope":  "{\"osId\": \"be45668d-a320-485a-95d5-cd924a4a256c\", \"sagaId\": \"2f32de03-80fa-4e97-bae2-72ebc4f10a02\", \"source\": \"os-service\", \"eventId\": \"10099661-f9b8-424f-8308-5a7ccf689bc3\", \"payload\": {\"filialId\": \"3b8b2b27-6629-44ca-a033-816aca080b55\", \"clienteId\": \"7d236980-fbb2-4d9d-aa4b-a31096fd4254\", \"veiculoId\": \"430bf1bd-7c25-4316-8af7-d7383fecfc55\", \"observacoes\": \"Integracao isolada 7.4.1, sem pagamento externo\"}, \"eventType\": \"diagnostic.start.v1\", \"occurredAt\": 1792544571.431446804, \"correlationId\": \"390b2176-33ff-4e6d-acf9-15aa2259d85c\"}",
+                             "occurredAtIsJsonString":  false,
+                             "osId":  "be45668d-a320-485a-95d5-cd924a4a256c",
+                             "deliveryMode":  2,
+                             "correlationId":  "390b2176-33ff-4e6d-acf9-15aa2259d85c",
+                             "payloadBytes":  539,
+                             "exchange":  "execution.commands.dlx"
+                         },
+    "osOutbox":  [
+                     {
+                         "id":  "10099661-f9b8-424f-8308-5a7ccf689bc3",
+                         "event_type":  "diagnostic.start.v1",
+                         "status":  "PUBLISHED",
+                         "attempts":  0,
+                         "created_at":  "2026-10-21T01:02:51.461434+00:00",
+                         "published_at":  "2026-10-21T01:02:55.282688+00:00",
+                         "last_error":  null
+                     }
+                 ],
+    "queues":  [
+                   {
+                       "name":  "billing.commands.dlq",
+                       "consumers":  0,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.payment.request",
+                       "consumers":  2,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.payment.request.retry",
+                       "consumers":  0,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.quote.create",
+                       "consumers":  2,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "billing.quote.create.retry",
+                       "consumers":  0,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.commands.dlq",
+                       "consumers":  0,
+                       "messages":  1,
+                       "messages_ready":  1,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.diagnostic.start",
+                       "consumers":  1,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.diagnostic.start.retry",
+                       "consumers":  0,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.cancel",
+                       "consumers":  1,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.cancel.retry",
+                       "consumers":  0,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.start",
+                       "consumers":  1,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "execution.repair.start.retry",
+                       "consumers":  0,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "os.saga.events",
+                       "consumers":  1,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   },
+                   {
+                       "name":  "os.saga.events.dlq",
+                       "consumers":  0,
+                       "messages":  0,
+                       "messages_ready":  0,
+                       "messages_unacknowledged":  0
+                   }
+               ],
+    "bindings":  [
+                     {
+                         "source":  "billing.commands.dlx",
+                         "destination":  "billing.commands.dlq",
+                         "routing_key":  "#"
+                     },
+                     {
+                         "source":  "billing.commands.retry",
+                         "destination":  "billing.payment.request.retry",
+                         "routing_key":  "payment.request.v1"
+                     },
+                     {
+                         "source":  "billing.commands.retry",
+                         "destination":  "billing.quote.create.retry",
+                         "routing_key":  "quote.create.v1"
+                     },
+                     {
+                         "source":  "execution.commands.dlx",
+                         "destination":  "execution.commands.dlq",
+                         "routing_key":  "#"
+                     },
+                     {
+                         "source":  "execution.commands.retry",
+                         "destination":  "execution.diagnostic.start.retry",
+                         "routing_key":  "diagnostic.start.v1"
+                     },
+                     {
+                         "source":  "execution.commands.retry",
+                         "destination":  "execution.repair.cancel.retry",
+                         "routing_key":  "repair.cancel.v1"
+                     },
+                     {
+                         "source":  "execution.commands.retry",
+                         "destination":  "execution.repair.start.retry",
+                         "routing_key":  "repair.start.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "billing.payment.request",
+                         "routing_key":  "payment.request.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "billing.quote.create",
+                         "routing_key":  "quote.create.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "execution.diagnostic.start",
+                         "routing_key":  "diagnostic.start.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "execution.repair.cancel",
+                         "routing_key":  "repair.cancel.v1"
+                     },
+                     {
+                         "source":  "oficina.commands",
+                         "destination":  "execution.repair.start",
+                         "routing_key":  "repair.start.v1"
+                     },
+                     {
+                         "source":  "oficina.events",
+                         "destination":  "os.saga.events",
+                         "routing_key":  "#.v1"
+                     },
+                     {
+                         "source":  "oficina.events.dlx",
+                         "destination":  "os.saga.events.dlq",
+                         "routing_key":  "saga.events.dead"
+                     }
+                 ],
+    "brokerConnections":  [
+                              {
+                                  "name":  "172.23.0.6:43688 -\u003e 172.23.0.4:5672",
+                                  "user":  "integration",
+                                  "vhost":  "/",
+                                  "peer_host":  "172.23.0.6",
+                                  "state":  "running"
+                              },
+                              {
+                                  "name":  "172.23.0.7:42286 -\u003e 172.23.0.4:5672",
+                                  "user":  "integration",
+                                  "vhost":  "/",
+                                  "peer_host":  "172.23.0.7",
+                                  "state":  "running"
+                              },
+                              {
+                                  "name":  "172.23.0.8:33010 -\u003e 172.23.0.4:5672",
+                                  "user":  "integration",
+                                  "vhost":  "/",
+                                  "peer_host":  "172.23.0.8",
+                                  "state":  "running"
+                              }
+                          ],
+    "executionCounts":  {
+                            "diagnostics":  0,
+                            "repairs":  0,
+                            "inbox":  0,
+                            "outbox":  0,
+                            "replicaSet":  "rs0",
+                            "primary":  true
+                        },
+    "billingCounts":  {
+                          "orcamentos":  0,
+                          "aprovacoes":  0,
+                          "pagamentos":  0,
+                          "tentativas":  0,
+                          "inbox":  0,
+                          "outbox":  0
+                      },
+    "migrations":  {
+                       "os":  [
+                                  {
+                                      "version":  "1",
+                                      "description":  "bootstrap schema",
+                                      "success":  true
+                                  },
+                                  {
+                                      "version":  "2",
+                                      "description":  "create os domain",
+                                      "success":  true
+                                  },
+                                  {
+                                      "version":  "3",
+                                      "description":  "create outbox events",
+                                      "success":  true
+                                  },
+                                  {
+                                      "version":  "4",
+                                      "description":  "create saga and inbox",
+                                      "success":  true
+                                  }
+                              ],
+                       "billing":  [
+                                       {
+                                           "version":  "1",
+                                           "description":  "bootstrap schema",
+                                           "success":  true
+                                       },
+                                       {
+                                           "version":  "2",
+                                           "description":  "create billing domain",
+                                           "success":  true
+                                       },
+                                       {
+                                           "version":  "3",
+                                           "description":  "create messaging tables",
+                                           "success":  true
+                                       }
+                                   ]
+                   },
+    "originalEnvironments":  [
+                                 {
+                                     "name":  "oficina-billing-rabbitmq-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-billing-billing-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-billing-postgres-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-execution-service",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "tech-challenge-oficina-execution-service-rabbitmq-1",
+                                     "sameContainerStillRunning":  true
+                                 },
+                                 {
+                                     "name":  "oficina-execution-mongodb",
+                                     "sameContainerStillRunning":  true
+                                 }
+                             ],
+    "logExcerpts":  [
+                        "execution-1  | 2026-10-21T01:02:55.355304796Z 2026-10-21T01:02:55.354Z  WARN 1 --- [tech-challenge-oficina-execution-service] [ntContainer#0-1] c.o.e.i.messaging.CommandConsumer        : command eventId=null eventType=null sagaId=null osId=null correlationId=null result=rejected",
+                        "execution-1  | 2026-10-21T01:02:55.373277335Z 2026-10-21T01:02:55.372Z  WARN 1 --- [tech-challenge-oficina-execution-service] [ntContainer#0-1] c.o.e.i.messaging.CommandConsumer        : command forwarding messageId=10099661-f9b8-424f-8308-5a7ccf689bc3 eventType=diagnostic.start.v1 attempt=1 result=dlq",
+                        "os-1         | 2026-10-21T01:02:55.305124361Z 2026-10-21T01:02:55.304Z  INFO 1 --- [tech-challenge-oficina-os-service] [   scheduling-1] c.o.o.i.messaging.OutboxPublisher        : outbox publication confirmed eventId=10099661-f9b8-424f-8308-5a7ccf689bc3 osId=be45668d-a320-485a-95d5-cd924a4a256c correlationId=390b2176-33ff-4e6d-acf9-15aa2259d85c"
+                    ]
+}

@@ -1,0 +1,468 @@
+{
+  "status": "PASSED",
+  "checks": [
+    "login real clienteA",
+    "login real clienteB",
+    "login real atendente",
+    "login real gerente",
+    "login real mecanico",
+    "login real semPapel",
+    "B: trabalho fisico nao revertido automaticamente",
+    "B: Saga FAILED registra necessidade de intervencao manual",
+    "nenhuma cobranca para OS 659804ea-e4f3-4db3-a393-2dd1e4c37898",
+    "nenhum comando de pagamento para OS 659804ea-e4f3-4db3-a393-2dd1e4c37898",
+    "B: evento consumido repair.failed.v1",
+    "B: evento consumido repair.cancellation-failed.v1",
+    "B: compensacao solicitada por Outbox/RabbitMQ",
+    "B: historico tecnico comprova falha e limite da compensacao",
+    "evento controlado roteado diagnostic.failed.v1",
+    "C: diagnostic.failed tardio com novo eventId rejeitado",
+    "C: OS, historico, Saga e Outbox integralmente preservados"
+  ],
+  "A": {
+    "status": "PASSED",
+    "order": {
+      "id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+      "clienteId": "14dcb330-95b3-45ae-b1b0-bef1545b0d2d",
+      "veiculoId": "29e58853-0927-4b1d-839a-57ae529b4609",
+      "filialId": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "status": "CANCELADA",
+      "observacoes": "Compensacao E2E 9.1.4 A",
+      "createdAt": "2026-10-29T14:42:29.283197Z",
+      "updatedAt": "2026-10-29T14:42:47.324219Z",
+      "startedAt": null,
+      "finishedAt": null,
+      "version": 3
+    },
+    "saga": {
+      "sagaId": "3dcb4550-e17c-4d78-a3a2-6722aa04e4b4",
+      "ordemServicoId": "cc8fe793-b81c-4812-8431-754a1f28800b",
+      "status": "COMPENSATED",
+      "currentStep": "COMPENSATION",
+      "createdAt": "2026-10-29T14:42:29.286589Z",
+      "updatedAt": "2026-10-29T14:42:47.325459Z",
+      "completedAt": "2026-10-29T14:42:47.325459Z",
+      "lastError": "quote rejected"
+    },
+    "snapshot": {
+      "order": [
+        {
+          "id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+          "cliente_id": "14dcb330-95b3-45ae-b1b0-bef1545b0d2d",
+          "veiculo_id": "29e58853-0927-4b1d-839a-57ae529b4609",
+          "filial_id": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+          "status": "CANCELADA",
+          "observacoes": "Compensacao E2E 9.1.4 A",
+          "created_at": "2026-10-29 14:42:29.283197+00:00",
+          "updated_at": "2026-10-29 14:42:47.324219+00:00",
+          "started_at": null,
+          "finished_at": null,
+          "version": 3
+        }
+      ],
+      "saga": [
+        {
+          "id": "3dcb4550-e17c-4d78-a3a2-6722aa04e4b4",
+          "ordem_servico_id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+          "status": "COMPENSATED",
+          "current_step": "COMPENSATION",
+          "correlation_id": "ca1c5ce5-3f89-4880-9ab2-531421257c07",
+          "created_at": "2026-10-29 14:42:29.286589+00:00",
+          "updated_at": "2026-10-29 14:42:47.325459+00:00",
+          "completed_at": "2026-10-29 14:42:47.325459+00:00",
+          "last_error": "quote rejected",
+          "version": 3
+        }
+      ],
+      "history": [
+        {
+          "id": "01ee6ac9-51ec-416e-bd95-f8fdf2696cc3",
+          "ordem_servico_id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+          "status_anterior": "RECEBIDA",
+          "status_novo": "EM_DIAGNOSTICO",
+          "motivo": "Diagnostico iniciado",
+          "created_at": "2026-10-29 14:42:34.965451+00:00",
+          "correlation_id": "ca1c5ce5-3f89-4880-9ab2-531421257c07"
+        },
+        {
+          "id": "0bf5a3c4-c89a-4ab0-87d1-9cd8663ed010",
+          "ordem_servico_id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+          "status_anterior": null,
+          "status_novo": "RECEBIDA",
+          "motivo": "Abertura da ordem de servico",
+          "created_at": "2026-10-29 14:42:29.284387+00:00",
+          "correlation_id": "ca1c5ce5-3f89-4880-9ab2-531421257c07"
+        },
+        {
+          "id": "60f7b298-75fd-4c92-8626-fe62d243c5ec",
+          "ordem_servico_id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+          "status_anterior": "EM_DIAGNOSTICO",
+          "status_novo": "AGUARDANDO_APROVACAO",
+          "motivo": "Orcamento criado 8a7f31bb-b8fb-4a26-856a-6f3e28dcf584",
+          "created_at": "2026-10-29 14:42:42.312110+00:00",
+          "correlation_id": "ca1c5ce5-3f89-4880-9ab2-531421257c07"
+        },
+        {
+          "id": "7aa33262-64a0-4d18-90c0-f4b377590b73",
+          "ordem_servico_id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+          "status_anterior": "AGUARDANDO_APROVACAO",
+          "status_novo": "CANCELADA",
+          "motivo": "Orcamento recusado",
+          "created_at": "2026-10-29 14:42:47.324240+00:00",
+          "correlation_id": "ca1c5ce5-3f89-4880-9ab2-531421257c07"
+        }
+      ],
+      "outbox": [
+        {
+          "id": "a347dc37-9370-4f19-b729-2c80e4d40093",
+          "aggregate_id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+          "aggregate_type": "OrdemServico",
+          "event_type": "diagnostic.start.v1",
+          "payload": {
+            "osId": "cc8fe793-b81c-4812-8431-754a1f28800b",
+            "sagaId": "3dcb4550-e17c-4d78-a3a2-6722aa04e4b4",
+            "source": "os-service",
+            "eventId": "a347dc37-9370-4f19-b729-2c80e4d40093",
+            "payload": {
+              "filialId": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+              "clienteId": "14dcb330-95b3-45ae-b1b0-bef1545b0d2d",
+              "veiculoId": "29e58853-0927-4b1d-839a-57ae529b4609",
+              "observacoes": "Compensacao E2E 9.1.4 A"
+            },
+            "eventType": "diagnostic.start.v1",
+            "occurredAt": "2026-10-29T14:42:29.287912312Z",
+            "correlationId": "ca1c5ce5-3f89-4880-9ab2-531421257c07"
+          },
+          "status": "PUBLISHED",
+          "correlation_id": "ca1c5ce5-3f89-4880-9ab2-531421257c07",
+          "created_at": "2026-10-29 14:42:29.288253+00:00",
+          "published_at": "2026-10-29 14:42:30.095754+00:00",
+          "attempts": 0,
+          "next_attempt_at": null,
+          "last_error": null,
+          "locked_until": null
+        },
+        {
+          "id": "f0245ae3-8af4-4c0f-bcf1-2867632ffe36",
+          "aggregate_id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+          "aggregate_type": "OrdemServico",
+          "event_type": "quote.create.v1",
+          "payload": {
+            "osId": "cc8fe793-b81c-4812-8431-754a1f28800b",
+            "sagaId": "3dcb4550-e17c-4d78-a3a2-6722aa04e4b4",
+            "source": "os-service",
+            "eventId": "f0245ae3-8af4-4c0f-bcf1-2867632ffe36",
+            "payload": {
+              "items": [
+                {
+                  "tipo": "SERVICO",
+                  "itemId": "failure-service",
+                  "descricao": "Servico ficticio",
+                  "quantidade": "1",
+                  "unidadePreco": "HORA",
+                  "precoPrevisto": "75.00"
+                }
+              ]
+            },
+            "eventType": "quote.create.v1",
+            "occurredAt": "2026-10-29T14:42:40.029925042Z",
+            "correlationId": "ca1c5ce5-3f89-4880-9ab2-531421257c07"
+          },
+          "status": "PUBLISHED",
+          "correlation_id": "ca1c5ce5-3f89-4880-9ab2-531421257c07",
+          "created_at": "2026-10-29 14:42:40.030226+00:00",
+          "published_at": "2026-10-29 14:42:40.121903+00:00",
+          "attempts": 0,
+          "next_attempt_at": null,
+          "last_error": null,
+          "locked_until": null
+        }
+      ]
+    },
+    "inbox": [
+      {
+        "event_id": "fabd302a-3aa2-4df4-8df1-d391efb324b2",
+        "event_type": "quote.rejected.v1",
+        "status": "PROCESSED"
+      }
+    ],
+    "outbox": [
+      {
+        "event_id": "a598f9bd-3b0d-4cc1-9655-64fa7d902f27",
+        "event_type": "quote.created.v1",
+        "os_id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+        "status": "PUBLISHED"
+      },
+      {
+        "event_id": "fabd302a-3aa2-4df4-8df1-d391efb324b2",
+        "event_type": "quote.rejected.v1",
+        "os_id": "cc8fe793-b81c-4812-8431-754a1f28800b",
+        "status": "PUBLISHED"
+      }
+    ],
+    "checks": [
+      "login real clienteA",
+      "login real clienteB",
+      "login real atendente",
+      "login real gerente",
+      "login real mecanico",
+      "login real semPapel",
+      "A: diagnostico PENDING",
+      "notificacao unica pertence ao cliente e ao orcamento pendente",
+      "A: rejeicao cancela OS e compensa Saga",
+      "A: decisao persistida REJECTED",
+      "nenhuma cobranca para OS cc8fe793-b81c-4812-8431-754a1f28800b",
+      "nenhum comando de pagamento para OS cc8fe793-b81c-4812-8431-754a1f28800b",
+      "A: nenhum reparo criado",
+      "A: nenhum comando de reparo",
+      "A: quote.rejected consumido uma unica vez"
+    ]
+  },
+  "B": {
+    "status": "PASSED",
+    "order": {
+      "id": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+      "clienteId": "14dcb330-95b3-45ae-b1b0-bef1545b0d2d",
+      "veiculoId": "29e58853-0927-4b1d-839a-57ae529b4609",
+      "filialId": "8c6fe106-d23d-42bf-8685-83a7315b63ea",
+      "status": "EM_EXECUCAO",
+      "observacoes": "Compensacao E2E 9.1.4 B",
+      "createdAt": "2026-10-29T14:42:48.048215Z",
+      "updatedAt": "2026-10-29T14:43:15.156011Z",
+      "startedAt": "2026-10-29T14:43:15.156011Z",
+      "finishedAt": null,
+      "version": 3
+    },
+    "saga": {
+      "sagaId": "e662c1bb-8ff1-47ae-a8c0-838d63aaedf1",
+      "ordemServicoId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+      "status": "FAILED",
+      "currentStep": "COMPENSATION",
+      "createdAt": "2026-10-29T14:42:48.049892Z",
+      "updatedAt": "2026-10-29T14:43:45.301548Z",
+      "completedAt": "2026-10-29T14:43:45.301548Z",
+      "lastError": "Cancelamento nao confirmado: trabalho fisico exige intervencao manual"
+    },
+    "repair": {
+      "id": "1c391b34-e1cf-4e2a-97fa-b8b9c9cbc6a3",
+      "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+      "sagaId": "e662c1bb-8ff1-47ae-a8c0-838d63aaedf1",
+      "diagnosticId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+      "status": "FAILED",
+      "observacoes": "Falha fisica controlada E2E 9.1.4",
+      "startedAt": "2026-10-29T14:43:10.370Z",
+      "completedAt": null,
+      "createdAt": "2026-10-29T14:43:10.196Z",
+      "updatedAt": "2026-10-29T14:43:39.468Z",
+      "version": 2
+    },
+    "inbox": [
+      {
+        "event_id": "faf745bc-57ba-421f-a0d5-4548c99dfcbf",
+        "event_type": "diagnostic.started.v1",
+        "status": "PROCESSED"
+      },
+      {
+        "event_id": "aed9c7e2-4c1d-47be-815c-984d9e4954f0",
+        "event_type": "diagnostic.completed.v1",
+        "status": "PROCESSED"
+      },
+      {
+        "event_id": "d34c279e-7b43-4bfd-b4d2-88d1df1c185c",
+        "event_type": "quote.created.v1",
+        "status": "PROCESSED"
+      },
+      {
+        "event_id": "f696f95c-0a8c-47f5-a8b7-77eb3ba0ff0f",
+        "event_type": "quote.approved.v1",
+        "status": "PROCESSED"
+      },
+      {
+        "event_id": "5199484d-05db-4588-83fb-fdc70a4e21e4",
+        "event_type": "repair.started.v1",
+        "status": "PROCESSED"
+      },
+      {
+        "event_id": "725791da-3be3-4641-9a45-1a92d061e555",
+        "event_type": "repair.failed.v1",
+        "status": "PROCESSED"
+      },
+      {
+        "event_id": "5e8f0de9-8282-42df-b9d8-63b2fbefa3fc",
+        "event_type": "repair.cancellation-failed.v1",
+        "status": "PROCESSED"
+      }
+    ],
+    "history": [
+      {
+        "_id": "92eef79a-1b58-461d-934c-c2aa3f6b386b",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "diagnosticId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+        "eventType": "diagnostic.queued",
+        "description": "Diagnostico aguardando inicio operacional",
+        "createdAt": "2026-10-29 14:42:50.153000",
+        "correlationId": "e235c64c-b83c-488b-93b6-1e1a07537d9a",
+        "_class": "com.oficina.execution.infrastructure.persistence.document.ExecutionHistoryDocument"
+      },
+      {
+        "_id": "9447afb8-0928-4ba7-98a5-b6ef77253d7b",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "diagnosticId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+        "eventType": "diagnostic.started.v1",
+        "description": "Diagnostico iniciado pelo mecanico",
+        "createdAt": "2026-10-29 14:42:50.313000",
+        "correlationId": "e235c64c-b83c-488b-93b6-1e1a07537d9a",
+        "_class": "com.oficina.execution.infrastructure.persistence.document.ExecutionHistoryDocument"
+      },
+      {
+        "_id": "c96d77e5-dab7-45c5-8a37-c71416d42412",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "diagnosticId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+        "eventType": "diagnostic.item-added",
+        "description": "Item tecnico adicionado",
+        "createdAt": "2026-10-29 14:42:55.184000",
+        "_class": "com.oficina.execution.infrastructure.persistence.document.ExecutionHistoryDocument"
+      },
+      {
+        "_id": "0fc8e7ef-7840-4f56-850c-3316bbb82f05",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "diagnosticId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+        "eventType": "diagnostic.completed.v1",
+        "description": "Diagnostico concluido",
+        "createdAt": "2026-10-29 14:42:55.268000",
+        "correlationId": "e235c64c-b83c-488b-93b6-1e1a07537d9a",
+        "_class": "com.oficina.execution.infrastructure.persistence.document.ExecutionHistoryDocument"
+      },
+      {
+        "_id": "0989555e-d7b9-4392-badc-fe14656ab653",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "diagnosticId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+        "repairId": "1c391b34-e1cf-4e2a-97fa-b8b9c9cbc6a3",
+        "eventType": "repair.queued",
+        "description": "Reparo autorizado pelo OS Service aguardando inicio operacional",
+        "createdAt": "2026-10-29 14:43:10.200000",
+        "correlationId": "e235c64c-b83c-488b-93b6-1e1a07537d9a",
+        "_class": "com.oficina.execution.infrastructure.persistence.document.ExecutionHistoryDocument"
+      },
+      {
+        "_id": "6275d576-bdf6-4173-af1d-4ef196024109",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "diagnosticId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+        "repairId": "1c391b34-e1cf-4e2a-97fa-b8b9c9cbc6a3",
+        "eventType": "repair.started.v1",
+        "description": "Reparo iniciado pelo mecanico",
+        "createdAt": "2026-10-29 14:43:10.374000",
+        "correlationId": "e235c64c-b83c-488b-93b6-1e1a07537d9a",
+        "_class": "com.oficina.execution.infrastructure.persistence.document.ExecutionHistoryDocument"
+      },
+      {
+        "_id": "5f4bcd21-59a9-410f-99df-26499275202b",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "diagnosticId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+        "repairId": "1c391b34-e1cf-4e2a-97fa-b8b9c9cbc6a3",
+        "eventType": "repair.failed.v1",
+        "description": "Reparo falhou",
+        "createdAt": "2026-10-29 14:43:39.513000",
+        "correlationId": "ad13e25b-e254-4c6d-84d3-9cfe6d0480ff",
+        "_class": "com.oficina.execution.infrastructure.persistence.document.ExecutionHistoryDocument"
+      },
+      {
+        "_id": "f8147746-2c36-4c1f-ae2f-94d005e97aea",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "diagnosticId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+        "repairId": "1c391b34-e1cf-4e2a-97fa-b8b9c9cbc6a3",
+        "eventType": "repair.cancellation-failed.v1",
+        "description": "Cancelamento nao confirmado: trabalho fisico exige intervencao manual",
+        "createdAt": "2026-10-29 14:43:45.251000",
+        "correlationId": "ad13e25b-e254-4c6d-84d3-9cfe6d0480ff",
+        "_class": "com.oficina.execution.infrastructure.persistence.document.ExecutionHistoryDocument"
+      }
+    ],
+    "outbox": [
+      {
+        "_id": "faf745bc-57ba-421f-a0d5-4548c99dfcbf",
+        "aggregateId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+        "aggregateType": "Diagnostic",
+        "eventType": "diagnostic.started.v1",
+        "status": "PUBLISHED",
+        "sagaId": "e662c1bb-8ff1-47ae-a8c0-838d63aaedf1",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "correlationId": "e235c64c-b83c-488b-93b6-1e1a07537d9a",
+        "createdAt": "2026-10-29 14:42:50.314000",
+        "attempts": 1,
+        "nextAttemptAt": "2026-10-29 14:42:50.314000",
+        "sequence": 1,
+        "_class": "com.oficina.execution.infrastructure.persistence.document.OutboxEventDocument",
+        "publishedAt": "2026-10-29 14:42:55.067000"
+      },
+      {
+        "_id": "aed9c7e2-4c1d-47be-815c-984d9e4954f0",
+        "aggregateId": "6bbbc601-b3ad-4c0d-b208-ac3403577aff",
+        "aggregateType": "Diagnostic",
+        "eventType": "diagnostic.completed.v1",
+        "status": "PUBLISHED",
+        "sagaId": "e662c1bb-8ff1-47ae-a8c0-838d63aaedf1",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "correlationId": "e235c64c-b83c-488b-93b6-1e1a07537d9a",
+        "createdAt": "2026-10-29 14:42:55.273000",
+        "attempts": 1,
+        "nextAttemptAt": "2026-10-29 14:42:55.273000",
+        "sequence": 2,
+        "_class": "com.oficina.execution.infrastructure.persistence.document.OutboxEventDocument",
+        "publishedAt": "2026-10-29 14:43:00.096000"
+      },
+      {
+        "_id": "5199484d-05db-4588-83fb-fdc70a4e21e4",
+        "aggregateId": "1c391b34-e1cf-4e2a-97fa-b8b9c9cbc6a3",
+        "aggregateType": "Repair",
+        "eventType": "repair.started.v1",
+        "status": "PUBLISHED",
+        "sagaId": "e662c1bb-8ff1-47ae-a8c0-838d63aaedf1",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "correlationId": "e235c64c-b83c-488b-93b6-1e1a07537d9a",
+        "createdAt": "2026-10-29 14:43:10.376000",
+        "attempts": 1,
+        "nextAttemptAt": "2026-10-29 14:43:10.376000",
+        "sequence": 3,
+        "_class": "com.oficina.execution.infrastructure.persistence.document.OutboxEventDocument",
+        "publishedAt": "2026-10-29 14:43:15.147000"
+      },
+      {
+        "_id": "725791da-3be3-4641-9a45-1a92d061e555",
+        "aggregateId": "1c391b34-e1cf-4e2a-97fa-b8b9c9cbc6a3",
+        "aggregateType": "Repair",
+        "eventType": "repair.failed.v1",
+        "status": "PUBLISHED",
+        "sagaId": "e662c1bb-8ff1-47ae-a8c0-838d63aaedf1",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "correlationId": "ad13e25b-e254-4c6d-84d3-9cfe6d0480ff",
+        "createdAt": "2026-10-29 14:43:39.534000",
+        "attempts": 1,
+        "nextAttemptAt": "2026-10-29 14:43:39.534000",
+        "sequence": 4,
+        "_class": "com.oficina.execution.infrastructure.persistence.document.OutboxEventDocument",
+        "publishedAt": "2026-10-29 14:43:40.267000"
+      },
+      {
+        "_id": "5e8f0de9-8282-42df-b9d8-63b2fbefa3fc",
+        "aggregateId": "1c391b34-e1cf-4e2a-97fa-b8b9c9cbc6a3",
+        "aggregateType": "Repair",
+        "eventType": "repair.cancellation-failed.v1",
+        "status": "PUBLISHED",
+        "sagaId": "e662c1bb-8ff1-47ae-a8c0-838d63aaedf1",
+        "osId": "659804ea-e4f3-4db3-a393-2dd1e4c37898",
+        "correlationId": "ad13e25b-e254-4c6d-84d3-9cfe6d0480ff",
+        "createdAt": "2026-10-29 14:43:45.254000",
+        "attempts": 1,
+        "nextAttemptAt": "2026-10-29 14:43:45.254000",
+        "sequence": 5,
+        "_class": "com.oficina.execution.infrastructure.persistence.document.OutboxEventDocument",
+        "publishedAt": "2026-10-29 14:43:45.295000"
+      }
+    ]
+  },
+  "C": {
+    "status": "REJECTED",
+    "unchanged": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "sagaId": "f1087028-433e-4cd0-b903-4d639710ff98",
+  "ordemServicoId": "d71aaccc-9fc0-427a-b535-38ec8f5036a6",
+  "status": "COMPLETED",
+  "currentStep": "DONE",
+  "createdAt": "2026-10-29T14:40:43.592953Z",
+  "updatedAt": "2026-10-29T14:42:07.291644Z",
+  "completedAt": "2026-10-29T14:42:07.291644Z",
+  "lastError": null
+}

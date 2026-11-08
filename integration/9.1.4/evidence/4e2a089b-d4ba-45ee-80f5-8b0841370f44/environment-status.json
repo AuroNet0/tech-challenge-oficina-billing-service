@@ -1,0 +1,30 @@
+{
+  "runId": "4e2a089b-d4ba-45ee-80f5-8b0841370f44",
+  "observedAt": "2026-10-28T18:15:29Z",
+  "status": "BLOCKED_ENVIRONMENT",
+  "regression": "PASSED",
+  "e2e": "NOT_EXECUTED",
+  "e2eChecks": 0,
+  "bdd": "NOT_EXECUTED",
+  "compensations": {"A": "NOT_EXECUTED", "B": "NOT_EXECUTED", "C": "NOT_EXECUTED"},
+  "hostMemoryGB": {"total": 15.74, "freeAtObservation": 0.89},
+  "docker": {"statusQueries": "HTTP_500", "newServiceStopAttempt": "HTTP_500"},
+  "wsl": {"error": "Wsl/Service/0x8007274c", "result": "Connection timeout"},
+  "startupOrchestrator": "CANCELED",
+  "lastObservedNewContainers": {
+    "auth": "healthy",
+    "auth-db": "healthy",
+    "os-db": "healthy",
+    "billing-db": "healthy",
+    "mongodb": "healthy",
+    "rabbitmq": "unhealthy",
+    "os-service": "starting",
+    "execution-service": "starting",
+    "billing-service": "starting",
+    "mercado-pago-mock": "healthy"
+  },
+  "finalContainerState": "UNKNOWN_DOCKER_UNAVAILABLE",
+  "preexistingContainers": "No lifecycle commands issued; final state unavailable",
+  "recovery": "Docker/WSL restart not performed because it affects preexisting user containers",
+  "secretsIncluded": false
+}

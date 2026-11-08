@@ -1,0 +1,587 @@
+﻿[
+    {
+        "passed":  true,
+        "service":  "auth",
+        "lineCoverage":  92.83,
+        "missedLines":  59,
+        "suites":  [
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.application.AutenticarUsuarioUseCaseTest",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.application.IdentityUseCasesTest",
+                           "tests":  3,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.application.VerificarAcessoClienteUseCaseTest",
+                           "tests":  18,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.domain.UsuarioTest",
+                           "tests":  6,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.handler.AuthHandlerTest",
+                           "tests":  2,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.handler.LoginHandlerTest",
+                           "tests":  3,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.infrastructure.Argon2idPasswordHasherTest",
+                           "tests":  1,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.infrastructure.config.AuthDatabaseTest",
+                           "tests":  2,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.infrastructure.persistence.jdbc.JdbcFailureTest",
+                           "tests":  2,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.infrastructure.security.InternalIdentityComponentsTest",
+                           "tests":  7,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.infrastructure.security.JwtAndRotationTest",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.infrastructure.security.KeySourcesTest",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.service.CpfValidatorTest",
+                           "tests":  7,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.service.JwtServiceTest",
+                           "tests":  2,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.infrastructure.persistence.jdbc.AuthenticationPostgresIT",
+                           "tests":  7,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.infrastructure.persistence.jdbc.ClientAccessPostgresIT",
+                           "tests":  4,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "br.com.fiap.oficina.auth.infrastructure.persistence.jdbc.IdentityPostgresIT",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       }
+                   ],
+        "coveredLines":  764,
+        "counts":  {
+                       "skipped":  0,
+                       "errors":  0,
+                       "tests":  84,
+                       "failures":  0
+                   }
+    },
+    {
+        "passed":  true,
+        "service":  "os-service",
+        "lineCoverage":  91.79,
+        "missedLines":  144,
+        "suites":  [
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.application.saga.SagaEventHandlerTest",
+                           "tests":  8,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.application.saga.SagaMessageSerializerTest",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.application.usecase.DiagnosticStartMessageSerializerTest",
+                           "tests":  1,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.application.usecase.OutboxRetryPolicyTest",
+                           "tests":  1,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.application.usecase.UseCaseTest",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.domain.CpfCnpjTest",
+                           "tests":  3,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.domain.DomainEntityTest",
+                           "tests":  7,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.domain.OrdemServicoTest",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.domain.OutboxEventTest",
+                           "tests":  3,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.domain.PlacaTest",
+                           "tests":  3,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.domain.SagaInstanceTest",
+                           "tests":  3,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.infrastructure.identity.ClientAccessAdapterTest",
+                           "tests":  6,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.infrastructure.messaging.OutboxPublisherTest",
+                           "tests":  2,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.infrastructure.messaging.RabbitMessageBrokerAdapterIntegrationTest",
+                           "tests":  3,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.infrastructure.persistence.DomainPersistenceIntegrationTest",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.infrastructure.persistence.OrdemServicoRollbackIntegrationTest",
+                           "tests":  1,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.infrastructure.persistence.OutboxPersistenceIntegrationTest",
+                           "tests":  4,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.infrastructure.persistence.OutboxRollbackIntegrationTest",
+                           "tests":  1,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.infrastructure.persistence.PopulatedMigrationIntegrationTest",
+                           "tests":  1,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.infrastructure.web.controller.BusinessApiIntegrationTest",
+                           "tests":  4,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.OsApplicationTests",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.security.AuthJwtDecoderTest",
+                           "tests":  20,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.security.AuthorizationIntegrationTest",
+                           "tests":  9,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.security.BranchAssociationIntegrationTest",
+                           "tests":  9,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.security.BranchAssociationUseCaseTest",
+                           "tests":  2,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.security.HttpCurrentActorTest",
+                           "tests":  2,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.security.InternalAuthorizationControllerTest",
+                           "tests":  7,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.os.security.ResourceAuthorizationTest",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       }
+                   ],
+        "coveredLines":  1610,
+        "counts":  {
+                       "skipped":  0,
+                       "errors":  0,
+                       "tests":  130,
+                       "failures":  0
+                   }
+    },
+    {
+        "passed":  true,
+        "service":  "execution-service",
+        "lineCoverage":  94.4,
+        "missedLines":  50,
+        "suites":  [
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.application.usecase.CommandHandlerTest",
+                           "tests":  10,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.application.usecase.DiagnosticServiceTest",
+                           "tests":  8,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.application.usecase.ExecutionHistoryServiceTest",
+                           "tests":  1,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.application.usecase.RepairServiceTest",
+                           "tests":  6,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.domain.model.DiagnosticTest",
+                           "tests":  13,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.domain.model.ExecutionHistoryTest",
+                           "tests":  1,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.domain.model.RepairTest",
+                           "tests":  3,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.ExecutionApplicationTests",
+                           "tests":  1,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.infrastructure.messaging.MessageCodecTest",
+                           "tests":  9,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.infrastructure.messaging.MessagingIntegrationTest",
+                           "tests":  25,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.infrastructure.messaging.OutboxPublisherTest",
+                           "tests":  3,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.infrastructure.persistence.DomainPersistenceIntegrationTest",
+                           "tests":  8,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.infrastructure.persistence.MongoConnectivityIntegrationTest",
+                           "tests":  1,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.infrastructure.security.TechnicalAuthorizationHttpAdapterTest",
+                           "tests":  3,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.infrastructure.web.BootstrapWebIntegrationTest",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.infrastructure.web.ExecutionApiIntegrationTest",
+                           "tests":  30,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.security.AuthJwtDecoderTest",
+                           "tests":  17,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.execution.security.TechnicalAuthorizationTest",
+                           "tests":  5,
+                           "errors":  0,
+                           "failures":  0
+                       }
+                   ],
+        "coveredLines":  843,
+        "counts":  {
+                       "skipped":  0,
+                       "errors":  0,
+                       "tests":  149,
+                       "failures":  0
+                   }
+    },
+    {
+        "passed":  true,
+        "service":  "billing-service",
+        "lineCoverage":  95.39,
+        "missedLines":  72,
+        "suites":  [
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.application.FinancialUseCaseTests",
+                           "tests":  12,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.BillingApplicationTests",
+                           "tests":  19,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.domain.FinancialDomainTests",
+                           "tests":  27,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.messaging.DeliveryPolicyTests",
+                           "tests":  6,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.messaging.MessagingIntegrationTests",
+                           "tests":  22,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.messaging.MessagingUnitTests",
+                           "tests":  23,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.payment.ProviderIntegrationTests",
+                           "tests":  38,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.payment.ProviderUnitTests",
+                           "tests":  14,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.persistence.FinancialPersistenceTests",
+                           "tests":  12,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.security.AuthJwtDecoderTest",
+                           "tests":  22,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.security.FinancialAuthorizationTest",
+                           "tests":  8,
+                           "errors":  0,
+                           "failures":  0
+                       },
+                       {
+                           "skipped":  0,
+                           "name":  "com.oficina.billing.web.FinancialApiTests",
+                           "tests":  32,
+                           "errors":  0,
+                           "failures":  0
+                       }
+                   ],
+        "coveredLines":  1490,
+        "counts":  {
+                       "skipped":  0,
+                       "errors":  0,
+                       "tests":  235,
+                       "failures":  0
+                   }
+    }
+]

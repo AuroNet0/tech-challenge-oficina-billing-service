@@ -1,0 +1,192 @@
+{
+  "status": "PASSED",
+  "fileCount": 46,
+  "previousE2EChecks": 134,
+  "scope": "integration/8.3.5 scripts and published evidence; private artifacts excluded",
+  "files": [
+    {
+      "sha256": "CCE149B9BDDAEE542BE35C318C4BA6050530B8C49D413B3899C08E466163CA9E",
+      "path": "integration/8.3.5/collect.ps1"
+    },
+    {
+      "sha256": "1A8CAA438FCC6FFB365E27F16AEF559AEFAED30736588A2D62EDC945D16BB300",
+      "path": "integration/8.3.5/compose.yaml"
+    },
+    {
+      "sha256": "19AF62ABCD420C2844BD0DC7C10B1E6D54AD70D4DD789EC39545F1264FB7F665",
+      "path": "integration/8.3.5/export-provider.py"
+    },
+    {
+      "sha256": "21267C53982F1523E3B2EA15B3DF8D2D7167C740A59042A59EF15BBB64D7F196",
+      "path": "integration/8.3.5/prepare.ps1"
+    },
+    {
+      "sha256": "4BD8CB6FDD07566F60D2F7247B14BB4531DD3477244DA26E015413F20C5C9311",
+      "path": "integration/8.3.5/README.md"
+    },
+    {
+      "sha256": "2F2996187DF5AFD79DCDCC59129CAF3EE2709F69F35D0FC3A4AC85C2603E21E5",
+      "path": "integration/8.3.5/relatorio.md"
+    },
+    {
+      "sha256": "D7B5DA9DDEEA05925DADBF240AD5EB44320569484804DF391B6F57A27C173359",
+      "path": "integration/8.3.5/Runner.Dockerfile"
+    },
+    {
+      "sha256": "6E48CDCABD106AFCA2EA6B92ADFF010456F4AB31A14B8392172CDD2777E2ACA3",
+      "path": "integration/8.3.5/runner.py"
+    },
+    {
+      "sha256": "7101AF58776ADC80D95DB3C523BE3B858528747A2BC8AEF85C3960FFEA0C4AD6",
+      "path": "integration/8.3.5/start.ps1"
+    },
+    {
+      "sha256": "863E99693859663448D276F1C7D38A954C92FC6E40D8F3300A26251350AA2E03",
+      "path": "integration/8.3.5/verify.ps1"
+    },
+    {
+      "sha256": "03F24E257A558378AD6F604136E5114D58EF6E2CE53E15D8D514345F21EEFA79",
+      "path": "integration/8.3.5/evidence/approval.json"
+    },
+    {
+      "sha256": "608345E5C195ECBA644E34A2D2BDC815E0227AF9A2405B502643A2748A23086D",
+      "path": "integration/8.3.5/evidence/artifact-sha256.json"
+    },
+    {
+      "sha256": "E9D5CF59B40C7BA1B57CC28ECF34EEC620FFA0DA818358A464500A8E3B10F0DF",
+      "path": "integration/8.3.5/evidence/assignment-audit.json"
+    },
+    {
+      "sha256": "A4ED7A64E2340868768F98BEF07C13BE791152F52E461676D9853C06623CE20C",
+      "path": "integration/8.3.5/evidence/auth-migrations.json"
+    },
+    {
+      "sha256": "93008ECA9013D4774ADD9F78E56A9EF02582A61EDA3752A480D5053F376497DD",
+      "path": "integration/8.3.5/evidence/billing-inbox.json"
+    },
+    {
+      "sha256": "5C4F5121D478EA47B1130D0245E6E4EEE2EC77E5A00EC6A0FC1555637199AD14",
+      "path": "integration/8.3.5/evidence/billing-migrations.json"
+    },
+    {
+      "sha256": "88E06D995ED7EF58EB1966A141CE4498AACBA39FB896FBB7A2EBD4A481F24C30",
+      "path": "integration/8.3.5/evidence/billing-outbox.json"
+    },
+    {
+      "sha256": "055B656F88E93DA1F17CF0B029DBEAAD2B1748A307B23F450117BC55F0980062",
+      "path": "integration/8.3.5/evidence/bindings.json"
+    },
+    {
+      "sha256": "F92D71CAB72226C308DFB4EFAF6E90F562524309CC3CD0D0D4E94971593697E0",
+      "path": "integration/8.3.5/evidence/broker-outage.json"
+    },
+    {
+      "sha256": "BEE66871910FD645EE67D51FB347F072FE44685E2379D8C919579DA1B25DAA6E",
+      "path": "integration/8.3.5/evidence/broker-recovery.json"
+    },
+    {
+      "sha256": "F2427AF5B14C6B191711BC35FF70543647CBACE13A6C0148E2C172C3C9C6E7F8",
+      "path": "integration/8.3.5/evidence/containers.json"
+    },
+    {
+      "sha256": "6131F7D9CF548B332E71A435854CFE581BB98FDA92B1EF5107F311E19C999CB0",
+      "path": "integration/8.3.5/evidence/dependency-unavailable.json"
+    },
+    {
+      "sha256": "F696C3B73985B1E9CFBD1BBDC68C03AFB509C21E80FB48951B8D5FDDAEE401FC",
+      "path": "integration/8.3.5/evidence/diagnostic.json"
+    },
+    {
+      "sha256": "510D26FC258479433735EA03D33F6108B01E5AA5EFE029867C630286E33791B3",
+      "path": "integration/8.3.5/evidence/execution-inbox.json"
+    },
+    {
+      "sha256": "DF1173CEFDFD55565F36E832FBE44D60629B2586E60C1A0CC140045A5EC8C5CB",
+      "path": "integration/8.3.5/evidence/execution-outbox.json"
+    },
+    {
+      "sha256": "931B33B8A328C3530CFA7641EB6A312CBBFC87ACE3E0FC4C65AA14AFA22C14EC",
+      "path": "integration/8.3.5/evidence/financial-state.json"
+    },
+    {
+      "sha256": "F63B008A05360B2B0704677BD12CFBEA8023F4FCD455D4C9915A796951626D33",
+      "path": "integration/8.3.5/evidence/http-trace.json"
+    },
+    {
+      "sha256": "6D589A3E380A27863846C15B17C1B6998F08D90CF874E90B99D3B9C9CD8A66FF",
+      "path": "integration/8.3.5/evidence/order-final.json"
+    },
+    {
+      "sha256": "938220DEF7C758B84B22F56532477E003B3EBB0314F45B18BBE49C63C87F9872",
+      "path": "integration/8.3.5/evidence/os-inbox.json"
+    },
+    {
+      "sha256": "51034AE11D60363241A4C8CD837B8A4380B93B7E2B217FC5D83FBAD4D7DE060E",
+      "path": "integration/8.3.5/evidence/os-migrations.json"
+    },
+    {
+      "sha256": "54A60ADE255B793BFF9C749CA79F56F31377FD716180ED4931166BA11D00F265",
+      "path": "integration/8.3.5/evidence/os-outbox.json"
+    },
+    {
+      "sha256": "258CF1D414BC0BDA9599DAE3AA2425AE2A2E2C9E754A1E0199D3FDC2362ABC3D",
+      "path": "integration/8.3.5/evidence/payment.json"
+    },
+    {
+      "sha256": "8DF3281CFC865C6F977F8AE33AAEA8253C8AD7D16994C9C78B702D95874F6E5D",
+      "path": "integration/8.3.5/evidence/preflight.json"
+    },
+    {
+      "sha256": "3FC6FE307F8598769589FB3F443F29DC07BC7E348DDF77943349D3702EF64CEB",
+      "path": "integration/8.3.5/evidence/preservation.json"
+    },
+    {
+      "sha256": "022A958E3D9763B672B90E419C7A8AC9D4C2DFD1704E11B5F73EF19C2541CEA8",
+      "path": "integration/8.3.5/evidence/provider-evidence.json"
+    },
+    {
+      "sha256": "8F3B6817BD9D83A211ADC73CEEDB72D3E99F3808AD4EB80F91FFBD38DCE0A1B9",
+      "path": "integration/8.3.5/evidence/provisioning.json"
+    },
+    {
+      "sha256": "BFE15C0332E421A56E1D094A983C896C3242095FDFF99377C8159528007C20E6",
+      "path": "integration/8.3.5/evidence/queues-dlq.json"
+    },
+    {
+      "sha256": "A295C7A1839A6832203DAAC4B30930A716C59C9BE390710BF2DF6CADF7EF3740",
+      "path": "integration/8.3.5/evidence/queues-final.json"
+    },
+    {
+      "sha256": "8C7C72A0F73BAD17D2DA120CBEAE504293D8B5F24C08FCCDE3D3B1182C15012A",
+      "path": "integration/8.3.5/evidence/repair.json"
+    },
+    {
+      "sha256": "02CBC75D6288719BA0A9E5473DCA1AB1417CCACE596F40B91B85B5764FD01F71",
+      "path": "integration/8.3.5/evidence/result.json"
+    },
+    {
+      "sha256": "90DDD9F27810BBEA22D912300F069A9C3CE83FC0E87A9EB0E510994804794617",
+      "path": "integration/8.3.5/evidence/revisions.json"
+    },
+    {
+      "sha256": "7805BA14C0F84B7214215271736EC3ECE480C05A58EBD9A895BCFADFD9ED135F",
+      "path": "integration/8.3.5/evidence/runtime-versions.json"
+    },
+    {
+      "sha256": "C7D56BC43AD81C30B04054E5A3C55C471D3974DDC947D5BE04DBCEFBF307648D",
+      "path": "integration/8.3.5/evidence/saga-final.json"
+    },
+    {
+      "sha256": "5141F452B2DE669C2870926B10E67645C4074BEEEACFDA8ADA32B76A63577498",
+      "path": "integration/8.3.5/evidence/saga-initial.json"
+    },
+    {
+      "sha256": "B2B86F852303EE5C7AAE1DCD01660C3AF4E821AD20980F94186A044D18171009",
+      "path": "integration/8.3.5/evidence/validation-global.json"
+    },
+    {
+      "sha256": "AEEAFC98EDFA2E8CFD9DBF014A9FC7B6D9F10990864487CBEBD1693B0D5E4407",
+      "path": "integration/8.3.5/evidence/verification.json"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+﻿[{"name":"maintenance_work_mem","setting":"65536","unit":"kB"}, 
+ {"name":"max_connections","setting":"100","unit":null}, 
+ {"name":"shared_buffers","setting":"16384","unit":"8kB"}, 
+ {"name":"work_mem","setting":"4096","unit":"kB"}]
