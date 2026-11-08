@@ -1,5 +1,12 @@
 # Oficina Billing Service
 
+## CI independente
+
+O CI academico do Billing valida Java 21, testes Maven, cobertura LINE >=80%,
+seguranca basica, imagem linux/amd64 e runtime PostgreSQL/RabbitMQ com health
+checks e SIGTERM. Veja [gates, relatorios e execucao local](docs/ci.md).
+GitHub Actions permanece desabilitado; nao ha deploy automatico.
+
 ## Notificação interna de orçamento — etapa 9.1.3
 
 O Billing persiste um aviso quando o orçamento fica disponível para aprovação. O cliente proprietário autenticado consulta `GET /api/v1/notificacoes?osId={osId}&page=0&size=20`, com autorização atual pelo canal financeiro OS/Auth. Não há envio de e-mail ou mensagem externa. Consulte [funcionamento, API, idempotência e demonstração FIAP](docs/notificacoes-orcamento.md).

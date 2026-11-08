@@ -7,3 +7,4 @@
 *.iml
 /.env
 /bootstrap-*.log
+/ci-reports/

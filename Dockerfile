@@ -12,4 +12,6 @@ WORKDIR /app
 COPY --from=build --chown=billing:billing /workspace/target/tech-challenge-oficina-billing-service-*.jar app.jar
 USER billing
 EXPOSE 8080
+STOPSIGNAL SIGTERM
+HEALTHCHECK --interval=5s --timeout=3s --start-period=40s --retries=24 CMD curl --fail --silent http://127.0.0.1:8080/actuator/health/readiness || exit 1
 ENTRYPOINT ["java", "-jar", "app.jar"]
