@@ -41,6 +41,8 @@ def secret_found(content, literals=True):
         rb'''(?im)^[ \t]*["']?(?:[\w.-]*[_.-])?(?:password|passwd|pass|token|secret|api_key|access_key|secret_key|aws_secret_access_key|aws_session_token)["']?[ \t]*[:=][ \t]*(?:"([^"\r\n]*)"|'([^'\r\n]*)'|([^\s,#}\r\n]+))''', content)
     for match in assignments:
         value = next(value for value in match.groups() if value is not None)
+        if match.group(0).lstrip().startswith(b"id-token:") and value in {b"write", b"read", b"none"}:
+            continue
         if value.lower() not in {b"", b"null", b"~"} and not value.startswith(b"${"):
             return True
     return re.search(rb'''(?im)\b(?:password|apiKey|accessToken|clientSecret)\s*=\s*"(?!\$\{)[^"\r\n]+"|<(?:password|token|secret)>\s*(?!\$\{)[^\s<][^<]*</(?:password|token|secret)>''', content) is not None
