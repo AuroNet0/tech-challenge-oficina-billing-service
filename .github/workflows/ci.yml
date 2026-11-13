@@ -44,7 +44,7 @@ jobs:
           chmod +x mvnw
           ./mvnw -B -ntp org.sonarsource.scanner.maven:sonar-maven-plugin:5.1.0.4751:sonar \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.organization=AuroNet0 \
+            -Dsonar.organization=auronet0 \
             -Dsonar.projectKey=AuroNet0_tech-challenge-oficina-billing-service \
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
             -Dsonar.qualitygate.wait=false
