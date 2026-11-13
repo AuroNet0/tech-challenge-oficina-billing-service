@@ -74,3 +74,116 @@ jobs:
           path: ${{ runner.temp }}/billing-verification/*.json
           if-no-files-found: error
           retention-days: 7
+
+  deploy:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    concurrency:
+      group: deploy-billing-service
+      cancel-in-progress: false
+    defaults:
+      run:
+        shell: bash
+    env:
+      AWS_REGION: us-east-1
+      CLUSTER: tc-oficina-p4-demo-a
+      NAMESPACE: tc-oficina-p4-demo-a
+      ECR_REPOSITORY: tc-oficina-p4-demo-a-billing
+      DEPLOYMENT: billing-service
+      CONTAINER: billing-service
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          unset-current-credentials: true
+      - name: Check deployment environment
+        id: preflight
+        run: |
+          set -euo pipefail
+          environment_missing=false
+          if response=$(aws eks describe-cluster --name "$CLUSTER" 2>&1); then
+            :
+          elif [[ "$response" == *'(ResourceNotFoundException)'* ]]; then
+            environment_missing=true
+          else
+            printf '%s\n' "$response" >&2
+            exit 1
+          fi
+          if response=$(aws ecr describe-repositories --repository-names "$ECR_REPOSITORY" 2>&1); then
+            :
+          elif [[ "$response" == *'(RepositoryNotFoundException)'* ]]; then
+            environment_missing=true
+          else
+            printf '%s\n' "$response" >&2
+            exit 1
+          fi
+          if [[ "$environment_missing" == true ]]; then
+            echo '::notice::ambiente ausente; deploy não realizado'
+            echo 'deploy=skip' >> "$GITHUB_OUTPUT"
+          else
+            echo 'deploy=run' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Checkout exact revision
+        if: steps.preflight.outputs.deploy == 'run'
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Build or reuse immutable ECR image
+        if: steps.preflight.outputs.deploy == 'run'
+        id: image
+        run: |
+          set -euo pipefail
+          account_id=$(aws sts get-caller-identity --query Account --output text)
+          [[ "$account_id" =~ ^[0-9]{12}$ ]]
+          registry="${account_id}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+          image="${registry}/${ECR_REPOSITORY}:${GITHUB_SHA}"
+          if response=$(aws ecr describe-images --repository-name "$ECR_REPOSITORY" \
+            --image-ids "imageTag=$GITHUB_SHA" --query 'imageDetails[0].imageDigest' \
+            --output text 2>&1); then
+            digest="$response"
+            echo "Reusing existing tag $image"
+          elif [[ "$response" == *'(ImageNotFoundException)'* ]]; then
+            aws ecr get-login-password --region "$AWS_REGION" | \
+              docker login --username AWS --password-stdin "$registry"
+            docker build --tag "$image" .
+            docker push "$image"
+            digest=$(aws ecr describe-images --repository-name "$ECR_REPOSITORY" \
+              --image-ids "imageTag=$GITHUB_SHA" --query 'imageDetails[0].imageDigest' --output text)
+          else
+            printf '%s\n' "$response" >&2
+            exit 1
+          fi
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          reference="${registry}/${ECR_REPOSITORY}@${digest}"
+          printf 'digest=%s\nreference=%s\n' "$digest" "$reference" >> "$GITHUB_OUTPUT"
+      - name: Deploy billing service
+        if: steps.preflight.outputs.deploy == 'run'
+        id: rollout
+        env:
+          REFERENCE: ${{ steps.image.outputs.reference }}
+        run: |
+          set -euo pipefail
+          reference="$REFERENCE"
+          aws eks update-kubeconfig --name "$CLUSTER" --region "$AWS_REGION"
+          kubectl -n "$NAMESPACE" set image deployment/"$DEPLOYMENT" "$CONTAINER"="$reference"
+          if ! kubectl -n "$NAMESPACE" rollout status deployment/"$DEPLOYMENT" --timeout=300s; then
+            kubectl -n "$NAMESPACE" describe deployment/"$DEPLOYMENT" || true
+            kubectl -n "$NAMESPACE" logs deployment/"$DEPLOYMENT" --all-containers=true --tail=100 || true
+            exit 1
+          fi
+      - name: "Deployment summary: billing-service"
+        if: always() && (steps.preflight.outputs.deploy == 'skip' || steps.rollout.outcome == 'success')
+        env:
+          DIGEST: ${{ steps.image.outputs.digest }}
+          RESULT: ${{ steps.preflight.outputs.deploy == 'skip' && 'skipped' || 'deployed' }}
+        run: |
+          set -euo pipefail
+          printf '| Serviço | SHA | Digest | Resultado |\n|---|---|---|---|\n| %s | %s | %s | %s |\n' \
+            "$DEPLOYMENT" "$GITHUB_SHA" "${DIGEST:-não aplicável}" "$RESULT" >> "$GITHUB_STEP_SUMMARY"
