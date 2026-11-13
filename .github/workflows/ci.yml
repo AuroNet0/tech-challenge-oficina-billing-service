@@ -47,7 +47,7 @@ jobs:
             -Dsonar.organization=auronet0 \
             -Dsonar.projectKey=AuroNet0_tech-challenge-oficina-billing-service \
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-            -Dsonar.qualitygate.wait=false
+            -Dsonar.qualitygate.wait=true
       - name: Collect job outcome
         if: always()
         env:
