@@ -1,4 +1,4 @@
-# Mensageria do Billing Service — etapa 7.4
+# Mensageria do Billing Service
 
 ## Referências e compatibilidade
 
@@ -75,7 +75,7 @@ Itens semanticamente inválidos, quando ainda não existe orçamento, geram Inbo
 
 ### Decisões REST
 
-Na etapa 8.3.4, as rotas HTTP usam Bearer RS256 e autorizacao pela OS, com adapter indisponivel por padrao. Os consumidores nao dependem de JWT humano. Cada decisao HTTP autorizada grava orcamento, Aprovacao e Outbox na mesma transacao:
+As rotas HTTP usam Bearer RS256 e autorização pela OS. O perfil `mtls` usa `MtlsFinancialAccessAdapter`; fora dele, o adapter indisponível bloqueia as operações dependentes. Os consumidores não dependem de JWT humano. Cada decisão HTTP autorizada grava orçamento, Aprovacao e Outbox na mesma transação:
 
 | Decisão | Evento | Payload |
 | --- | --- | --- |
@@ -93,13 +93,26 @@ Orçamento, decisão e evento compartilham um instante UTC truncado a microssegu
 Payload contém somente repairId textual não vazio, conforme o comando criado pelo SagaEventHandler após repair.completed.v1. Billing valida OS/Saga e orçamento APPROVED e cria:
 
 - Um pagamento lógico PENDING, com valor exatamente igual ao aprovado e moeda BRL.
-- Provider MERCADO_PAGO como identificação do adapter futuro, sem qualquer chamada externa.
+- Provider MERCADO_PAGO como identificação do adapter, sem chamada externa durante o consumo desse comando.
 - externalReference "billing:" + orçamentoId.
 - Uma tentativa inicial PENDING com UUID idempotente determinístico derivado de externalReference + ":initial".
 
 Pagamento, tentativa e Inbox são atômicos. Novos comandos para o mesmo orçamento consultam o pagamento existente e o repairId do primeiro comando processado. Se consistentes, não criam outro pagamento ou tentativa; se conflitantes, vão à DLQ. Um comando de requisição não abre automaticamente nova tentativa de provedor após FAILED.
 
-**PENDING significa intenção persistida, não cobrança realizada nem pagamento confirmado.** Não há chamada Mercado Pago, webhook, confirmação manual, payment.confirmed.v1 ou payment.failed.v1 nesta etapa. A ausência do adapter não é uma falha financeira. Falhas permanentes de elegibilidade vão à DLQ e exigem recuperação coordenada com o OS, que permanece aguardando pagamento.
+**PENDING significa intenção persistida, não cobrança realizada nem pagamento confirmado.** O consumo de `payment.request.v1` não abre checkout nem publica resultado financeiro. A integração atual de Checkout Pro, webhook e reconciliação está descrita em [Mercado Pago](mercado-pago.md). Falhas permanentes de elegibilidade vão à DLQ e exigem recuperação coordenada com o OS.
+
+### Resultados financeiros e participação na Saga
+
+`ProviderTransactions` grava os resultados financeiros na Outbox após validação do resultado consultado no provedor:
+
+| Evento em oficina.events | Payload |
+| --- | --- |
+| `payment.confirmed.v1` | `paymentId` do pagamento lógico do Billing |
+| `payment.failed.v1` | `reason` da recusa/cancelamento verificado |
+
+Timeout, indisponibilidade e pagamento pendente não comprovam recusa. A publicação usa `source=billing-service`, com OS, Saga e correlação do agregado/comando de origem. O webhook não publica diretamente no broker.
+
+O Billing é participante, sem handler de comando de compensação ou refund automático. O OS permanece como orquestrador. O [roteiro E2E/BDD](../integration/9.1.4/README.md) documenta rejeição do orçamento com Saga `COMPENSATED` e a conclusão com pagamento `CONFIRMED`, OS `FINALIZADA` e Saga `COMPLETED`; são estados verificados pelo runner, não atualizados diretamente pelo Billing.
 
 ## Inbox e atomicidade
 

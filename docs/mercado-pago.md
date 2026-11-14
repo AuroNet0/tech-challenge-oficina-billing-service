@@ -1,4 +1,4 @@
-# Mercado Pago — Checkout Pro, etapa 7.5
+# Mercado Pago — Checkout Pro
 
 ## Produto e fontes oficiais
 
@@ -83,7 +83,7 @@ Resposta 200 quando pronto; 202 para criação de resultado UNKNOWN ainda não r
 
 UNKNOWN tem preferenceId/checkoutUrl nulos. CONFIRMED, FAILED sem nova tentativa ou retenção para revisão retornam conflito; pagamento inexistente retorna 404. Desabilitado/erro externo operacional retorna 503 quando não tratado como criação desconhecida. Conflitos concorrentes retornam 409. Responses ProblemDetail não expõem SQL/stack trace.
 
-**Limite de autorizacao 8.3.4:** JWT RS256 e politicas estao implementados; o adapter OS permanece indisponivel. Conhecer UUID ou possuir papel nao comprova propriedade. Nenhum mock positivo existe em producao. Consulte [autorizacao Billing](security/billing-authorization-8.3.4.md). A autorizacao distribuida nao esta concluida.
+**Autorização atual:** JWT RS256 e papel CLIENTE são necessários, além de decisão positiva da OS para CHECKOUT. No perfil `mtls`, `MtlsFinancialAccessAdapter` consulta o canal HTTPS confiável da OS encaminhando o JWT original; fora desse perfil, o adapter retorna indisponibilidade. Conhecer UUID ou possuir papel não comprova propriedade. Consulte [autorização Billing](security/billing-authorization-8.3.4.md) e o [roteiro integrado 9.1.4](../integration/9.1.4/README.md).
 
 ## Reserva, criação externa e recuperação
 
@@ -162,22 +162,29 @@ O OS permanece WAITING_PAYMENT ao receber payment.failed conforme seu contrato. 
 
 Corrigir credenciais/rede/topologia, manter identidade e envelopes, e deixar o retry/reconciliação atuar. Não apagar notificações/ledger nem gerar eventIds novos para esconder falhas. UNKNOWN sem preferência visível exige investigação no provedor, não criação automática repetida. REVIEW por valor/identidade, múltiplos créditos ou refund exige auditoria humana e fluxo administrativo futuro, sem endpoint público para liberar confirmação. FAILED da Outbox segue o procedimento auditado de docs/messaging.md. Expiração pendente exige verificar o link no provedor e, se necessário, atuação no painel de testes.
 
-## Testes locais, preservação E2E e Compose
+## Testes locais e fluxo integrado
 
 ```bash
 ./mvnw clean verify
-docker compose -f integration/7.5/compose.yaml up --build -d --wait
-curl -i http://127.0.0.1:23082/actuator/health/readiness
-docker compose -f integration/7.5/compose.yaml stop
 ```
 
-No Windows, usar mvnw.cmd. O Compose de validação é isolado (porta 23082) e inicia com Mercado Pago desligado; não altera os containers normais. Os testes usam PostgreSQL/RabbitMQ reais via Testcontainers e JDK HttpServer como equivalente local de MockWebServer. Credenciais são marcadores sintéticos de teste, nunca secrets reais. Evidências HTTP sem headers/segredos são geradas em target/provider-http-evidence.json; relatórios Surefire e JaCoCo ficam nos diretórios usuais.
+No Windows, use `./mvnw.cmd clean verify`. Java 21 e Docker disponível são pré-requisitos. Os testes usam PostgreSQL/RabbitMQ reais via Testcontainers e `ProviderTestServer`, baseado no JDK HttpServer em loopback. O servidor simula preferências, pagamentos, erros e respostas do provedor. Relatórios Surefire e JaCoCo ficam em `target/surefire-reports/` e `target/site/jacoco/`.
 
-O relatório E2E 7.4.1 e suas evidências versionadas foram preservados. Artefatos brutos adicionais foram arquivados antes do clean em integration/7.4.1/artifacts/e2e-backup-20261021-094942.zip (ignorado pelo Git), SHA-256 BEABD351631672A305E7A8DAC45265965604B2C3CCBA7EDC2644901DE3515583. Os projetos billing-e2e foram parados sem remover volumes; os seis containers normais não foram parados.
+Para o fluxo distribuído atual, siga [integration/9.1.4/README.md](../integration/9.1.4/README.md), usando o [compose 9.1.4](../integration/9.1.4/compose.yaml). A partir da raiz do Billing:
 
-### Resultado desta execução
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File integration/9.1.4/prepare.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File integration/9.1.4/verify.ps1 -OutputDirectory '<RunRoot>/verify'
+powershell -NoProfile -ExecutionPolicy Bypass -File integration/9.1.4/start.ps1 -RunRoot '<RunRoot>'
+powershell -NoProfile -ExecutionPolicy Bypass -File integration/9.1.4/summarize-memory.ps1 -RunRoot '<RunRoot>'
+powershell -NoProfile -ExecutionPolicy Bypass -File integration/9.1.4/collect.ps1 -RunRoot '<RunRoot>' -VerificationDirectory '<RunRoot>/verify'
+```
 
-Em 21/10/2026, `mvnw.cmd clean verify` terminou com BUILD SUCCESS: 193 testes, zero falhas/erros/ignorados e JaCoCo de 97,72% por linhas (1.373/1.405). Os 50 novos testes incluem PostgreSQL/RabbitMQ reais e API HTTP simulada; os 143 anteriores foram preservados. O Compose isolado ficou saudável, aplicou V1–V4 e foi parado após a validação, sem afetar os containers normais. Detalhes e evidências sanitizadas: [relatório da execução](../integration/7.5/relatorio.md) e [chamadas HTTP simuladas](../integration/7.5/provider-http-evidence.json).
+Substitua `<RunRoot>` pelo caminho emitido pela preparação. Se o JAR do Auth ainda não existir, execute antes `verify.ps1` com um diretório novo e exclusivo e use esse mesmo diretório na coleta, conforme o roteiro. Os quatro repositórios precisam estar lado a lado e em `homolog`: Auth, OS, Execution e Billing. O harness monta `integration/8.3.5` do repositório Auth e `docker/` do Execution; também usa Git, OpenSSL e keytool na preparação, com caminhos configuráveis.
+
+O compose habilita integração/reconciliação com credenciais sintéticas e monta o mock Python de `integration/7.6/mock/server.py` em loopback do Billing. O [cenário Gherkin](../integration/9.1.4/oficina.feature) é executado por [runner Python próprio](../integration/9.1.4/runner.py), sem Cucumber-JVM. A fase BDD confirma por HTTP pagamento `CONFIRMED`, OS `FINALIZADA` e Saga `COMPLETED`.
+
+O [relatório versionado de 9.1.4](../integration/9.1.4/evidence/41341594-ea06-4522-a7e5-804f9497e4a7/relatorio.md) registra uma execução histórica com provedor simulado. Ele substitui os links antigos como referência de fluxo integrado, sem representar evidência da execução 7.5 ou homologação oficial. Esta revisão documental não executa testes. Não publique chaves, JWTs, `private.env` ou logs privados.
 
 ## Roteiro oficial sandbox — PENDENTE
 
@@ -193,4 +200,4 @@ Nenhum teste externo é declarado aprovado: não foram solicitadas/obtidas crede
 8. Reentregar notificações oficiais, desligar o receptor temporariamente e validar recuperação sem duplicidade; verificar fechamento das preferências e alertas. Não publicar manualmente payment.confirmed para completar o teste.
 9. Registrar IDs/eventos/status e evidência sanitizada, nunca token, secret ou assinatura completa. Encerrar ambientes de teste sem tocar nos volumes normais.
 
-Limites atuais: testes oficiais pendentes, somente ambiente financeiro de testes, autorização por proprietário não integrada, UNKNOWN/REVIEW podem exigir intervenção humana, sem refund/chargeback automático ou suporte automático a compra dividida em múltiplos créditos. Nenhuma infraestrutura cloud/CI foi adicionada.
+Limites atuais: homologação oficial não comprovada pelas evidências simuladas, somente ambiente financeiro de testes, autorização dependente do canal confiável OS/Auth, UNKNOWN/REVIEW podem exigir intervenção humana, sem refund/chargeback automático ou suporte automático a compra dividida em múltiplos créditos. O CI/CD atual está descrito em [ci.md](ci.md).
