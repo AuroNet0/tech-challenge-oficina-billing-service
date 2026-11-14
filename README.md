@@ -62,6 +62,19 @@ O decoder exige `typ=JWT`, `kid` não vazio, `sub` e `jti` UUID canônicos, data
 
 Além do papel, `FinancialAuthorization` exige decisão positiva para a OS e a finalidade `READ`, `DECIDE` ou `CHECKOUT`; notificações usam `DECIDE`. No perfil `mtls`, `MtlsFinancialAccessAdapter` consulta o OS por HTTPS, encaminha o JWT original e valida ator, OS, ação e correlação da resposta. A identidade TLS depende da configuração da JVM, demonstrada no compose de integração. Fora desse perfil, `UnavailableFinancialAccessAdapter` retorna indisponibilidade e as operações dependentes respondem 503. Negação retorna 403; ausência ou invalidade do Bearer no canal financeiro retorna 401. Consulte [autorização financeira](docs/security/billing-authorization-8.3.4.md) e [notificações](docs/notificacoes-orcamento.md).
 
+### Coleção Postman
+
+A [coleção do Billing](docs/postman/billing-service-colletion.json) reúne requisições de orçamentos, pagamentos, checkout Mercado Pago, notificações, saúde e API Docs. Neste checkout, ela está em `docs/postman/billing-service-colletion.json`.
+
+Com os arquivos da coleção e do ambiente disponíveis:
+
+1. Importe os dois arquivos no Postman.
+2. Selecione o ambiente `Oficina - AWS`.
+3. Preencha `baseUrl` com a URL do API Gateway e as credenciais dos perfis no ambiente local.
+4. Gere os tokens com o Login da coleção do repositório `tech-challenge-oficina-auth`, em `docs/postman`, e preencha as variáveis correspondentes.
+
+Orçamento e pagamento só existem depois que a Saga os cria para uma OS; informe seu identificador na variável `osId`. O webhook do Mercado Pago não está na coleção porque exige assinatura HMAC do provedor. A coleção não contém credenciais nem tokens versionados.
+
 ## 3. Dados
 
 O banco é **PostgreSQL (SQL)**, com nome padrão `oficina_billing`, substituível por `DB_NAME`. O [compose local](compose.yaml) provisiona PostgreSQL 17 com volume `billing-postgres-data`; o [compose de integração](integration/9.1.4/compose.yaml) separa `billing-db` (`e2e_billing`) dos bancos dos demais serviços. Isso confirma banco próprio do Billing nas configurações locais; o nome físico do banco no EKS não foi identificado.
@@ -233,6 +246,7 @@ Se o JAR do Auth ainda não existir, execute antes `verify.ps1` com um diretóri
 | `src/main/resources/` | Configuração e migrações Flyway |
 | `src/test/` | Testes de domínio, aplicação, persistência, segurança, API, mensageria e provedor |
 | `docs/` | Mensageria, Mercado Pago, notificações, segurança e CI |
+| `docs/postman` | Coleção Postman do serviço e ambiente |
 | `k8s` | Manifestos Kubernetes de referência do serviço |
 | `integration/9.1.4/` | Harness E2E/BDD, compose e evidências históricas |
 | `scripts/ci/` | Verificador, testes dos scripts e compose de runtime |
