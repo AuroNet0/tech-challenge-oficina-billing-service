@@ -54,7 +54,7 @@ Matriz conferida nos controllers e em [SecurityConfig](src/main/java/com/oficina
 | GET | `/actuator/health`, `/actuator/health/liveness`, `/actuator/health/readiness` | Público |
 | GET | `/swagger-ui/index.html`, `/v3/api-docs` | Público na configuração atual |
 
-**Swagger/OpenAPI:** a política de não publicação não foi identificada. O POM inclui Springdoc, [OpenApiConfig](src/main/java/com/oficina/billing/infrastructure/config/OpenApiConfig.java) declara a API e a segurança permite `/swagger-ui/**` e `/v3/api-docs/**`. A opção `disable-swagger-default-url: true` não desabilita a publicação da documentação.
+**Swagger/OpenAPI:** o serviço publica a documentação da API. O POM inclui Springdoc, [OpenApiConfig](src/main/java/com/oficina/billing/infrastructure/config/OpenApiConfig.java) declara a API e a segurança permite `/swagger-ui/**` e `/v3/api-docs/**`. A opção `disable-swagger-default-url: true` não desabilita a publicação da documentação.
 
 O canal de negócio usa `Authorization: Bearer <JWT>`, sem sessão e com CSRF desabilitado. [AuthJwtDecoder](src/main/java/com/oficina/billing/infrastructure/web/security/AuthJwtDecoder.java) valida assinatura RS256 via JWKS HTTPS (`BILLING_JWKS_URI`), igualdade exata de `iss` com `BILLING_JWT_ISSUER` e presença de `BILLING_JWT_AUDIENCE` em `aud`, que deve ser lista de strings. Os valores confiáveis são fornecidos por ambiente; os exemplos de issuer/JWKS em `.env.example` precisam ser substituídos.
 
@@ -167,7 +167,7 @@ No Windows: `./mvnw.cmd clean verify`. Relatórios gerados: `target/surefire-rep
 
 O [POM](pom.xml) executa JaCoCo em `verify`, com gate agregado `BUNDLE`, contador **LINE**, valor `COVEREDRATIO` e mínimo **0,80**. O CI também exige cobertura de linhas de pelo menos 80% e ausência de testes com falha, erro ou ignorados.
 
-Cobertura SonarCloud informada para a análise de **13/11/2026: 86,7%**. Esse valor e a data foram fornecidos para esta documentação; não há relatório dessa análise identificado no repositório. Projeto: [Oficina Billing no SonarCloud](https://sonarcloud.io/summary/new_code?id=AuroNet0_tech-challenge-oficina-billing-service).
+Cobertura medida pelo SonarCloud na análise de **13/11/2026: 86,7%**. Projeto: [Oficina Billing no SonarCloud](https://sonarcloud.io/summary/new_code?id=AuroNet0_tech-challenge-oficina-billing-service).
 
 ## 8. CI/CD
 
@@ -189,7 +189,7 @@ Região, cluster, namespace, ECR, Deployment e container são definidos no workf
 
 ## 9. Implantação
 
-O workflow prepara a atualização do Billing no EKS e pressupõe um Deployment existente. A geração dos recursos pelo stack `platform` de `tech-challenge-oficina-k8s-infra` foi informada no escopo desta documentação; sua implementação e URL não foram identificadas nos arquivos deste repositório. O workflow não comprova que o ambiente esteja atualmente ligado ou que um rollout já tenha ocorrido.
+O workflow prepara a atualização do Billing no EKS e pressupõe um Deployment existente. Os recursos são criados pelo Deploy de [tech-challenge-oficina-k8s-infra](https://github.com/AuroNet0/tech-challenge-oficina-k8s-infra) (stack `platform`). Quando o ambiente não está de pé, a etapa de deploy é ignorada.
 
 | Item | Valor confirmado |
 | --- | --- |
@@ -234,7 +234,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File integration/9.1.4/summarize-
 powershell -NoProfile -ExecutionPolicy Bypass -File integration/9.1.4/collect.ps1 -RunRoot '<RunRoot>' -VerificationDirectory '<RunRoot>/verify'
 ```
 
-Se o JAR do Auth ainda não existir, execute antes `verify.ps1` com um diretório de saída novo e exclusivo e use esse diretório em `collect.ps1 -VerificationDirectory`, conforme o roteiro. Não reutilize arquivos de execução parcial fora dos checkpoints documentados. Chaves, JWTs, `private.env` e logs privados não devem ser publicados. As evidências versionadas são históricas; esta revisão documental não executa o cenário.
+Se o JAR do Auth ainda não existir, execute antes `verify.ps1` com um diretório de saída novo e exclusivo e use esse diretório em `collect.ps1 -VerificationDirectory`, conforme o roteiro. Não reutilize arquivos de execução parcial fora dos checkpoints documentados. Chaves, JWTs, `private.env` e logs privados não devem ser publicados. As evidências versionadas em `integration/9.1.4/evidence` registram execuções anteriores do cenário.
 
 ## 12. Estrutura do repositório
 
