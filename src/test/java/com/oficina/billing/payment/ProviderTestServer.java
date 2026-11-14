@@ -23,6 +23,7 @@ final class ProviderTestServer implements AutoCloseable {
     volatile long createDelay;
     volatile CountDownLatch creationStarted;
     volatile CountDownLatch continueCreation;
+    volatile List<String> sellerTags = List.of("test_user");
     private final JsonMapper mapper = JsonMapper.builder().enable(tools.jackson.databind.DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS).build();
     private final HttpServer server;
     private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
@@ -40,7 +41,7 @@ final class ProviderTestServer implements AutoCloseable {
 
     void reset() {
         preferences.clear(); payments.clear(); requests.clear(); errors.clear(); creates.set(0);
-        createDelay = 0; creationStarted = null; continueCreation = null;
+        createDelay = 0; creationStarted = null; continueCreation = null; sellerTags = List.of("test_user");
     }
 
     Map<String, Object> payment(String id, String preferenceId, String status, Instant updatedAt) {
@@ -64,7 +65,7 @@ final class ProviderTestServer implements AutoCloseable {
             String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
             requests.add(new Request(method, exchange.getRequestURI().toString(), exchange.getRequestHeaders().getFirst("Authorization"), body));
             if (errors.containsKey(path)) { respond(exchange, errors.get(path), Map.of("message", "simulated provider failure")); return; }
-            if (path.equals("/users/me")) { respond(exchange, 200, Map.of("id", 42, "tags", List.of("test_user"))); return; }
+            if (path.equals("/users/me")) { respond(exchange, 200, Map.of("id", 42, "tags", sellerTags)); return; }
             if (path.equals("/checkout/preferences") && method.equals("POST")) {
                 Map<String, Object> value = new HashMap<>(mapper.readValue(body, Map.class));
                 String id = "preference-" + creates.incrementAndGet();

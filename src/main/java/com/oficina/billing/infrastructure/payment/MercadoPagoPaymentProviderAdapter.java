@@ -73,7 +73,8 @@ public class MercadoPagoPaymentProviderAdapter implements PaymentProviderPort {
     @Override
     public ExternalPayment getPayment(String id) {
         JsonNode node = send("GET", "/v1/payments/" + segment(id), null);
-        if (!id.equals(text(node, "id")) || !seller().equals(text(node, "collector_id"))
+        Seller seller = sellerAccount();
+        if (!id.equals(text(node, "id")) || !seller.id().equals(text(node, "collector_id"))
                 || !node.hasNonNull("live_mode") || !node.get("live_mode").isBoolean()) throw new ProviderException(false);
         String preferenceId = null;
         JsonNode order = node.get("order");
@@ -85,7 +86,8 @@ public class MercadoPagoPaymentProviderAdapter implements PaymentProviderPort {
         if (preferenceId == null && attemptId == null) throw new ProviderException(false);
         return new ExternalPayment(id, text(node, "external_reference"), preferenceId, attemptId,
                 decimal(node, "transaction_amount"), text(node, "currency_id"), text(node, "status"),
-                OffsetDateTime.parse(text(node, "date_last_updated")).toInstant(), node.get("live_mode").asBoolean());
+                OffsetDateTime.parse(text(node, "date_last_updated")).toInstant(),
+                node.get("live_mode").asBoolean() && !seller.testUser());
     }
 
     @Override
@@ -117,13 +119,17 @@ public class MercadoPagoPaymentProviderAdapter implements PaymentProviderPort {
         }
     }
 
-    private String seller() {
+    private record Seller(String id, boolean testUser) {}
+
+    private String seller() { return sellerAccount().id(); }
+
+    private Seller sellerAccount() {
         JsonNode user = send("GET", "/users/me", null);
-        boolean test = properties.getAccessToken().startsWith("TEST-");
+        boolean testUser = false;
         JsonNode tags = user.get("tags");
-        if (tags != null && tags.isArray()) for (JsonNode tag : tags) test |= "test_user".equals(tag.asString());
-        if (!test) throw new ProviderException(false);
-        return text(user, "id");
+        if (tags != null && tags.isArray()) for (JsonNode tag : tags) testUser |= "test_user".equals(tag.asString());
+        if (!testUser && !properties.getAccessToken().startsWith("TEST-")) throw new ProviderException(false);
+        return new Seller(text(user, "id"), testUser);
     }
 
     private Preference preference(JsonNode node) {

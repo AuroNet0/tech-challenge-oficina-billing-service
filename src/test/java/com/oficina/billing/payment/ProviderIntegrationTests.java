@@ -299,13 +299,22 @@ class ProviderIntegrationTests {
             case "amount" -> remote.put("transaction_amount", new BigDecimal("149.99"));
             case "currency" -> remote.put("currency_id", "USD");
             case "attempt" -> remote.put("metadata", Map.of("billing_attempt_id", UUID.randomUUID().toString()));
-            case "live" -> remote.put("live_mode", true);
+            case "live" -> { SERVER.sellerTags = List.of(); remote.put("live_mode", true); }
             default -> throw new IllegalArgumentException();
         }
         notify("1001", "wrong"); worker.processNotification();
         assertThat(payments.findById(initial.id()).orElseThrow().status()).isEqualTo(PagamentoStatus.PENDING);
         assertThat(count("outbox_events")).isZero();
         assertThat(jdbc.queryForObject("SELECT status FROM provider_notifications", String.class)).isEqualTo("REVIEW");
+    }
+
+    @Test
+    void liveModePaymentFromTestUserSellerConfirms() throws Exception {
+        var ready = checkout.iniciar(initial.id());
+        SERVER.payment("1001", ready.preferenceId(), "approved", Instant.now()).put("live_mode", true);
+        notify("1001", "test-user-live"); worker.processNotification();
+        assertThat(payments.findById(initial.id()).orElseThrow().status()).isEqualTo(PagamentoStatus.CONFIRMED);
+        assertThat(eventCount("payment.confirmed.v1")).isEqualTo(1);
     }
 
     @Test
