@@ -169,8 +169,6 @@ O [POM](pom.xml) executa JaCoCo em `verify`, com gate agregado `BUNDLE`, contado
 
 Cobertura SonarCloud informada para a análise de **13/11/2026: 86,7%**. Esse valor e a data foram fornecidos para esta documentação; não há relatório dessa análise identificado no repositório. Projeto: [Oficina Billing no SonarCloud](https://sonarcloud.io/summary/new_code?id=AuroNet0_tech-challenge-oficina-billing-service).
 
-A imagem `docs/img/sonarcloud.png` não foi identificada no repositório. A referência solicitada `![SonarCloud](docs/img/sonarcloud.png)` fica registrada como texto, sem incorporar imagem com caminho inexistente.
-
 ## 8. CI/CD
 
 O [workflow atual](.github/workflows/ci.yml) define `verify` para pull requests e pushes em `main` e `homolog`, além de execução manual (`workflow_dispatch`).
