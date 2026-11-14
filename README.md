@@ -193,6 +193,8 @@ O workflow prepara a atualização do Billing no EKS e pressupõe um Deployment 
 | Liveness | `/actuator/health/liveness` |
 | Readiness e HEALTHCHECK da imagem | `/actuator/health/readiness` |
 
+A pasta `k8s/` contém [k8s/billing-service.yaml](k8s/billing-service.yaml), com manifestos de referência (ServiceAccount, ConfigMap, Service e Deployment) que espelham o que o stack `platform` do repositório `tech-challenge-oficina-k8s-infra` aplica no EKS. Os valores entre `<...>` (endpoint do RDS, issuer/audience/JWKS, URLs do Mercado Pago, conta AWS e tag da imagem) são fornecidos pela infraestrutura em cada ambiente; segredos de TLS, banco, RabbitMQ e Mercado Pago são referenciados por nome e não ficam no repositório. O arquivo não é aplicado diretamente por este repositório: o Deploy da infraestrutura provisiona e aplica os recursos no cluster, enquanto o job `deploy` do `ci.yml` apenas atualiza a imagem do Deployment (`kubectl set image`).
+
 Conforme [application.yml](src/main/resources/application.yml), readiness inclui estado da aplicação e banco; RabbitMQ não participa do health. Detalhes internos do health não são expostos.
 
 ## 10. Integração Mercado Pago
@@ -231,6 +233,7 @@ Se o JAR do Auth ainda não existir, execute antes `verify.ps1` com um diretóri
 | `src/main/resources/` | Configuração e migrações Flyway |
 | `src/test/` | Testes de domínio, aplicação, persistência, segurança, API, mensageria e provedor |
 | `docs/` | Mensageria, Mercado Pago, notificações, segurança e CI |
+| `k8s` | Manifestos Kubernetes de referência do serviço |
 | `integration/9.1.4/` | Harness E2E/BDD, compose e evidências históricas |
 | `scripts/ci/` | Verificador, testes dos scripts e compose de runtime |
 | `.github/workflows/` | Workflow de verificação e deploy |

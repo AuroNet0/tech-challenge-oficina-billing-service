@@ -1,0 +1,271 @@
+# Manifestos de referência do billing-service.
+# Espelham o que o stack platform do repositório tech-challenge-oficina-k8s-infra aplica no EKS.
+# Os valores entre <...> são fornecidos pela infraestrutura em cada ambiente (RDS, JWT, conta AWS).
+# Segredos (TLS, banco, RabbitMQ) são referenciados por nome e NÃO ficam neste repositório.
+# O CI deste repositório atualiza somente a imagem do Deployment (kubectl set image).
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: billing-service
+  namespace: tc-oficina-p4-demo-a
+  labels:
+    app.kubernetes.io/part-of: oficina-phase4
+    oficina/environment: demo-a
+    oficina/managed-by: platform
+automountServiceAccountToken: false
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: billing-service-config
+  namespace: tc-oficina-p4-demo-a
+  labels:
+    app.kubernetes.io/part-of: oficina-phase4
+    oficina/environment: demo-a
+    oficina/managed-by: platform
+data:
+  SPRING_PROFILES_ACTIVE: mtls
+  SERVER_ADDRESS: 0.0.0.0
+  SERVER_PORT: '8443'
+  SERVER_SSL_ENABLED: 'true'
+  SERVER_SSL_KEY_STORE: file:/tls/identity.p12
+  SERVER_SSL_KEY_STORE_TYPE: PKCS12
+  SERVER_SSL_TRUST_STORE: file:/tls/inbound-truststore.p12
+  SERVER_SSL_TRUST_STORE_TYPE: PKCS12
+  SERVER_SSL_CLIENT_AUTH: want
+  SPRING_RABBITMQ_HOST: rabbitmq
+  SPRING_RABBITMQ_PORT: '5672'
+  SPRING_RABBITMQ_VIRTUAL_HOST: /oficina
+  SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: '3'
+  SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: '0'
+  SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+  SPRING_FLYWAY_ENABLED: 'true'
+  NEW_RELIC_APP_NAME: tc-oficina-p4-demo-a-billing-service
+  NEW_RELIC_DISTRIBUTED_TRACING_ENABLED: 'true'
+  OFICINA_INTERNAL_AUTH_URI: https://auth-internal.tc-oficina-p4-demo-a.svc.cluster.local:8443/internal/v1/identity/client-access/check
+  OFICINA_INTERNAL_OS_URI: https://os-service.tc-oficina-p4-demo-a.svc.cluster.local:8443/internal/financial-authorization
+  SPRING_DATASOURCE_URL: jdbc:postgresql://<RDS_ENDPOINT>:5432/oficina_billing?sslmode=verify-full&sslrootcert=/rds-ca/ca.pem
+  BILLING_JWT_ISSUER: <VALOR_FORNECIDO_PELA_INFRA>
+  BILLING_JWT_AUDIENCE: <VALOR_FORNECIDO_PELA_INFRA>
+  BILLING_JWKS_URI: <VALOR_FORNECIDO_PELA_INFRA>
+  MERCADO_PAGO_ENABLED: 'false'
+  MERCADO_PAGO_RECONCILIATION_ENABLED: 'false'
+  MERCADO_PAGO_API_BASE_URL: https://api.mercadopago.com
+  MERCADO_PAGO_NOTIFICATION_URL: <VALOR_FORNECIDO_PELA_INFRA>
+  MERCADO_PAGO_SUCCESS_URL: <VALOR_FORNECIDO_PELA_INFRA>
+  MERCADO_PAGO_FAILURE_URL: <VALOR_FORNECIDO_PELA_INFRA>
+  MERCADO_PAGO_PENDING_URL: <VALOR_FORNECIDO_PELA_INFRA>
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: billing-service
+  namespace: tc-oficina-p4-demo-a
+  labels:
+    app.kubernetes.io/part-of: oficina-phase4
+    oficina/environment: demo-a
+    oficina/managed-by: platform
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: billing-service
+  ports:
+    - name: https
+      port: 8443
+      targetPort: https
+      appProtocol: https
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billing-service
+  namespace: tc-oficina-p4-demo-a
+  labels:
+    app.kubernetes.io/part-of: oficina-phase4
+    oficina/environment: demo-a
+    oficina/managed-by: platform
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: billing-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/part-of: oficina-phase4
+        oficina/environment: demo-a
+        oficina/managed-by: platform
+        app.kubernetes.io/name: billing-service
+        oficina/role: business
+    spec:
+      serviceAccountName: billing-service
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 45
+      containers:
+        - name: billing-service
+          image: <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/tc-oficina-p4-demo-a-billing:<TAG_OU_DIGEST>
+          imagePullPolicy: IfNotPresent
+          command:
+            - java
+            - -Xmx384m
+            - -XX:ActiveProcessorCount=2
+            - '@/tls/java-options'
+            - -jar
+            - /app/app.jar
+          ports:
+            - name: https
+              containerPort: 8443
+          securityContext: &id001
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 768Mi
+          envFrom:
+            - configMapRef:
+                name: billing-service-config
+          env:
+            - name: SERVER_SSL_KEY_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: billing-service-tls
+                  key: password
+            - name: SERVER_SSL_TRUST_STORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: billing-service-tls
+                  key: password
+            - name: SPRING_RABBITMQ_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: billing-service-rabbitmq
+                  key: username
+            - name: SPRING_RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: billing-service-rabbitmq
+                  key: password
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: billing-postgres
+                  key: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: billing-postgres
+                  key: password
+            - name: MERCADO_PAGO_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: billing-mercado-pago
+                  key: access-token
+            - name: MERCADO_PAGO_WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: billing-mercado-pago
+                  key: webhook-secret
+          startupProbe:
+            httpGet:
+              scheme: HTTPS
+              port: https
+              path: /actuator/health/liveness
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 60
+          livenessProbe:
+            httpGet:
+              scheme: HTTPS
+              port: https
+              path: /actuator/health/liveness
+            periodSeconds: 15
+            timeoutSeconds: 3
+            failureThreshold: 4
+          readinessProbe:
+            httpGet:
+              scheme: HTTPS
+              port: https
+              path: /actuator/health/readiness
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          volumeMounts:
+            - name: tls
+              mountPath: /tls
+              readOnly: true
+            - name: rds-ca
+              mountPath: /rds-ca
+              readOnly: true
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tls
+          secret:
+            secretName: billing-service-tls
+            defaultMode: 288
+        - name: rds-ca
+          configMap:
+            name: rds-ca
+        - name: tmp
+          emptyDir:
+            sizeLimit: 256Mi
+      initContainers:
+        - name: database-ready
+          image: <IMAGEM_POSTGRES_CLIENT>
+          command:
+            - sh
+            - -ec
+            - for attempt in $(seq 1 120); do psql -Xq -c 'SELECT 1' >/dev/null 2>&1 && exit 0; sleep 3; done; exit 1
+          securityContext: *id001
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+          env:
+            - name: PGHOST
+              value: <RDS_ENDPOINT>
+            - name: PGPORT
+              value: '5432'
+            - name: PGDATABASE
+              value: oficina_billing
+            - name: PGSSLMODE
+              value: verify-full
+            - name: PGSSLROOTCERT
+              value: /rds-ca/ca.pem
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: billing-postgres
+                  key: username
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: billing-postgres
+                  key: password
+          volumeMounts:
+            - name: rds-ca
+              mountPath: /rds-ca
+              readOnly: true
