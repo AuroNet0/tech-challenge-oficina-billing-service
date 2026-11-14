@@ -238,29 +238,3 @@ Se o JAR do Auth ainda não existir, execute antes `verify.ps1` com um diretóri
 | `scripts/ci/` | Verificador, testes dos scripts e compose de runtime |
 | `.github/workflows/` | Workflow de verificação e deploy |
 | `compose.yaml`, `Dockerfile`, `pom.xml` | Execução local, imagem e build Maven |
-
-## 13. Auditoria desta documentação
-
-### Afirmações não confirmadas
-
-- Política de não publicação do Swagger/OpenAPI: não identificada; a configuração atual permite acesso público.
-- Captura `docs/img/sonarcloud.png`: não identificada; a imagem não foi incorporada para evitar link quebrado.
-- Cobertura SonarCloud de 86,7% em 13/11/2026: informada no pedido, sem relatório local identificado dessa análise.
-- URL e implementação do stack `platform` de `tech-challenge-oficina-k8s-infra`: não identificadas neste repositório; nenhum link foi deduzido.
-- Nome físico do banco no EKS, estado atual do ambiente, execução remota dos jobs e política de imutabilidade do ECR: não identificados pelos arquivos locais.
-- Execução atual do cenário BDD: não realizada nesta revisão documental; os resultados versionados são históricos.
-
-### Divergências entre documentação anterior e código
-
-- README e `docs/ci.md` declaravam ausência de CI/CD, deploy e publicação de imagens e afirmavam Actions desabilitado. O workflow atual define verificação, análise SonarCloud e deploy condicional; a habilitação remota do Actions não é comprovada por esse arquivo.
-- O documento da etapa 8.3.4 descrevia o adapter indisponível como única implementação de produção em todos os perfis e a integração distribuída como não iniciada. O código atual contém adapter `mtls`; o fallback indisponível é ativado fora desse perfil.
-- `docs/messaging.md` tratava o adapter do provedor e os eventos financeiros como futuros. O código atual implementa checkout, webhook, reconciliação e eventos de pagamento via Outbox; o consumo de `payment.request.v1` continua sem chamada externa.
-- O documento de segurança descrevia projeção mínima para todos os funcionários. `FinancialAuthorization.operational()` aplica a projeção quando existe `ROLE_ATENDENTE`; `GERENTE` sozinho recebe o DTO financeiro após autorização.
-- Os roteiros antigos apontavam para etapas anteriores de integração; os links solicitados foram atualizados para o roteiro 9.1.4. O compose dessa etapa ainda reutiliza o mock de `integration/7.6`.
-
-### Links relativos corrigidos e validação
-
-- Antigos links do README para `integration/8.3.5/README.md` e `integration/8.3.5/relatorio.md` foram substituídos por referências existentes da etapa 9.1.4.
-- Em `docs/mercado-pago.md`, os links para `../integration/7.5/relatorio.md` e `../integration/7.5/provider-http-evidence.json` foram substituídos pelo roteiro e pelo relatório versionado de 9.1.4; são evidências de outra execução, sem atribuir a elas os resultados históricos da 7.5.
-- Em `docs/security/billing-authorization-8.3.4.md`, a referência textual a `integration/7.6/relatorio.md` foi substituída por links para o roteiro e o runner atuais.
-- Os links relativos ativos do README e dos documentos alterados foram conferidos no filesystem e apontam para arquivos existentes. O caminho da imagem ausente aparece somente como texto.
